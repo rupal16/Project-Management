@@ -1,14 +1,17 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
 import Userregis from './routes/user-registration/user-reg' ;
-
+import { BrowserRouter as Router, Switch, Route} from 'react-router-dom' ;
 function App() {
   return (
+    <React.Fragment>
+    <Router>
     <div className="App">
-        <Userregis />
+        <Switch>
+        <Route path="/userregistration" component={Userregis} />
+        </Switch>
     </div>
+    </Router>
+    </React.Fragment>
   );
 }
-
 export default App;

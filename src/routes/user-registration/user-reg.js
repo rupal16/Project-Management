@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 import './user-reg.scss' ;
+import { Link } from 'react-router-dom' ;
+import { Button } from 'react-bootstrap';
 
 const initialState = {
             firstName: "",
@@ -31,17 +33,11 @@ class regis extends Component {
             passwordError: "",
             confirmPasswordError: "",
         });
-
- 
         this.handleChange = this.handleChange.bind(this);
         this.validate = this.validate.bind(this);
         this.handleUserInput = this.handleUserInput.bind(this);
     }
-
-   
-    
-
-    handleChange = (event) => {
+   handleChange = (event) => {
         const isCheckbox = event.target.type === "checkbox";
         
             this.setState({
@@ -162,22 +158,19 @@ class regis extends Component {
                     <div className="input-error">{this.state.confirmPasswordError}</div>
                 </div>
                 <div>
-                    <button>Submit</button>
+                    <Button variant="secondary" type="submit" value="submit">Submit</Button>{' '}
                 </div>
                 <br />
                 
                 <div>
                 <p className="forgot-password">
-                    Already registered <a href="#">sign in?</a>
+                    Already registered? <Link to="/signin">sign in</Link>
                 </p>
-                </div>
-                    
+                </div>                    
                 </form>
                 </div>
             </div>
-            
-        )
+            )
     }
 }
-
 export default regis
