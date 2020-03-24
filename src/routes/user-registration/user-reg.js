@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import './user-reg.scss' ;
 import { Link } from 'react-router-dom' ;
 import { Button } from 'react-bootstrap';
+import { withFirebase } from '../../config/Fire';
+
 
 const initialState = {
             firstName: "",
@@ -16,6 +18,11 @@ const initialState = {
             confirmPasswordError: "",
 
 }
+const regisForm = withFirebase(regis);
+
+// <FirebaseContext.Consumer>
+//       {firebase=() => <regis firebase={firebase} />}
+// </FirebaseContext.Consumer>
 
 class regis extends Component {
     state = initialState;
@@ -112,14 +119,29 @@ class regis extends Component {
         this.setState({[name]: value});
       }
 
+      onSubmit = event => {
+        const { firstName, lastName, email, password, confirmPassword } = this.state;
+        this.props.firebase
+          .doCreateUserWithDetails(firstName, lastName, email, password, confirmPassword)
+          .then(authUser => {
+            this.setState({ ...initialState });
+          })
+          .catch(error => {
+            this.setState({ error });
+          });
+        event.preventDefault();
+      }
 
+      
 
+     
 
     render() {
         return (
             <div className="wrapper">
             <div className="form-wrapper">
                 <h1>Register Now!</h1>
+                
                 <form onSubmit={this.handlesubmit}>
                 <div className>
                     <label>First Name
@@ -173,4 +195,4 @@ class regis extends Component {
             )
     }
 }
-export default regis
+export default { regis, regisForm}
