@@ -1,30 +1,14 @@
 import React, { Component } from 'react'
-import './user-reg.scss' ;
+import './registration.scss' ;
 import { Link } from 'react-router-dom' ;
 import { Button } from 'react-bootstrap';
-import { withFirebase } from '../../config/Fire';
+import firebase from '../../config/fire' ;
+import initialState from '../../components/initialState' ;
+// import Input from '../../components/input' ; 
 
+var messageRef = firebase.database().ref('messages');
 
-const initialState = {
-            firstName: "",
-            lastName: "",
-            email: "",
-            password: "",
-            confirmPassword: "",
-            firstNameError: "",
-            lastNameError: "",
-            emailError: "",
-            passwordError: "",
-            confirmPasswordError: "",
-
-}
-const regisForm = withFirebase(regis);
-
-// <FirebaseContext.Consumer>
-//       {firebase=() => <regis firebase={firebase} />}
-// </FirebaseContext.Consumer>
-
-class regis extends Component {
+class Registration extends Component {
     state = initialState;
     constructor(props){
         super(props);
@@ -110,6 +94,7 @@ class regis extends Component {
             //clear form
             this.setState(initialState);
         }
+        this.saveMessage(this.state.firstName, this.state.lastName, this.state.email, this.state.password, this.state.confirmPassword);
         
     }
 
@@ -119,20 +104,19 @@ class regis extends Component {
         this.setState({[name]: value});
       }
 
-      onSubmit = event => {
-        const { firstName, lastName, email, password, confirmPassword } = this.state;
-        this.props.firebase
-          .doCreateUserWithDetails(firstName, lastName, email, password, confirmPassword)
-          .then(authUser => {
-            this.setState({ ...initialState });
-          })
-          .catch(error => {
-            this.setState({ error });
-          });
-        event.preventDefault();
-      }
+      saveMessage = (firstName, lastName, email, password, confirmPassword) => {
+        var newMessageRef = messageRef.push();
+        newMessageRef.set({
+            firstName: this.state.firstName,
+            lastName: this.state.lastName,
+            email: this.state.email,
+            password: this.state.password,
+            confirmPassword: this.state.confirmPassword,
 
-      
+        });
+    }
+
+  
 
      
 
@@ -145,7 +129,15 @@ class regis extends Component {
                 <form onSubmit={this.handlesubmit}>
                 <div className>
                     <label>First Name
-                    <input type="text" className="firstName fields" name="firstName" placeholder=" First Name" onChange={this.handleChange} value={this.state.firstName}></input>
+                    <input
+                     type="text"
+                     className="firstName fields" 
+                     name="firstName" 
+                     placeholder=" First Name" 
+                     onChange={this.handleChange} 
+                     value={this.state.firstName}>
+
+                     </input>
                     </label>
 
                     <div className="input-error">{this.state.firstNameError}</div>
@@ -153,7 +145,14 @@ class regis extends Component {
                 
                 <div>
                     <label>Last Name
-                    <input type="text" className="lastName fields" name="lastName" placeholder=" Last Name" onChange={this.handleChange} value={this.state.lastName}></input>
+                    <input type="text"
+                     className="lastName fields" 
+                     name="lastName" 
+                     placeholder=" Last Name" 
+                     onChange={this.handleChange} 
+                     value={this.state.lastName}>
+
+                     </input>
                     </label>
                     <div className="input-error">{this.state.lastNameError}</div>
                     
@@ -161,21 +160,41 @@ class regis extends Component {
                 
                 <div>
                     <label>E-mail
-                    <input type="email" className="email fields" placeholder="E-mail" name="email" onChange={this.handleChange} value={this.state.email}></input>
+                    <input 
+                    type="email" 
+                    className="email fields" 
+                    placeholder="E-mail" 
+                    name="email" 
+                    onChange={this.handleChange} 
+                    value={this.state.email}>
+
+                    </input>
                     </label>
                     <div className="input-error">{this.state.emailError}</div>
                 </div>
                 
                 <div>
                     <label>Password
-                    <input type="password" className="password fields" placeholder="password" name="password" onChange={this.handleChange} value={this.state.password}></input>
+                    <input 
+                    type="password" 
+                    className="password fields" 
+                    placeholder="password" 
+                    name="password" 
+                    onChange={this.handleChange} 
+                    value={this.state.password}></input>
                     </label>
                     <div className="input-error">{this.state.passwordError}</div>
                 </div>
                 
                 <div>
                     <label>Confirm Password
-                    <input type="password" className="confirmPassword fields" placeholder="confirm password" name="confirmPassword" onChange={this.handleChange} value={this.state.confirmPassword}></input>
+                    <input 
+                    type="password" 
+                    className="confirmPassword fields" 
+                    placeholder="confirm password" 
+                    name="confirmPassword" 
+                    onChange={this.handleChange} 
+                    value={this.state.confirmPassword}></input>
                     </label>
                     <div className="input-error">{this.state.confirmPasswordError}</div>
                 </div>
@@ -195,4 +214,6 @@ class regis extends Component {
             )
     }
 }
-export default { regis, regisForm}
+export default Registration
+
+

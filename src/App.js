@@ -1,13 +1,6 @@
 import React, { Component } from 'react'
-import Userregis from './routes/user-registration/user-reg' ;
+import Registration from './routes/registration' ;
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom' ;
-// function App() {
-//   return (
-//     //
-// }
-// export default App;
-
-
 
 class App extends Component {
   render() {
@@ -17,7 +10,7 @@ class App extends Component {
    <Router>
     <div className="App">
          <Switch>
-         <Route path="/userregistration" component={Userregis} />
+         <Route path="/user-registration" component={Registration} />
          </Switch>
      </div>
      </Router>

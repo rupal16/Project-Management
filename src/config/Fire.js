@@ -1,5 +1,5 @@
-import app from 'firebase/app';
-import 'firebase/auth';
+import firebase from 'firebase' ;
+
 
 
 
@@ -14,23 +14,6 @@ const config = {
     measurementId: "G-B7ESFBK1HZ"
   };
 
-  class Firebase {
-      constructor(){
-          app.initializeApp(config);
-          this.auth = app.auth();
-      }
+  const fire = firebase.initializeApp(config);
+  export default fire
 
-      doCreateUserWithDetails = (firstName,lastName,email, password,confirmedPassword) =>
-    this.auth.createUserWithDetails(firstName,lastName,email, password,confirmedPassword);
-
-    doSignUpWithDetails = (firstName,lastName,email, password,confirmedPassword) =>
-    this.auth.signUpWithDetails(firstName,lastName,email, password,confirmedPassword);
-
-    doSignOut = () => this.auth.signOut();
-    // doPasswordReset = email => this.auth.sendPasswordResetEmail(email);
-    // doPasswordUpdate = password =>
-    // this.auth.currentUser.updatePassword(password);
-}
-  
-
-  export default Firebase
