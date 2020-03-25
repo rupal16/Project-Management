@@ -1,8 +1,4 @@
 import firebase from 'firebase' ;
-
-
-
-
 const config = {
     apiKey: "AIzaSyDx6G7Xd2COPEvOYINW45jjIxoVx94WE1A",
     authDomain: "project-management-8014f.firebaseapp.com",

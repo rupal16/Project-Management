@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom' ;
 import { Button } from 'react-bootstrap';
 import firebase from '../../config/fire' ;
 import initialState from '../../components/initialState' ;
-// import Input from '../../components/input' ; 
+import Input from '../../components/input' ; 
 
 var messageRef = firebase.database().ref('messages');
 
@@ -35,9 +35,7 @@ class Registration extends Component {
                 [event.target.name]: isCheckbox
                 ?event.target.checked
                 :event.target.value
-            });
-        
-        
+            });        
     };
 
     validate = () => {
@@ -82,17 +80,18 @@ class Registration extends Component {
             return false;
         }
         return true;
+
     };
     
 
     handlesubmit = (event) => {
-        
-        event.preventDefault();
         const isValid = this.validate();
         if (isValid){
             console.log(this.state);
-            //clear form
+        
             this.setState(initialState);
+        }else{
+            event.preventDefault();
         }
         this.saveMessage(this.state.firstName, this.state.lastName, this.state.email, this.state.password, this.state.confirmPassword);
         
@@ -116,10 +115,6 @@ class Registration extends Component {
         });
     }
 
-  
-
-     
-
     render() {
         return (
             <div className="wrapper">
@@ -127,77 +122,71 @@ class Registration extends Component {
                 <h1>Register Now!</h1>
                 
                 <form onSubmit={this.handlesubmit}>
-                <div className>
-                    <label>First Name
-                    <input
-                     type="text"
-                     className="firstName fields" 
-                     name="firstName" 
-                     placeholder=" First Name" 
-                     onChange={this.handleChange} 
-                     value={this.state.firstName}>
-
-                     </input>
-                    </label>
-
-                    <div className="input-error">{this.state.firstNameError}</div>
-                </div>
+                {console.log(this.state)}
                 
                 <div>
-                    <label>Last Name
-                    <input type="text"
+                <Input
+                    labelname="First Name"
+                    type="text"
+                     className="firstName fields" 
+                     name="firstName" 
+                     placeholder=" First Name"  
+                     handleChange={this.handleChange}
+                     value={this.state.firstName}
+                    />
+                    <div className="input-error">{this.state.firstNameError}</div>
+                </div>
+
+               
+                <div>
+                <Input
+                    labelname="Last Name"
+                    type="text"
                      className="lastName fields" 
                      name="lastName" 
                      placeholder=" Last Name" 
-                     onChange={this.handleChange} 
-                     value={this.state.lastName}>
-
-                     </input>
-                    </label>
+                     handleChange={this.handleChange} 
+                     value={this.state.lastName}
+                    />
                     <div className="input-error">{this.state.lastNameError}</div>
-                    
                 </div>
-                
                 <div>
-                    <label>E-mail
-                    <input 
-                    type="email" 
-                    className="email fields" 
-                    placeholder="E-mail" 
-                    name="email" 
-                    onChange={this.handleChange} 
-                    value={this.state.email}>
-
-                    </input>
-                    </label>
+                <Input
+                    labelname="Email"
+                    type="email"
+                     className="email fields" 
+                     name="email" 
+                     placeholder=" Email"  
+                     handleChange={this.handleChange}
+                     value={this.state.email}
+                    />
                     <div className="input-error">{this.state.emailError}</div>
                 </div>
-                
                 <div>
-                    <label>Password
-                    <input 
-                    type="password" 
-                    className="password fields" 
-                    placeholder="password" 
-                    name="password" 
-                    onChange={this.handleChange} 
-                    value={this.state.password}></input>
-                    </label>
+                <Input
+                    labelname="Password"
+                    type="password"
+                     className="password fields" 
+                     name="password" 
+                     placeholder=" Password"  
+                     handleChange={this.handleChange}
+                     value={this.state.password}
+                    />
                     <div className="input-error">{this.state.passwordError}</div>
                 </div>
-                
                 <div>
-                    <label>Confirm Password
-                    <input 
-                    type="password" 
-                    className="confirmPassword fields" 
-                    placeholder="confirm password" 
-                    name="confirmPassword" 
-                    onChange={this.handleChange} 
-                    value={this.state.confirmPassword}></input>
-                    </label>
+                <Input
+                    labelname="Confirm Password"
+                    type="password"
+                     className="confirmPassword fields" 
+                     name="confirmPassword" 
+                     placeholder="Confirm Password"  
+                     handleChange={this.handleChange}
+                     value={this.state.confirmPassword}
+                    />
                     <div className="input-error">{this.state.confirmPasswordError}</div>
                 </div>
+                
                 <div>
                     <Button variant="secondary" type="submit" value="submit">Submit</Button>{' '}
                 </div>
@@ -210,6 +199,7 @@ class Registration extends Component {
                 </div>                    
                 </form>
                 </div>
+                
             </div>
             )
     }
