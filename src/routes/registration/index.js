@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import './registration.scss' ;
 import { Link } from 'react-router-dom' ;
 import { Button } from 'react-bootstrap';
-import firebase from '../../config/fire' ;
+import firebase from '../../config/Fire' ;
 import initialState from '../../components/initialState' ;
 import Input from '../../components/input' ; 
 
