@@ -5,6 +5,7 @@ import { Button } from 'react-bootstrap';
 import firebase from '../../config/Fire' ;
 import initialState from '../../components/initialState' ;
 import Input from '../../components/input' ; 
+import sendOtp from '../../utils/sendOtp' ;
 
 
 let messageRef = firebase.database().ref('messages');
@@ -33,10 +34,10 @@ class Registration extends Component {
             passwordError: "",
             confirmPasswordError: "",
         });
-        this.handleChange = this.handleChange.bind(this);
-        this.validate = this.validate.bind(this);
-        this.handleUserInput = this.handleUserInput.bind(this);
-        this.handleClick = this.handleClick.bind(this);
+        // this.handleChange = this.handleChange.bind(this);
+        // this.validate = this.validate.bind(this);
+        // this.handleUserInput = this.handleUserInput.bind(this);
+        // this.handleClick = this.handleClick.bind(this);
     }
    handleChange = (event) => {
         const isCheckbox = event.target.type === "checkbox";
@@ -129,29 +130,29 @@ class Registration extends Component {
 
         });
     }
-    handleClick=(phone)=>{
-        let recaptcha = new firebase.auth.RecaptchaVerifier('recaptcha-container');
-        let number = this.state.phone;
-        firebase.auth().signInWithPhoneNumber(number, recaptcha).then( function(e) {
-          let code = prompt('Enter the otp', '');
+//     handleClick=(phone)=>{
+//         let recaptcha = new firebase.auth.RecaptchaVerifier('recaptcha-container');
+//         let number = this.state.phone;
+//         firebase.auth().signInWithPhoneNumber(number, recaptcha).then( function(e) {
+//           let code = prompt('Enter the otp', '');
     
             
-            if(code === null) return;
+//             if(code === null) return;
     
             
-            e.confirm(code).then(function (result) {
-                console.log(result.user, 'user');
+//             e.confirm(code).then(function (result) {
+//                 console.log(result.user, 'user');
     
-                document.querySelector('Button').textContent +=   result.user.phone + "Number verified";
+//                 document.querySelector('Button').textContent +=   result.user.phone + "Number verified";
                 
-            }).catch((error) => {
-                console.error( error);
+//             }).catch((error) => {
+//                 console.error( error);
                 
-            })
+//             })
     
-        })
+//         })
     
-}
+// }
 //     
 //     getPhoneNumberFromUserInput();
 // handleClick = () => {
@@ -194,51 +195,78 @@ class Registration extends Component {
 //     }
 //   });
 //   let recaptchaResponse = grecaptcha.getResponse(window.recaptchaWidgetId);
-}
-handleClick=(phone)=>{
-window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container', {
-    'size': 'normal',
-    'callback': function(response) {
-      // reCAPTCHA solved, allow signInWithPhoneNumber.
-      // ...
-      alert('success');
-    },
-    'expired-callback': function() {
-      // Response expired. Ask user to solve reCAPTCHA again.
-      alert('recaptha expired');
-      // ...
-    }
-  });
-  recaptchaVerifier.render().then(function(widgetId) {
-    window.recaptchaWidgetId = widgetId;
-  });
-  var recaptchaResponse = grecaptcha.getResponse(window.recaptchaWidgetId);
-  var phoneNumber = getPhoneNumberFromUserInput();
-var appVerifier = window.recaptchaVerifier;
-firebase.auth().signInWithPhoneNumber(phoneNumber, appVerifier)
-    .then(function (confirmationResult) {
-      // SMS sent. Prompt user to type the code from the message, then sign the
-      // user in with confirmationResult.confirm(code).
-      window.confirmationResult = confirmationResult;
-    }).catch(function (error) {
-      // Error; SMS not sent
-      // ...
-    });
-    //sign in the user with verification code
-    var code = getCodeFromUserInput();
-confirmationResult.confirm(code).then(function (result) {
-  // User signed in successfully.
-  alert('user signed successfully')
-  var user = result.user;
-  // ...
-}).catch(function (error) {
-  // User couldn't sign in (bad verification code?)
-  // ...
-  alert('unsuccessful attempt');
-  let credential = firebase.auth.PhoneAuthProvider.credential(confirmationResult.verificationId, code);
-});
-firebase.auth().signInWithCredential(credential);
-}
+// }
+// handleClick=(phone)=>{
+// window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container', {
+//     'size': 'normal',
+//     'callback': function(response) {
+//       // reCAPTCHA solved, allow signInWithPhoneNumber.
+//       // ...
+//       alert('success');
+//     },
+//     'expired-callback': function() {
+//       // Response expired. Ask user to solve reCAPTCHA again.
+//       alert('recaptha expired');
+//       // ...
+//     }
+//   });
+//   recaptchaVerifier.render().then(function(widgetId) {
+//     window.recaptchaWidgetId = widgetId;
+//   });
+//   var recaptchaResponse = grecaptcha.getResponse(window.recaptchaWidgetId);
+//   var phoneNumber = getPhoneNumberFromUserInput();
+// var appVerifier = window.recaptchaVerifier;
+// firebase.auth().signInWithPhoneNumber(phoneNumber, appVerifier)
+//     .then(function (confirmationResult) {
+//       // SMS sent. Prompt user to type the code from the message, then sign the
+//       // user in with confirmationResult.confirm(code).
+//       window.confirmationResult = confirmationResult;
+//     }).catch(function (error) {
+//       // Error; SMS not sent
+//       // ...
+//     });
+//     //sign in the user with verification code
+//     var code = getCodeFromUserInput();
+// confirmationResult.confirm(code).then(function (result) {
+//   // User signed in successfully.
+//   alert('user signed successfully')
+//   var user = result.user;
+//   // ...
+// }).catch(function (error) {
+//   // User couldn't sign in (bad verification code?)
+//   // ...
+//   alert('unsuccessful attempt');
+//   let credential = firebase.auth.PhoneAuthProvider.credential(confirmationResult.verificationId, code);
+// });
+// firebase.auth().signInWithCredential(credential);
+// }
+
+// handleClick = (phone) => {
+//     // sendOtp("+91 8961991275");
+//     let recaptcha = new firebase.auth.RecaptchaVerifier('recaptcha-container');
+//     var number = "+91 8961991275";
+//     var appVerifier = window.recaptcha;
+//     firebase
+//     .auth()
+//     .signInWithPhoneNumber(number, recaptcha)
+//     .then(function (e) {
+//       // SMS sent. Prompt user to type the code from the message, then sign the
+//       // user in with confirmationResult.confirm(code).
+//       let code = prompt("Enter the OTP","")
+//     //   window.confirmationResult = confirmationResult;
+//     if(code === null) return;
+
+//     e.confirm(code)
+//     }).catch(function (error) {
+//         // console.log
+//       // Error; SMS not sent
+//       // ...
+//     });
+// }
+handleClick = phone => {sendOtp(
+    "+91 8961991275"
+    )}
+
     render() {
         return (
             <div className="wrapper">
@@ -326,16 +354,18 @@ firebase.auth().signInWithCredential(credential);
                 </div>
                 
                 <div id="recaptcha">
-                    <Button variant="secondary" type="submit" value="submit" onClick={this.state.handleClick}>Submit</Button>{' '}
+                    <Button variant="secondary" type="submit" value="submit" onClick={this.handleClick}>Submit</Button>{' '}
                 </div>
                 <br />
-                {/* //onClick={this.handleClick} */}
+                {/* // */}
                 
                 <div>
-                <p className="forgot-password">
+                <p className="forgot-password" onClick={this.handleClick}>
                     Already registered? <Link to="/signin">sign in</Link>
                 </p>
-                </div>                    
+                </div>
+                <button>Send otp</button>
+                <div id="recaptcha-container"></div>                    
                 </form>
                 </div>
                 
