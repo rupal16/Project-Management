@@ -1,11 +1,14 @@
 import React, { Component } from 'react'
-import './registration.scss' ;
+import './style.scss' ;
 import { Link } from 'react-router-dom' ;
 import { Button } from 'react-bootstrap';
-import firebase from '../../config/Fire' ;
+// import firebase from '../../config/Fire' ;
 import initialState from '../../components/initialState' ;
 import Input from '../../components/input' ; 
 import sendOtp from '../../utils/auth' ;
+// import * as fire from 'firebase' ;
+import firebase from "../../config/Fire" ;
+// import * as fire from "firebase" ;
 
 
 let messageRef = firebase.database().ref('messages');
@@ -27,7 +30,7 @@ class Registration extends Component {
             passwordError: "",
             confirmPasswordError: "",
         });
-    }
+   }
    handleChange = (event) => {
         const isCheckbox = event.target.type === "checkbox";
         
@@ -92,12 +95,15 @@ class Registration extends Component {
         const isValid = this.validate();
         if (isValid){
             console.log(this.state);
+            
         
             this.setState(initialState);
         }else{
             event.preventDefault();
         }
+        
         this.saveMessage(this.state.firstName, this.state.lastName,this.state.phone, this.state.email, this.state.password, this.state.confirmPassword);
+        
         
     }
 
@@ -117,12 +123,13 @@ class Registration extends Component {
             password: this.state.password,
             confirmPassword: this.state.confirmPassword,
 
-        });
-    }
+        }); 
+};
+
 handleClick = phone => {sendOtp(
     "+91 8961991275"
-    )};
-
+    
+    )}
     render() {
         return (
             <div className="wrapper">
@@ -130,8 +137,6 @@ handleClick = phone => {sendOtp(
                 <h1>Register Now!</h1>
                 
                 <form onSubmit={this.handlesubmit}>
-                {console.log(this.state)}
-                
                 <div>
                 <Input
                     labelname="First Name"
@@ -208,8 +213,7 @@ handleClick = phone => {sendOtp(
                     />
                     <div className="input-error">{this.state.confirmPasswordError}</div>
                 </div>
-                
-                <div>
+                <div id="recaptcha">
                     <Button variant="secondary" type="submit" value="submit" onClick={this.handleClick}>Submit</Button>{' '}
                 </div>
                 <br />
@@ -219,7 +223,9 @@ handleClick = phone => {sendOtp(
                     Already registered? <Link to="/signin">sign in</Link>
                 </p>
                 </div>
-                <div id="recaptcha-container"></div>                    
+                <div id="recaptcha-container">
+                
+                </div>  
                 </form>
                 </div>
                 
