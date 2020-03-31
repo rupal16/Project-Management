@@ -9,38 +9,50 @@ import Input from "../../components/Input";
 
 import "./style.scss";
 
+const initialState={
+  otpSent: false,
+  initialSubmit: true,
+
+  firstName: {
+    val: "",
+    err: ""
+  },
+  lastName: {
+    val: "",
+    err: ""
+  },
+  phone: {
+    val: "",
+    err: ""
+  },
+  email: {
+    val: "",
+    err: ""
+  },
+  password: {
+    val: "",
+    err: ""
+  },
+  confirmPassword: {
+    val: "",
+    err: ""
+  },
+  otp: {
+    val: "",
+    err: ""
+  }
+}
 class Registration extends Component {
   constructor(props) {
     super(props);
-
-    this.state = {
-      firstName: {
-        val: "",
-        err: ""
-      },
-      lastName: {
-        val: "",
-        err: ""
-      },
-      phone: {
-        val: "",
-        err: ""
-      },
-      email: {
-        val: "",
-        err: ""
-      },
-      password: {
-        val: "",
-        err: ""
-      },
-      confirmPassword: {
-        val: "",
-        err: ""
-      }
-    };
+    //add reset form
+    this.state = initialState;
+      
+    
+    
   }
 
+ 
   handleChange = event => {
     const { target } = event;
     const { value, name } = target;
@@ -122,37 +134,25 @@ class Registration extends Component {
   };
 
   handlesubmit = event => {
+    console.log('submit');
+    console.log(this.state.initialSubmit)
     event.preventDefault();
-    const isValid = this.validate();
+    if(this.state.initialSubmit){
+      const isValid = this.validate();
 
     if (isValid) {
-      sendOtp("+91 8961991275");
-      this.setState({
-        firstName: {
-          val: "",
-          err: ""
-        },
-        lastName: {
-          val: "",
-          err: ""
-        },
-        phone: {
-          val: "",
-          err: ""
-        },
-        email: {
-          val: "",
-          err: ""
-        },
-        password: {
-          val: "",
-          err: ""
-        },
-        confirmPassword: {
-          val: "",
-          err: ""
-        }
-      });
+      sendOtp("+91 8961991275",
+      ()=>this.setState({...this.state,otpSent:true, initialSubmit: false}));
+    }
+    else{
+      // this.resetForm();
+      console.log('final')
+    }
+    
+    
+    
+    //  this.setState({...this.setState,otpSent: true});
+      
     } else {
       event.preventDefault();
     }
@@ -160,6 +160,10 @@ class Registration extends Component {
     this.saveUser();
   };
 
+  resetForm=()=>{
+    this.setState(initialState);
+      
+  }
   handleUserInput = e => {
     const name = e.target.name;
     const value = e.target.value;
@@ -187,8 +191,12 @@ class Registration extends Component {
       email,
       phone,
       password,
-      confirmPassword
+      confirmPassword,
+      otp,
+      otpSent,
+
     } = this.state;
+
 
     return (
       <div className="wrapper">
@@ -269,13 +277,24 @@ class Registration extends Component {
                 err={confirmPassword.err}
               />
             </div>
+            {otpSent && <div>
+              <Input
+                labelname="Enter OTP"
+                type="number"
+                name="otp"
+                placeholder=" Enter OTP"
+                handleChange={this.handleChange}
+                value={otp.val}
+                err={otp.err}
+              />
+            </div>
+            }
 
-            <div id="recaptcha">
+             <div id="recaptcha">
               <Button
                 variant="secondary"
                 type="submit"
                 value="submit"
-                onClick={this.handleClick}
               >
                 Submit
               </Button>
