@@ -1,5 +1,7 @@
 import React from "react";
 
+import "./style.scss";
+
 const Input = props => {
   return (
     <div>
@@ -7,7 +9,7 @@ const Input = props => {
 
       <input
         type={props.type}
-        className={props.className}
+        className="input-field"
         name={props.name}
         placeholder={props.placeholder}
         onChange={props.handleChange}

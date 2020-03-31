@@ -11,4 +11,7 @@ const config = {
   measurementId: "G-B7ESFBK1HZ"
 };
 
-export default firebase.initializeApp(config);
+const firebaseApp = firebase.initializeApp(config);
+
+export const userDbRef = firebaseApp.database().ref("user");
+export default firebaseApp;
