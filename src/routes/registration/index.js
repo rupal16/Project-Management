@@ -14,18 +14,30 @@ class Registration extends Component {
     super(props);
 
     this.state = {
-      firstName: "",
-      lastName: "",
-      phone: "",
-      email: "",
-      password: "",
-      confirmPassword: "",
-      firstNameError: "",
-      lastNameError: "",
-      phoneError: "",
-      emailError: "",
-      passwordError: "",
-      confirmPasswordError: ""
+      firstName: {
+        val: "",
+        err: ""
+      },
+      lastName: {
+        val: "",
+        err: ""
+      },
+      phone: {
+        val: "",
+        err: ""
+      },
+      email: {
+        val: "",
+        err: ""
+      },
+      password: {
+        val: "",
+        err: ""
+      },
+      confirmPassword: {
+        val: "",
+        err: ""
+      }
     };
   }
 
@@ -33,19 +45,15 @@ class Registration extends Component {
     const { target } = event;
     const { value, name } = target;
 
+    const fieldObj = this.state[name];
+    fieldObj.val = value;
+
     this.setState({
-      [name]: value
+      [name]: fieldObj
     });
   };
 
   validate = () => {
-    let firstNameError = "";
-    let lastNameError = "";
-    let phoneError = "";
-    let emailError = "";
-    let passwordError = "";
-    let confirmPasswordError = "";
-
     const {
       firstName,
       lastName,
@@ -55,55 +63,58 @@ class Registration extends Component {
       confirmPassword
     } = this.state;
 
-    if (!firstName.trim()) {
-      firstNameError = "First name cannot be blank!";
+    let formErr = false;
+
+    if (!firstName.val.trim()) {
+      firstName.err = "First name cannot be blank!";
+      formErr = true;
     }
 
-    if (!lastName.trim()) {
-      lastNameError = "Last name cannot be blank!";
+    if (!lastName.val.trim()) {
+      lastName.err = "Last name cannot be blank!";
+      formErr = true;
     }
 
-    if (!phone.trim()) {
-      phoneError = "Phone number cannot be blank!";
+    if (!phone.val.trim()) {
+      phone.err = "Phone number cannot be blank!";
+      formErr = true;
     }
 
-    if (!email.trim()) {
-      emailError = "Email cannot be blank!";
+    if (!email.val.trim()) {
+      email.err = "Email cannot be blank!";
+      formErr = true;
     } else {
-      if (!email.trim().includes("@")) {
-        emailError = "invalid email";
+      if (!email.val.trim().includes("@")) {
+        email.err = "invalid email";
+        formErr = true;
       }
     }
 
-    if (!password) {
-      passwordError = "Password cannot be blank!";
+    if (!password.val) {
+      password.err = "Password cannot be blank!";
+      formErr = true;
     } else {
       if (password.length < 6) {
-        passwordError = "Password should contain more than 6 characters!";
+        password.err = "Password should contain more than 6 characters!";
+        formErr = true;
       }
     }
 
-    if (!confirmPassword) {
-      confirmPasswordError = "Confirm password cannot be blank!";
-    } else if (confirmPassword !== password) {
-      confirmPasswordError = "Unmatched password";
+    if (!confirmPassword.val) {
+      confirmPassword.err = "Confirm password cannot be blank!";
+      formErr = true;
+    } else if (confirmPassword.val !== password.val) {
+      confirmPassword.err = "Unmatched password";
+      formErr = true;
     }
-
-    if (
-      firstNameError ||
-      lastNameError ||
-      phoneError ||
-      emailError ||
-      passwordError ||
-      confirmPasswordError
-    ) {
+    if (formErr) {
       this.setState({
-        firstNameError,
-        lastNameError,
-        phoneError,
-        emailError,
-        passwordError,
-        confirmPasswordError
+        firstName,
+        lastName,
+        phone,
+        email,
+        password,
+        confirmPassword
       });
       return false;
     }
@@ -111,22 +122,36 @@ class Registration extends Component {
   };
 
   handlesubmit = event => {
+    event.preventDefault();
     const isValid = this.validate();
 
     if (isValid) {
+      sendOtp("+91 8961991275");
       this.setState({
-        firstName: "",
-        lastName: "",
-        phone: "",
-        email: "",
-        password: "",
-        confirmPassword: "",
-        firstNameError: "",
-        lastNameError: "",
-        phoneError: "",
-        emailError: "",
-        passwordError: "",
-        confirmPasswordError: ""
+        firstName: {
+          val: "",
+          err: ""
+        },
+        lastName: {
+          val: "",
+          err: ""
+        },
+        phone: {
+          val: "",
+          err: ""
+        },
+        email: {
+          val: "",
+          err: ""
+        },
+        password: {
+          val: "",
+          err: ""
+        },
+        confirmPassword: {
+          val: "",
+          err: ""
+        }
       });
     } else {
       event.preventDefault();
@@ -155,11 +180,16 @@ class Registration extends Component {
     });
   };
 
-  handleClick = phone => {
-    sendOtp("+91 8961991275");
-  };
-
   render() {
+    const {
+      firstName,
+      lastName,
+      email,
+      phone,
+      password,
+      confirmPassword
+    } = this.state;
+
     return (
       <div className="wrapper">
         <div className="form-wrapper">
@@ -173,9 +203,9 @@ class Registration extends Component {
                 name="firstName"
                 placeholder=" First Name"
                 handleChange={this.handleChange}
-                value={this.state.firstName}
+                value={firstName.val}
+                err={firstName.err}
               />
-              <div className="input-error">{this.state.firstNameError}</div>
             </div>
 
             <div>
@@ -185,9 +215,9 @@ class Registration extends Component {
                 name="lastName"
                 placeholder=" Last Name"
                 handleChange={this.handleChange}
-                value={this.state.lastName}
+                value={lastName.val}
+                err={lastName.err}
               />
-              <div className="input-error">{this.state.lastNameError}</div>
             </div>
 
             <div>
@@ -198,10 +228,10 @@ class Registration extends Component {
                 name="phone"
                 placeholder="Phone Number"
                 handleChange={this.handleChange}
-                value={this.state.phone}
+                value={phone.val}
                 required
+                err={phone.err}
               />
-              <div className="input-error">{this.state.phoneError}</div>
             </div>
 
             <div>
@@ -211,9 +241,9 @@ class Registration extends Component {
                 name="email"
                 placeholder=" Email"
                 handleChange={this.handleChange}
-                value={this.state.email}
+                value={email.val}
+                err={email.err}
               />
-              <div className="input-error">{this.state.emailError}</div>
             </div>
 
             <div>
@@ -223,9 +253,9 @@ class Registration extends Component {
                 name="password"
                 placeholder=" Password"
                 handleChange={this.handleChange}
-                value={this.state.password}
+                value={password.val}
+                err={password.err}
               />
-              <div className="input-error">{this.state.passwordError}</div>
             </div>
 
             <div>
@@ -235,11 +265,9 @@ class Registration extends Component {
                 name="confirmPassword"
                 placeholder="Confirm Password"
                 handleChange={this.handleChange}
-                value={this.state.confirmPassword}
+                value={confirmPassword.val}
+                err={confirmPassword.err}
               />
-              <div className="input-error">
-                {this.state.confirmPasswordError}
-              </div>
             </div>
 
             <div id="recaptcha">
