@@ -11,8 +11,7 @@ import "./style.scss";
 
 const initialState={
   otpSent: false,
-  initialSubmit: true,
-
+  initialSubmit: true, 
   firstName: {
     val: "",
     err: ""
@@ -42,24 +41,18 @@ const initialState={
     err: ""
   }
 }
+
 class Registration extends Component {
   constructor(props) {
     super(props);
-    //add reset form
     this.state = initialState;
-      
-    
-    
   }
-
  
   handleChange = event => {
     const { target } = event;
     const { value, name } = target;
-
     const fieldObj = this.state[name];
     fieldObj.val = value;
-
     this.setState({
       [name]: fieldObj
     });
@@ -119,6 +112,7 @@ class Registration extends Component {
       confirmPassword.err = "Unmatched password";
       formErr = true;
     }
+
     if (formErr) {
       this.setState({
         firstName,
@@ -134,36 +128,24 @@ class Registration extends Component {
   };
 
   handlesubmit = event => {
-    console.log('submit');
-    console.log(this.state.initialSubmit)
     event.preventDefault();
     if(this.state.initialSubmit){
       const isValid = this.validate();
 
     if (isValid) {
-      sendOtp("+91 8961991275",
-      ()=>this.setState({...this.state,otpSent:true, initialSubmit: false}));
+      sendOtp(this.state.phone.val,
+      ()=>this.setState({...this.state,otpSent:true, initialSubmit: false}));    
     }
     else{
-      // this.resetForm();
-      console.log('final')
-    }
-    
-    
-    
-    //  this.setState({...this.setState,otpSent: true});
-      
-    } else {
-      event.preventDefault();
+      this.setState(initialState);
     }
 
+   } else {
+      event.preventDefault();
+    }
     this.saveUser();
   };
 
-  resetForm=()=>{
-    this.setState(initialState);
-      
-  }
   handleUserInput = e => {
     const name = e.target.name;
     const value = e.target.value;
@@ -174,7 +156,7 @@ class Registration extends Component {
     const { firstName, lastName, phone, email, password } = this.state;
 
     var newUserRef = userDbRef.push();
-
+    
     newUserRef.set({
       firstName,
       lastName,
@@ -183,6 +165,7 @@ class Registration extends Component {
       password
     });
   };
+  
 
   render() {
     const {
@@ -230,7 +213,7 @@ class Registration extends Component {
 
             <div>
               <Input
-                labelname="Phone Number"
+                labelname="Phone Number (Include the country code- eg: +91-xxxxxxxxxx)"
                 type="tel"
                 pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
                 name="phone"
