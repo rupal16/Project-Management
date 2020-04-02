@@ -134,7 +134,8 @@ class Registration extends Component {
 
     if (isValid) {
       sendOtp(this.state.phone.val,
-      ()=>this.setState({...this.state,otpSent:true, initialSubmit: false}));    
+      ()=>this.setState({...this.state,otpSent:true, initialSubmit: false})
+      ); 
     }
     else{
       this.setState(initialState);
@@ -142,8 +143,23 @@ class Registration extends Component {
 
    } else {
       event.preventDefault();
+      const confirmationResult = window.confirmationResult;
+      const userEnteredOtp = this.state.otp.val;
+      confirmationResult
+      .confirm(userEnteredOtp)
+      .then(this.saveUser)
+      .catch(this.showErrorMessage);
     }
-    this.saveUser();
+  };
+
+  showErrorMessage = () => {
+    console.log("Incorrect Otp");
+    const hiddenTagId = "errorMessage";
+    const hiddenDiv = document.getElementById(hiddenTagId);
+    console.log(hiddenDiv);
+    if (hiddenDiv !== undefined) {
+      hiddenDiv.removeAttribute("hidden");
+    }
   };
 
   handleUserInput = e => {
@@ -152,8 +168,47 @@ class Registration extends Component {
     this.setState({ [name]: value });
   };
 
+  resetState = () => {
+    this.setState({
+      otpSent: false,
+      initialSubmit: true, 
+      firstName: {
+        val: "",
+        err: ""
+      },
+      lastName: {
+        val: "",
+        err: ""
+      },
+      phone: {
+        val: "",
+        err: ""
+      },
+      email: {
+        val: "",
+        err: ""
+      },
+      password: {
+        val: "",
+        err: ""
+      },
+      confirmPassword: {
+        val: "",
+        err: ""
+      },
+      otp: {
+        val: "",
+        err: ""
+      }
+    });
+    this.forceUpdate();
+  }
+
   saveUser = () => {
     const { firstName, lastName, phone, email, password } = this.state;
+
+    // Reset back to the original state
+    this.resetState();
 
     var newUserRef = userDbRef.push();
     
@@ -166,7 +221,6 @@ class Registration extends Component {
     });
   };
   
-
   render() {
     const {
       firstName,
@@ -177,9 +231,7 @@ class Registration extends Component {
       confirmPassword,
       otp,
       otpSent,
-
     } = this.state;
-
 
     return (
       <div className="wrapper">
@@ -272,6 +324,10 @@ class Registration extends Component {
               />
             </div>
             }
+
+            <div id="errorMessage" hidden>
+                <h2>Incorrect Otp</h2>
+            </div>
 
              <div id="recaptcha">
               <Button

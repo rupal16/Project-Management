@@ -2,6 +2,7 @@ import * as firebase from "firebase";
 import firebaseApp from "../config/firebase";
 
 const sendOtp = (phoneNumber, callback) => {
+
   firebaseApp.auth().useDeviceLanguage();
 
   window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier(
@@ -12,12 +13,12 @@ const sendOtp = (phoneNumber, callback) => {
   firebase
     .auth()
     .signInWithPhoneNumber(phoneNumber, appVerifier)
-    .then(() => {
-      callback();   
-    })
+    .then((confirmationResult)=> {
+      console.log("Confirmtion Result " + confirmationResult);
+      window.confirmationResult = confirmationResult;
+      callback();  
+  })
     .catch(error => {
-      // you need to handle error by
-      // displaying it in the form
        alert('Invalid OTP');
     });
 };
