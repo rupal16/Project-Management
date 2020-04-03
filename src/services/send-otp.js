@@ -14,7 +14,6 @@ const sendOtp = (phoneNumber, callback) => {
     .auth()
     .signInWithPhoneNumber(phoneNumber, appVerifier)
     .then((confirmationResult)=> {
-      console.log("Confirmtion Result " + confirmationResult);
       window.confirmationResult = confirmationResult;
       callback();  
   })

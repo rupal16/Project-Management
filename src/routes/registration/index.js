@@ -153,10 +153,8 @@ class Registration extends Component {
   };
 
   showErrorMessage = () => {
-    console.log("Incorrect Otp");
     const hiddenTagId = "errorMessage";
     const hiddenDiv = document.getElementById(hiddenTagId);
-    console.log(hiddenDiv);
     if (hiddenDiv !== undefined) {
       hiddenDiv.removeAttribute("hidden");
     }
