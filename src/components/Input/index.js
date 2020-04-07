@@ -1,25 +1,31 @@
 import React from "react";
-import { InputGroup, FormControl } from 'react-bootstrap' ;
+import { Form,Col } from 'react-bootstrap' ;
 
-import "./style.scss";
+import './style.scss';
 
 const Input = props => {
-  return (
-  <div>
-  <InputGroup className="mb-3">
-    <InputGroup.Prepend>
-      <InputGroup.Text id="basic-addon1" className="heading">{props.labelname}</InputGroup.Text>
-    </InputGroup.Prepend>
-    <FormControl
-    type={props.type}
-      placeholder={props.placeholder}
-      className="input-field"
-      name={props.name}
-      onChange={props.handleChange}
-    />
-    <div className="input-error">{props.err}</div>
-  </InputGroup>
-</div>
-  );
-};
-export default Input;
+  return(
+    <div>
+      <Form>
+      <Form.Group as={Col}>
+          <Form.Label className="label">{props.labelname}</Form.Label>
+          <br />
+          <Form.Control
+            className="input"
+            required
+            type={props.type}
+            placeholder={props.placeholder}
+            name={props.name}
+            onChange={props.handleChange}
+          />
+          <Form.Control.Feedback
+           type="invalid"
+            className="input-error">
+              {props.err}
+            </Form.Control.Feedback>            
+        </Form.Group>
+      </Form>
+    </div>
+  )
+}
+export default Input
