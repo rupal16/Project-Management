@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import { Button } from "react-bootstrap";
+import { Button, Form } from "react-bootstrap";
 
 import { userDbRef } from "../../config/firebase";
 import sendOtp from "../../services/send-otp";
@@ -125,14 +125,14 @@ class Registration extends Component {
 
       handlesubmit = event => {
         const { phone, initialSubmit, otp } = this.state;
-
+        this.fetchData();
         event.preventDefault();
         if(initialSubmit){
           const isValid = this.validate();
           if (isValid) {
             sendOtp(phone.val,
             ()=>this.setState({...this.state,otpSent:true, initialSubmit: false})
-           ); 
+          ); 
         }
       } else {
           event.preventDefault();
@@ -161,6 +161,7 @@ class Registration extends Component {
 
       resetState = () => {
         this.setState({
+          loading: false,
           otpSent: false,
           initialSubmit: true, 
           firstName: {
@@ -207,6 +208,12 @@ class Registration extends Component {
           password
         });
       };
+
+      onKeyPress = event => {
+        if (event.which === 13) {
+          event.preventDefault();
+        }
+      }
       
       render() {
         const {
@@ -222,6 +229,7 @@ class Registration extends Component {
 
         return (
           <div className="wrapper">
+          <Form onKeyPress={this.onKeyPress}>
             <div className="form-wrapper">
               <h1>Register Now!</h1>
                 <div>
@@ -332,6 +340,7 @@ class Registration extends Component {
                 </div>
                 <div id="recaptcha-container"></div>
             </div>
+            </Form>
           </div>
         );
       }
