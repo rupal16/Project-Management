@@ -6,7 +6,7 @@ import './style.scss';
 const Input = props => {
   return(
     <div>
-      <Form>
+     
       <Form.Group as={Col}>
           <Form.Label className="label">{props.labelname}</Form.Label>
           <br />
@@ -24,7 +24,7 @@ const Input = props => {
               {props.err}
             </Form.Control.Feedback>            
         </Form.Group>
-      </Form>
+     
     </div>
   )
 }

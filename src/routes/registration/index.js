@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import { Button, Form } from "react-bootstrap";
+import { Button, Form, Spinner } from "react-bootstrap";
 
 import { userDbRef } from "../../config/firebase";
 import sendOtp from "../../services/send-otp";
@@ -13,6 +13,7 @@ class Registration extends Component {
   constructor(props) {
     super(props);
       this.state = {
+      isloading: false,
       otpSent: false,
       initialSubmit: true, 
       firstName: {
@@ -44,6 +45,18 @@ class Registration extends Component {
         err: ""
       }
       };
+      }
+
+      fetchData = () => {
+        console.log("hi");
+        this.setState({
+          isloading: true
+        });
+        setTimeout(() => {
+          this.setState({
+            isloading: false
+          });
+        }, 2000);
       }
     
       handleChange = event => {
@@ -125,16 +138,19 @@ class Registration extends Component {
 
       handlesubmit = event => {
         const { phone, initialSubmit, otp } = this.state;
-        this.fetchData();
         event.preventDefault();
+        this.fetchData();
         if(initialSubmit){
           const isValid = this.validate();
           if (isValid) {
             sendOtp(phone.val,
             ()=>this.setState({...this.state,otpSent:true, initialSubmit: false})
+
           ); 
         }
       } else {
+        const isValid = this.validate();
+        if(isValid){
           event.preventDefault();
           const confirmationResult = window.confirmationResult;
           const userEnteredOtp = otp.val;
@@ -142,6 +158,7 @@ class Registration extends Component {
           .confirm(userEnteredOtp)
           .then(this.saveUser)
           .catch(this.showErrorMessage);
+        }
         }
       };
 
@@ -217,6 +234,7 @@ class Registration extends Component {
       
       render() {
         const {
+          isloading,
           firstName,
           lastName,
           email,
@@ -229,10 +247,13 @@ class Registration extends Component {
 
         return (
           <div className="wrapper">
+
           <Form onKeyPress={this.onKeyPress}>
             <div className="form-wrapper">
+            
               <h1>Register Now!</h1>
                 <div>
+                
                   <Input
                     labelname="First Name"
                     type="text"
@@ -324,12 +345,23 @@ class Registration extends Component {
                 </div>
                 <div id="recaptcha">
                   <Button 
+                  
                   type="submit" 
                   variant="secondary" 
                   value="submit" 
                   onClick={this.handlesubmit}
                   >
-                  Submit
+                  {/* {loading && <div><span>Loading Recaptcha</span></div>}
+                  {/* {loading && <div><img src="../../assets/gifs/Spinner.gif" alt="Wait ..." /><span>Loading Recaptcha</span></div>} */}
+                  {/* {!loading && <span>Submit</span>} */} 
+                  { isloading && <div>
+                    <Spinner animation="border" role="status">
+                    <span className="sr-only">Loading...Recaptcha</span>
+                    </Spinner>
+                  </div>}
+                  { !isloading && <div>
+                    <span>Submit</span>
+                  </div>}
                   </Button>
                 </div>
                 <br />

@@ -44,6 +44,11 @@ Button {
   background-color: #4caf50;
   border-radius: 5px;
 
+  .ref{
+    font-size: 30px;
+    background-color: black;
+  }
+
   &:hover {
     background-color: #fff;
     border: 2px solid $buttonhover;
