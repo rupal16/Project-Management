@@ -359,7 +359,7 @@ class Registration extends Component {
                   />
                 </div>
                 }
-
+                
                 <div id="errorMessage" hidden>
                     <h2>Incorrect Otp</h2>
                 </div>
@@ -368,11 +368,9 @@ class Registration extends Component {
                   type="submit" 
                   variant="secondary" 
                   value="submit" 
-                  // style={{"width": "100%"}}
                   style={buttonStyle}
                   onClick={this.handlesubmit}
                   disabled={this.isloading}>
-
                   {this.state.isloading && <div id="actionInProgressSpinner">
                   <Spinner as="span" 
 										animation="grow"
@@ -395,12 +393,11 @@ class Registration extends Component {
                     Already registered? <Link to="/signin">sign in</Link>
                   </p>
                 </div>
-                <div id="recaptcha-container"></div>
+                {!otpSent && <div id="recaptcha-container"></div>}
             </div>
             </Form>
             <Modal
 					show={this.state.errorMessageDisplay}
-					//handleClose={() => this.setState({ errorMessageDisplay: false })}
 					size="lg"                         
 					centered>
 					<Modal.Body>
