@@ -17,7 +17,7 @@ $inputhover: #56c1e2;
 
 .input {
   padding: 10px 10px;
-  border-radius: 5px;
+  border-radius: 15px;
   outline: none;
   width: 384px;
   border: 1px solid #cfcfcf;
@@ -27,7 +27,7 @@ $inputhover: #56c1e2;
     }
 
   &::placeholder {
-      font-size: 1.2em;
+      font-size: 0.9em;
       font-weight: lighter;
       color: #999;
     }

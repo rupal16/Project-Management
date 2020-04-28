@@ -12,7 +12,7 @@ $wrapperbg: #ffe6e6;
 }
 
 .form-wrapper {
-  width: 400px;
+  width: 500px;
   display: flex;
   flex-direction: column;
   padding: 20px 40px;
@@ -31,27 +31,13 @@ $wrapperbg: #ffe6e6;
   margin-left: 50px;
 
   a {
-      color: #167bff;
+      color: #008B8B;
     }
 }
 
 Button {
-  margin-top: 10px;
-  margin-left: auto;
-  margin-right: auto;
-  width: 37em;
-  height: 40px;
-  background-color: #4caf50;
-  border-radius: 5px;
-
-  .ref{
-    font-size: 30px;
-    background-color: black;
-  }
-
   &:hover {
-    background-color: #fff;
-    border: 2px solid $buttonhover;
+    border: 2px solid whitesmoke;
   }
 }
 

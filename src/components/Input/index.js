@@ -6,7 +6,6 @@ import './style.scss';
 const Input = props => {
   return(
     <div>
-     
       <Form.Group as={Col}>
           <Form.Label className="label">{props.labelname}</Form.Label>
           <br />
@@ -18,13 +17,15 @@ const Input = props => {
             name={props.name}
             onChange={props.handleChange}
           />
+          
           <Form.Control.Feedback
-           type="invalid"
+            type="invalid"
             className="input-error">
               {props.err}
-            </Form.Control.Feedback>            
+              {console.log(props.err)}
+            </Form.Control.Feedback>  
+
         </Form.Group>
-     
     </div>
   )
 }

@@ -1,7 +1,7 @@
 import * as firebase from "firebase";
 import firebaseApp from "../config/firebase";
 
-const sendOtp = (phoneNumber, callback) => {
+const sendOtp = (phoneNumber, callback, errorCallback) => {
 
   firebaseApp.auth().useDeviceLanguage();
 
@@ -18,7 +18,7 @@ const sendOtp = (phoneNumber, callback) => {
       callback();  
   })
     .catch(error => {
-       alert('Invalid OTP');
+      errorCallback();
     });
 };
 

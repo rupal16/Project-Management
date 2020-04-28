@@ -1,18 +1,27 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import { Button, Form, Spinner } from "react-bootstrap";
+import { Button, Form, Spinner, Modal } from "react-bootstrap";
 
 import { userDbRef } from "../../config/firebase";
 import sendOtp from "../../services/send-otp";
 
 import Input from "../../components/Input";
 
+import "bootstrap/dist/css/bootstrap.min.css";
 import "./style.scss";
+
+const buttonStyle = {
+  backgroundColor: "#008B8B",
+  width: "100%",
+  padding: "10px",
+  marginTop: "10px"
+}
 
 class Registration extends Component {
   constructor(props) {
     super(props);
       this.state = {
+      errorMessageDisplay: false,
       isloading: false,
       otpSent: false,
       initialSubmit: true, 
@@ -44,11 +53,10 @@ class Registration extends Component {
         val: "",
         err: ""
       }
-      };
-      }
+    };
+  }
 
       fetchData = () => {
-        console.log("hi");
         this.setState({
           isloading: true
         });
@@ -143,10 +151,10 @@ class Registration extends Component {
         if(initialSubmit){
           const isValid = this.validate();
           if (isValid) {
+            this.disableInputField();
             sendOtp(phone.val,
-            ()=>this.setState({...this.state,otpSent:true, initialSubmit: false})
-
-          ); 
+            ()=>this.setState({...this.state,otpSent:true, initialSubmit: false}),
+            () => this.setState({ errorMessageDisplay: true }));
         }
       } else {
         const isValid = this.validate();
@@ -157,7 +165,7 @@ class Registration extends Component {
           confirmationResult
           .confirm(userEnteredOtp)
           .then(this.saveUser)
-          .catch(this.showErrorMessage);
+          .catch(() => this.setState({ errorMessageDisplay: true }));
         }
         }
       };
@@ -178,6 +186,7 @@ class Registration extends Component {
 
       resetState = () => {
         this.setState({
+          errorMessageDisplay: false,
           loading: false,
           otpSent: false,
           initialSubmit: true, 
@@ -213,6 +222,17 @@ class Registration extends Component {
         this.forceUpdate();
       }
 
+      disableInputField = function () {
+        var nameList = ['firstName', 'lastName', 'phone', 'email', 'password', 'confirmPassword'];
+        var inputDomElements = document.getElementsByTagName('input');
+        nameList.forEach(inputName => {
+          var inputElement = inputDomElements[inputName];
+          if (inputElement !== undefined) {
+            inputElement.disabled = true;
+          }
+        });
+      }
+
       saveUser = () => {
         const { firstName, lastName, phone, email, password } = this.state;
         var newUserRef = userDbRef.push();
@@ -224,6 +244,7 @@ class Registration extends Component {
           email,
           password
         });
+        document.location.reload()
       };
 
       onKeyPress = event => {
@@ -234,7 +255,6 @@ class Registration extends Component {
       
       render() {
         const {
-          isloading,
           firstName,
           lastName,
           email,
@@ -345,23 +365,28 @@ class Registration extends Component {
                 </div>
                 <div id="recaptcha">
                   <Button 
-                  
                   type="submit" 
                   variant="secondary" 
                   value="submit" 
+                  // style={{"width": "100%"}}
+                  style={buttonStyle}
                   onClick={this.handlesubmit}
-                  >
-                  {/* {loading && <div><span>Loading Recaptcha</span></div>}
-                  {/* {loading && <div><img src="../../assets/gifs/Spinner.gif" alt="Wait ..." /><span>Loading Recaptcha</span></div>} */}
-                  {/* {!loading && <span>Submit</span>} */} 
-                  { isloading && <div>
-                    <Spinner animation="border" role="status">
-                    <span className="sr-only">Loading...Recaptcha</span>
-                    </Spinner>
+                  disabled={this.isloading}>
+
+                  {this.state.isloading && <div id="actionInProgressSpinner">
+                  <Spinner as="span" 
+										animation="grow"
+										size="sm"
+										role="status"
+										aria-hidden="true">
+									</Spinner>
+									<span style={{"left-margin": "30px"}}>
+										Please wait...
+									</span>
                   </div>}
-                  { !isloading && <div>
-                    <span>Submit</span>
-                  </div>}
+                  {!this.state.isloading && <div>
+									<span>Submit</span>
+								</div>}
                   </Button>
                 </div>
                 <br />
@@ -373,6 +398,18 @@ class Registration extends Component {
                 <div id="recaptcha-container"></div>
             </div>
             </Form>
+            <Modal
+					show={this.state.errorMessageDisplay}
+					//handleClose={() => this.setState({ errorMessageDisplay: false })}
+					size="lg"                         
+					centered>
+					<Modal.Body>
+						<p>Invalid OTP</p>
+					</Modal.Body>
+					<Modal.Footer>
+						<Button onClick={() => this.setState({ errorMessageDisplay: false })}>Close</Button>
+					</Modal.Footer>
+				</Modal>
           </div>
         );
       }
