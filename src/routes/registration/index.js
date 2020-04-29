@@ -71,10 +71,10 @@ class Registration extends Component {
         const { target } = event;
         const { value, name } = target;
         const fieldObj = this.state[name];
-        fieldObj.val = value;
+        fieldObj.val = value; 
         this.setState({
           [name]: fieldObj
-        });
+        });     
       };
 
       validate = () => {
@@ -96,9 +96,13 @@ class Registration extends Component {
           lastName.err = "Last name cannot be blank!";
           formErr = true;
         }
-
+        
         if (!phone.val.trim()) {
           phone.err = "Phone number cannot be blank!";
+          formErr = true;
+        }
+        else if (phone.val.length !== 14) {
+          phone.err = "Invalid number. Check the format";
           formErr = true;
         }
 
