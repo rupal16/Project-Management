@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
+import { Link, Route } from "react-router-dom";
 import { Button, Form, Spinner, Modal } from "react-bootstrap";
 
 // import { userDbRef } from "../../config/firebase";
@@ -10,6 +10,7 @@ import Input from "../../components/Input";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./style.scss";
+import Dashboard from "../Dashboard";
 
 const buttonStyle = {
   backgroundColor: "#008B8B",
@@ -160,6 +161,10 @@ class Registration extends Component {
             sendOtp(phone.val,
             ()=>this.setState({...this.state,otpSent:true, initialSubmit: false}),
             () => this.setState({ errorMessageDisplay: true }));
+            // {<Route path="dashboard" component={Dashboard} />}
+            return(
+              <h1>hi</h1>
+            )
         }
       } else {
         const isValid = this.validate();
@@ -188,44 +193,6 @@ class Registration extends Component {
         const value = e.target.value;
         this.setState({ [name]: value });
       };
-
-      resetState = () => {
-        this.setState({
-          errorMessageDisplay: false,
-          loading: false,
-          otpSent: false,
-          initialSubmit: true, 
-          firstName: {
-            val: "",
-            err: ""
-          },
-          lastName: {
-            val: "",
-            err: ""
-          },
-          phone: {
-            val: "",
-            err: ""
-          },
-          email: {
-            val: "",
-            err: ""
-          },
-          password: {
-            val: "",
-            err: ""
-          },
-          confirmPassword: {
-            val: "",
-            err: ""
-          },
-          otp: {
-            val: "",
-            err: ""
-          }
-        });
-        this.forceUpdate();
-      }
 
       disableInputField = function () {
         var nameList = ['firstName', 'lastName', 'phone', 'email', 'password', 'confirmPassword'];
