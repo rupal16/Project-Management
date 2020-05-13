@@ -1,16 +1,17 @@
 import React, { Component } from "react";
-import { Link, Route, Redirect } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Button, Form, Spinner, Modal } from "react-bootstrap";
 
 // import { userDbRef } from "../../config/firebase";
 import sendOtp from "../../services/send-otp";
-import { userDbRef } from "../../services/user-service";
+import { saveUser } from "../../services/user-service";
+// import { userDbRef } from "../../services/user-service";
 
 import Input from "../../components/Input";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./style.scss";
-import Dashboard from "../Dashboard";
+// import Dashboard from "../Dashboard";
 
 const buttonStyle = {
   backgroundColor: "#008B8B",
@@ -171,7 +172,7 @@ class Registration extends Component {
           const userEnteredOtp = otp.val;
           confirmationResult
           .confirm(userEnteredOtp)
-          .then(this.saveUser)
+          .then(saveUser())
           .catch(() => this.setState({ errorMessageDisplay: true }));
         }
         }
@@ -202,20 +203,20 @@ class Registration extends Component {
         });
       }
 
-      saveUser = () => {
-        const { firstName, lastName, phone, email, password } = this.state;
-        var newUserRef = userDbRef.push();
+      // saveUser = () => {
+      //   const { firstName, lastName, phone, email, password } = this.state;
+      //   var newUserRef = userDbRef.push();
         
-        newUserRef.set({
-          firstName,
-          lastName,
-          phone,
-          email,
-          password
-        });
-        // document.location.reload()
-        return(<Redirect to="/dashboard" />)
-      };
+      //   newUserRef.set({
+      //     firstName,
+      //     lastName,
+      //     phone,
+      //     email,
+      //     password
+      //   });
+      //   // document.location.reload()
+      //   return(<Redirect to="/dashboard" />)
+      // };
 
       onKeyPress = event => {
         if (event.which === 13) {
