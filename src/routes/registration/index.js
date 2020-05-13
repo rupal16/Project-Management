@@ -23,6 +23,7 @@ class Registration extends Component {
   constructor(props) {
     super(props);
       this.state = {
+      errorMsg: false,
       errorMessageDisplay: false,
       isloading: false,
       otpSent: false,
@@ -176,13 +177,13 @@ class Registration extends Component {
         }
       };
 
-      showErrorMessage = () => {
-        const hiddenTagId = "errorMessage";
-        const hiddenDiv = document.getElementById(hiddenTagId);
-        if (hiddenDiv !== undefined) {
-          hiddenDiv.removeAttribute("hidden");
-        }
-      };
+      // showErrorMessage = () => {
+      //   const hiddenTagId = "errorMessage";
+      //   const hiddenDiv = document.getElementById(hiddenTagId);
+      //   if (hiddenDiv !== undefined) {
+      //     hiddenDiv.removeAttribute("hidden");
+      //   }
+      // };
 
       handleUserInput = e => {
         const name = e.target.name;
@@ -330,10 +331,10 @@ class Registration extends Component {
                   />
                 </div>
                 }
-                
-                <div id="errorMessage" hidden>
+                { this.errorMsg ? <h2>Incorrect Otp</h2> : null}
+                {/* <div id="errorMessage" hidden>
                     <h2>Incorrect Otp</h2>
-                </div>
+                </div> */}
                 <div id="recaptcha">
                   <Button 
                   type="submit" 
