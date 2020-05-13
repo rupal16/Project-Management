@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Link, Route } from "react-router-dom";
+import { Link, Route, Redirect } from "react-router-dom";
 import { Button, Form, Spinner, Modal } from "react-bootstrap";
 
 // import { userDbRef } from "../../config/firebase";
@@ -161,10 +161,6 @@ class Registration extends Component {
             sendOtp(phone.val,
             ()=>this.setState({...this.state,otpSent:true, initialSubmit: false}),
             () => this.setState({ errorMessageDisplay: true }));
-            // {<Route path="dashboard" component={Dashboard} />}
-            return(
-              <h1>hi</h1>
-            )
         }
       } else {
         const isValid = this.validate();
@@ -216,7 +212,8 @@ class Registration extends Component {
           email,
           password
         });
-        document.location.reload()
+        // document.location.reload()
+        return(<Redirect to="/dashboard" />)
       };
 
       onKeyPress = event => {
