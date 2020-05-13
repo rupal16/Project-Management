@@ -240,7 +240,9 @@ class Registration extends Component {
         return (
           <div className="wrapper">
 
-          <Form onKeyPress={this.onKeyPress}>
+          <Form 
+          onKeyPress={this.onKeyPress}
+          onSubmit={this.handlesubmit}>
             <div className="form-wrapper">
             
               <h1>Register Now!</h1>
@@ -341,7 +343,6 @@ class Registration extends Component {
                   variant="secondary" 
                   value="submit" 
                   style={buttonStyle}
-                  onClick={this.handlesubmit}
                   disabled={this.isloading}>
                   {this.state.isloading && <div id="actionInProgressSpinner">
                   <Spinner as="span" 
