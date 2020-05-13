@@ -2,8 +2,9 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { Button, Form, Spinner, Modal } from "react-bootstrap";
 
-import { userDbRef } from "../../config/firebase";
+// import { userDbRef } from "../../config/firebase";
 import sendOtp from "../../services/send-otp";
+import { userDbRef } from "../../services/user-service";
 
 import Input from "../../components/Input";
 
