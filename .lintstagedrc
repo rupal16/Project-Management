@@ -1,5 +1,6 @@
 {
   "*.js": "eslint --fix",
   "*.css": "prettier --write",
-  "*.scss": "prettier --write"
+  "*.scss": "prettier --write",
+  "*.json": "prettier --write"
 }
