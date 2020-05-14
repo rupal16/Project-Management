@@ -1,10 +1,12 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { Button, Form, Spinner, Modal } from "react-bootstrap";
+// import { createBrowserHistory } from 'history';
 
 // import { userDbRef } from "../../config/firebase";
 import sendOtp from "../../services/send-otp";
 import { saveUser } from "../../services/user-service";
+import History from '../../utils/history';
 // import { userDbRef } from "../../services/user-service";
 
 import Input from "../../components/Input";
@@ -168,11 +170,17 @@ class Registration extends Component {
         const isValid = this.validate();
         if(isValid){
           event.preventDefault();
+          const { firstName, lastName, phone, email, password } = this.state;
+          // const history = createBrowserHistory();
           const confirmationResult = window.confirmationResult;
           const userEnteredOtp = otp.val;
           confirmationResult
           .confirm(userEnteredOtp)
-          .then(saveUser())
+          .then(() => {
+            saveUser(firstName, lastName, phone, email, password);
+            History.push('/dashboard');
+            
+          })
           .catch(() => this.setState({ errorMessageDisplay: true }));
         }
         }

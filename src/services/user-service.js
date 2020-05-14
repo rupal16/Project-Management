@@ -1,11 +1,11 @@
-import React from 'react';
-import { Redirect } from "react-router-dom";
+// import React from 'react';
+// import { Redirect } from "react-router-dom";
 import firebaseApp from '../config/firebase';
 
 const userDbRef = firebaseApp.database().ref("user");
 
-export const saveUser = () => {
-    const { firstName, lastName, phone, email, password } = this.state;
+export const saveUser = (firstName, lastName, phone, email, password) => {
+    // const { firstName, lastName, phone, email, password } = this.state;
     var newUserRef = userDbRef.push();
     
     newUserRef.set({
@@ -17,6 +17,7 @@ export const saveUser = () => {
     });
     // document.location.reload()
     // <Redirect to="/dashboard" />
-    return <Redirect to='/dashboard' />
+    // return <Redirect to='/dashboard' />
+    // history.push('/dashboard');
     
 };
