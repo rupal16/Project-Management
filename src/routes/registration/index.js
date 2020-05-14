@@ -26,6 +26,7 @@ class Registration extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      unmatchedPassword: false,
       errorMsg: false,
       errorMessageDisplay: false,
       isloading: false,
@@ -127,13 +128,13 @@ class Registration extends Component {
       formErr = true;
     }
 
-    if (!confirmPassword.val) {
-      confirmPassword.err = 'Confirm password cannot be blank!';
-      formErr = true;
-    } else if (confirmPassword.val !== password.val) {
-      confirmPassword.err = 'Unmatched password';
-      formErr = true;
-    }
+    // if (!confirmPassword.val) {
+    //   confirmPassword.err = 'Confirm password cannot be blank!';
+    //   formErr = true;
+    // } else if (confirmPassword.val !== password.val) {
+    //   confirmPassword.err = 'Unmatched password';
+    //   formErr = true;
+    // }
 
     if (formErr) {
       this.setState({
@@ -150,12 +151,16 @@ class Registration extends Component {
   };
 
   handlesubmit = event => {
-    const { phone, initialSubmit, otp } = this.state;
+    const { phone, initialSubmit, otp, unmatchedPassword } = this.state;
     event.preventDefault();
     this.fetchData();
     if (initialSubmit) {
       const isValid = this.validate();
-      if (isValid) {
+      if (isValid && !unmatchedPassword) {
+        // this.setState({
+        //   formErr: false,
+        // });
+        // this.validate();
         this.disableInputField();
         sendOtp(
           phone.val,
@@ -194,6 +199,23 @@ class Registration extends Component {
   //     hiddenDiv.removeAttribute("hidden");
   //   }
   // };
+  checkPassword = e => {
+    const { confirmPassword } = this.state;
+    if (e.target.value !== this.state.password.val) {
+      confirmPassword.err = 'Unmatched Password';
+      this.setState({
+        unmatchedPassword: true,
+      });
+    } else {
+      confirmPassword.err = null;
+      this.setState({
+        unmatchedPassword: false,
+      });
+    }
+    this.setState({
+      confirmPassword,
+    });
+  };
 
   handleUserInput = e => {
     const name = e.target.name;
@@ -325,7 +347,8 @@ class Registration extends Component {
                 type="password"
                 name="confirmPassword"
                 placeholder="Confirm Password"
-                handleChange={this.handleChange}
+                // onChange={this.checkPassword}
+                handleChange={this.checkPassword}
                 value={confirmPassword.val}
                 err={confirmPassword.err}
               />
