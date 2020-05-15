@@ -1,5 +1,10 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Redirect,
+} from 'react-router-dom';
 
 import history from '../utils/history';
 import Registration from './registration';
@@ -33,7 +38,8 @@ class Routes extends Component {
       <div>
         <Router history={history}>
           <Switch>
-            <Route exact path="/user-registration" component={Registration} />
+            <Redirect exact from="/" to="/user-registration" />
+            <Route path="/user-registration" component={Registration} />
             <Route path="/dashboard" component={Dashboard} />
           </Switch>
         </Router>
