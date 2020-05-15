@@ -14,9 +14,10 @@ import './style.scss';
 
 const buttonStyle = {
   backgroundColor: '#008B8B',
-  width: '100%',
+  width: '390px',
   padding: '10px',
-  marginTop: '10px',
+  marginTop: '15px',
+  marginLeft: '15px',
 };
 
 class Registration extends Component {
@@ -130,6 +131,10 @@ class Registration extends Component {
       password.err = 'Password should contain more than 6 characters!';
       formErr = true;
     }
+
+    // if (!confirmPassword.val) {
+    //   confirmPassword.err = 'Password cannot be blank!';
+    // }
 
     if (formErr) {
       this.setState({
