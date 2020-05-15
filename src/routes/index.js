@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
+import history from '../utils/history';
 import Registration from './registration';
 import Dashboard from './Dashboard';
 import firebase from '../config/firebase';
@@ -30,9 +31,9 @@ class Routes extends Component {
   render() {
     return (
       <div>
-        <Router>
+        <Router history={history}>
           <Switch>
-            <Route path="/user-registration" component={Registration} />
+            <Route exact path="/user-registration" component={Registration} />
             <Route path="/dashboard" component={Dashboard} />
           </Switch>
         </Router>

@@ -5,7 +5,6 @@ import firebaseApp from '../config/firebase';
 const userDbRef = firebaseApp.database().ref('user');
 
 export const saveUser = (firstName, lastName, phone, email, password) => {
-  // const { firstName, lastName, phone, email, password } = this.state;
   const newUserRef = userDbRef.push();
 
   newUserRef.set({
@@ -15,8 +14,4 @@ export const saveUser = (firstName, lastName, phone, email, password) => {
     email,
     password,
   });
-  // document.location.reload()
-  // <Redirect to="/dashboard" />
-  // return <Redirect to='/dashboard' />
-  // history.push('/dashboard');
 };

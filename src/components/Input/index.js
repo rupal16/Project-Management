@@ -11,10 +11,10 @@ const Input = props => {
         <br />
         <Form.Control
           className="input"
-          required
           type={props.type}
           placeholder={props.placeholder}
           name={props.name}
+          onBlur={props.onBlur}
           onChange={props.handleChange}
         />
 

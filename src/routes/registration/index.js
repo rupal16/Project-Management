@@ -1,19 +1,16 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { Button, Form, Spinner, Modal } from 'react-bootstrap';
-// import { createBrowserHistory } from 'history';
+import { withRouter } from 'react-router';
+import PropTypes from 'prop-types';
 
-// import { userDbRef } from "../../config/firebase";
 import sendOtp from '../../services/send-otp';
 import { saveUser } from '../../services/user-service';
-import History from '../../utils/history';
-// import { userDbRef } from "../../services/user-service";
 
 import Input from '../../components/Input';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './style.scss';
-// import Dashboard from "../Dashboard";
 
 const buttonStyle = {
   backgroundColor: '#008B8B',
@@ -23,9 +20,15 @@ const buttonStyle = {
 };
 
 class Registration extends Component {
+  static propTypes = {
+    history: PropTypes.object.isRequired,
+  };
+
   constructor(props) {
     super(props);
+
     this.state = {
+      formError: false,
       unmatchedPassword: false,
       errorMsg: false,
       errorMessageDisplay: false,
@@ -128,16 +131,9 @@ class Registration extends Component {
       formErr = true;
     }
 
-    // if (!confirmPassword.val) {
-    //   confirmPassword.err = 'Confirm password cannot be blank!';
-    //   formErr = true;
-    // } else if (confirmPassword.val !== password.val) {
-    //   confirmPassword.err = 'Unmatched password';
-    //   formErr = true;
-    // }
-
     if (formErr) {
       this.setState({
+        formError: true,
         firstName,
         lastName,
         phone,
@@ -151,16 +147,12 @@ class Registration extends Component {
   };
 
   handlesubmit = event => {
-    const { phone, initialSubmit, otp, unmatchedPassword } = this.state;
+    const { phone, initialSubmit, otp, formError } = this.state;
     event.preventDefault();
     this.fetchData();
     if (initialSubmit) {
       const isValid = this.validate();
-      if (isValid && !unmatchedPassword) {
-        // this.setState({
-        //   formErr: false,
-        // });
-        // this.validate();
+      if (isValid && formError) {
         this.disableInputField();
         sendOtp(
           phone.val,
@@ -178,38 +170,31 @@ class Registration extends Component {
       if (isValid) {
         event.preventDefault();
         const { firstName, lastName, phone, email, password } = this.state;
-        // const history = createBrowserHistory();
         const confirmationResult = window.confirmationResult;
         const userEnteredOtp = otp.val;
         confirmationResult
           .confirm(userEnteredOtp)
           .then(() => {
             saveUser(firstName, lastName, phone, email, password);
-            History.push('/dashboard');
+            this.props.history.push('/dashboard');
           })
           .catch(() => this.setState({ errorMessageDisplay: true }));
       }
     }
   };
 
-  // showErrorMessage = () => {
-  //   const hiddenTagId = "errorMessage";
-  //   const hiddenDiv = document.getElementById(hiddenTagId);
-  //   if (hiddenDiv !== undefined) {
-  //     hiddenDiv.removeAttribute("hidden");
-  //   }
-  // };
-  checkPassword = e => {
-    const { confirmPassword } = this.state;
-    if (e.target.value !== this.state.password.val) {
-      confirmPassword.err = 'Unmatched Password';
-      this.setState({
-        unmatchedPassword: true,
-      });
-    } else {
+  handleBlur = e => {
+    const pass = e.target.value;
+    const { password, confirmPassword } = this.state;
+    if (password.val === pass) {
       confirmPassword.err = null;
       this.setState({
-        unmatchedPassword: false,
+        formError: true,
+      });
+    } else {
+      confirmPassword.err = 'Unmatched password';
+      this.setState({
+        formError: false,
       });
     }
     this.setState({
@@ -240,21 +225,6 @@ class Registration extends Component {
       }
     });
   };
-
-  // saveUser = () => {
-  //   const { firstName, lastName, phone, email, password } = this.state;
-  //   var newUserRef = userDbRef.push();
-
-  //   newUserRef.set({
-  //     firstName,
-  //     lastName,
-  //     phone,
-  //     email,
-  //     password
-  //   });
-  //   // document.location.reload()
-  //   return(<Redirect to="/dashboard" />)
-  // };
 
   onKeyPress = event => {
     if (event.which === 13) {
@@ -347,7 +317,8 @@ class Registration extends Component {
                 type="password"
                 name="confirmPassword"
                 placeholder="Confirm Password"
-                // onChange={this.checkPassword}
+                onChange={this.handleChange}
+                onBlur={this.handleBlur}
                 handleChange={this.checkPassword}
                 value={confirmPassword.val}
                 err={confirmPassword.err}
@@ -368,9 +339,6 @@ class Registration extends Component {
               </div>
             )}
             {this.errorMsg ? <h2>Incorrect Otp</h2> : null}
-            {/* <div id="errorMessage" hidden>
-                    <h2>Incorrect Otp</h2>
-                </div> */}
             <div id="recaptcha">
               <Button
                 type="submit"
@@ -425,4 +393,4 @@ class Registration extends Component {
     );
   }
 }
-export default Registration;
+export default withRouter(Registration);
