@@ -17,7 +17,6 @@ const sendOtp = (phoneNumber, callback, errorCallback) => {
       callback();
     })
     .catch(error => {
-      console.log(error);
       errorCallback();
     });
 };

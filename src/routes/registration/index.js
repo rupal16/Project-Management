@@ -5,7 +5,7 @@ import { withRouter } from 'react-router';
 import PropTypes from 'prop-types';
 
 import sendOtp from '../../services/send-otp';
-import { saveUser } from '../../services/user-service';
+import { saveUser, isPhoneRegistered } from '../../services/user-service';
 
 import Input from '../../components/Input';
 
@@ -33,6 +33,7 @@ class Registration extends Component {
       unmatchedPassword: false,
       errorMsg: false,
       errorMessageDisplay: false,
+      isUserRegistered: false,
       isloading: false,
       otpSent: false,
       initialSubmit: true,
@@ -132,10 +133,6 @@ class Registration extends Component {
       formErr = true;
     }
 
-    // if (!confirmPassword.val) {
-    //   confirmPassword.err = 'Password cannot be blank!';
-    // }
-
     if (formErr) {
       this.setState({
         formError: true,
@@ -151,6 +148,17 @@ class Registration extends Component {
     return true;
   };
 
+  checkUser = async phone => {
+    let confirm = await isPhoneRegistered(phone);
+    if (!confirm) {
+      this.handleOtp(phone);
+    } else {
+      this.setState({
+        isUserRegistered: true,
+      });
+    }
+  };
+
   handlesubmit = event => {
     const { phone, initialSubmit, otp, formError } = this.state;
     event.preventDefault();
@@ -159,33 +167,37 @@ class Registration extends Component {
       const isValid = this.validate();
       if (isValid && formError) {
         this.disableInputField();
-        sendOtp(
-          phone.val,
-          () =>
-            this.setState({
-              ...this.state,
-              otpSent: true,
-              initialSubmit: false,
-            }),
-          () => this.setState({ errorMessageDisplay: true }),
-        );
       }
+      this.checkUser(phone);
     } else {
       const isValid = this.validate();
       if (isValid) {
         event.preventDefault();
-        const { firstName, lastName, phone, email, password } = this.state;
+        const { firstName, lastName, phone, email } = this.state;
         const confirmationResult = window.confirmationResult;
         const userEnteredOtp = otp.val;
         confirmationResult
           .confirm(userEnteredOtp)
           .then(() => {
-            saveUser(firstName, lastName, phone, email, password);
+            saveUser(firstName, lastName, phone, email);
             this.props.history.push('/dashboard');
           })
           .catch(() => this.setState({ errorMessageDisplay: true }));
       }
     }
+  };
+
+  handleOtp = phone => {
+    sendOtp(
+      phone.val,
+      () =>
+        this.setState({
+          ...this.state,
+          otpSent: true,
+          initialSubmit: false,
+        }),
+      () => this.setState({ errorMessageDisplay: true }),
+    );
   };
 
   handleBlur = e => {
@@ -390,6 +402,17 @@ class Registration extends Component {
             <Button
               onClick={() => this.setState({ errorMessageDisplay: false })}
             >
+              Close
+            </Button>
+          </Modal.Footer>
+        </Modal>
+
+        <Modal show={this.state.isUserRegistered} size="lg" centered>
+          <Modal.Body>
+            <p>You are already registered!</p>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button onClick={() => this.setState({ isUserRegistered: false })}>
               Close
             </Button>
           </Modal.Footer>
