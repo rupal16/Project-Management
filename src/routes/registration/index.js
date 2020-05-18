@@ -30,6 +30,7 @@ class Registration extends Component {
 
     this.state = {
       formError: false,
+      someError: false,
       unmatchedPassword: false,
       errorMsg: false,
       errorMessageDisplay: false,
@@ -150,11 +151,14 @@ class Registration extends Component {
 
   checkUser = async phone => {
     const isValid = this.validate();
-    console.log(isValid);
     if (isValid) {
       let confirm = await isPhoneRegistered(phone);
+      if (confirm === '1') {
+        this.setState({
+          someError: true,
+        });
+      }
       if (!confirm) {
-        console.log(isValid);
         this.handleOtp(phone);
       } else {
         this.setState({
@@ -184,7 +188,12 @@ class Registration extends Component {
         confirmationResult
           .confirm(userEnteredOtp)
           .then(() => {
-            saveUser(firstName, lastName, phone, email);
+            let check = saveUser(firstName, lastName, phone, email);
+            if (check === '1') {
+              this.setState({
+                someError: true,
+              });
+            }
             this.props.history.push('/dashboard');
           })
           .catch(() => this.setState({ errorMessageDisplay: true }));
@@ -201,7 +210,7 @@ class Registration extends Component {
           otpSent: true,
           initialSubmit: false,
         }),
-      () => this.setState({ errorMessageDisplay: true }),
+      () => this.setState({ someError: true }),
     );
   };
 
@@ -401,7 +410,7 @@ class Registration extends Component {
         </Form>
         <Modal show={this.state.errorMessageDisplay} size="lg" centered>
           <Modal.Body>
-            <p>Invalid OTP</p>
+            <p>Invalid OTP </p>
           </Modal.Body>
           <Modal.Footer>
             <Button
@@ -418,6 +427,17 @@ class Registration extends Component {
           </Modal.Body>
           <Modal.Footer>
             <Button onClick={() => this.setState({ isUserRegistered: false })}>
+              Close
+            </Button>
+          </Modal.Footer>
+        </Modal>
+
+        <Modal show={this.state.someError} size="lg" centered>
+          <Modal.Body>
+            <p>Your request could not be processed. Please try again later</p>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button onClick={() => this.setState({ someError: false })}>
               Close
             </Button>
           </Modal.Footer>
