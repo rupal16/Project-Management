@@ -149,13 +149,18 @@ class Registration extends Component {
   };
 
   checkUser = async phone => {
-    let confirm = await isPhoneRegistered(phone);
-    if (!confirm) {
-      this.handleOtp(phone);
-    } else {
-      this.setState({
-        isUserRegistered: true,
-      });
+    const isValid = this.validate();
+    console.log(isValid);
+    if (isValid) {
+      let confirm = await isPhoneRegistered(phone);
+      if (!confirm) {
+        console.log(isValid);
+        this.handleOtp(phone);
+      } else {
+        this.setState({
+          isUserRegistered: true,
+        });
+      }
     }
   };
 
@@ -171,7 +176,7 @@ class Registration extends Component {
       this.checkUser(phone);
     } else {
       const isValid = this.validate();
-      if (isValid) {
+      if (isValid && formError) {
         event.preventDefault();
         const { firstName, lastName, phone, email } = this.state;
         const confirmationResult = window.confirmationResult;
