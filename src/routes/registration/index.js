@@ -168,7 +168,7 @@ class Registration extends Component {
     }
   };
 
-  handlesubmit = event => {
+  handlesubmit = async event => {
     const { phone, initialSubmit, otp, formError } = this.state;
     event.preventDefault();
     this.fetchData();
@@ -185,18 +185,13 @@ class Registration extends Component {
         const { firstName, lastName, phone, email } = this.state;
         const confirmationResult = window.confirmationResult;
         const userEnteredOtp = otp.val;
-        confirmationResult
-          .confirm(userEnteredOtp)
-          .then(() => {
-            const { error } = saveUser(firstName, lastName, phone, email);
-            if (error) {
-              this.setState({
-                someError: true,
-              });
-            }
-            this.props.history.push('/dashboard');
-          })
-          .catch(() => this.setState({ errorMessageDisplay: true }));
+        try {
+          await confirmationResult.confirm(userEnteredOtp);
+          await saveUser(firstName, lastName, phone, email);
+          this.props.history.push('./dashboard');
+        } catch (err) {
+          this.setState({ someError: true });
+        }
       }
     }
   };
@@ -210,7 +205,7 @@ class Registration extends Component {
           otpSent: true,
           initialSubmit: false,
         }),
-      () => this.setState({ someError: true }),
+      () => this.setState({ errorMessageDisplay: true }),
     );
   };
 
