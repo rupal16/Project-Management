@@ -23,7 +23,8 @@ export const isPhoneRegistered = async phone => {
 };
 
 export const saveUser = async (firstName, lastName, phone, email) => {
-  let { error, result } = false;
+  let error = false;
+  let result = false;
 
   try {
     const newUserRef = userDbRef.push();
@@ -34,6 +35,8 @@ export const saveUser = async (firstName, lastName, phone, email) => {
       phone,
       email,
     });
+
+    result = true;
     return result;
   } catch (err) {
     error = true;
