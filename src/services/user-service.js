@@ -4,6 +4,7 @@ const userDbRef = firebaseApp.database().ref('user');
 
 export const isPhoneRegistered = async phone => {
   let error = false;
+
   try {
     const isRegistered = await userDbRef.once('value').then(snapshot => {
       let isNumberRegistered = false;
@@ -23,8 +24,7 @@ export const isPhoneRegistered = async phone => {
 };
 
 export const saveUser = async (firstName, lastName, phone, email) => {
-  let error = false;
-  let result = false;
+  let error = true;
 
   try {
     const newUserRef = userDbRef.push();
@@ -35,11 +35,7 @@ export const saveUser = async (firstName, lastName, phone, email) => {
       phone,
       email,
     });
-
-    result = true;
-    return result;
   } catch (err) {
-    error = true;
     return error;
   }
 };

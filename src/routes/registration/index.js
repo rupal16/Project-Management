@@ -188,8 +188,8 @@ class Registration extends Component {
         confirmationResult
           .confirm(userEnteredOtp)
           .then(() => {
-            let check = saveUser(firstName, lastName, phone, email);
-            if (check === '1') {
+            const { error } = saveUser(firstName, lastName, phone, email);
+            if (error) {
               this.setState({
                 someError: true,
               });
