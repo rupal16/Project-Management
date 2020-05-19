@@ -3,6 +3,7 @@ import firebaseApp from '../config/firebase';
 const userDbRef = firebaseApp.database().ref('user');
 
 export const isPhoneRegistered = async phone => {
+  let error = false;
   try {
     const isRegistered = await userDbRef.once('value').then(snapshot => {
       let isNumberRegistered = false;
@@ -16,7 +17,7 @@ export const isPhoneRegistered = async phone => {
     });
     return isRegistered;
   } catch (err) {
-    return 1;
+    return error;
   }
 };
 
