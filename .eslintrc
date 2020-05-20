@@ -1,0 +1,21 @@
+{
+  "parserOptions": {
+    "sourceType": "module",
+    "ecmaVersion": 2015
+  },
+  "env": {
+    "browser": true,
+    "node": true
+  },
+  "extends": ["react", "prettier"],
+  "plugins": ["prettier"],
+  "rules": {
+    "prettier/prettier": "error",
+    "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }]
+  },
+  "settings": {
+    "react": {
+      "version": "16"
+    }
+  }
+}
