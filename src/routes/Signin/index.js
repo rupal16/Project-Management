@@ -2,8 +2,9 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { Button, Spinner, Form, Modal } from 'react-bootstrap';
 import { withRouter } from 'react-router';
+import PropTypes from 'prop-types';
 
-import { isPhoneRegistered, saveUser } from '../../services/user-service';
+import { isPhoneRegistered } from '../../services/user-service';
 import sendOtp from '../../services/send-otp';
 
 import Input from '../../components/Input';
@@ -19,10 +20,14 @@ const buttonStyle = {
 };
 
 class Signin extends Component {
+  static propTypes = {
+    history: PropTypes.object.isRequired,
+  };
   constructor(props) {
     super(props);
 
     this.state = {
+      someError: false,
       otpSent: false,
       initialSubmit: true,
       isloading: false,
@@ -31,6 +36,7 @@ class Signin extends Component {
       errorMsg: false,
       formError: false,
       userNotRegisteredMessage: false,
+      invalidOtpMsg: false,
       phone: {
         val: '',
         err: '',
@@ -90,14 +96,12 @@ class Signin extends Component {
     if (isValid) {
       try {
         let isRegistered = await isPhoneRegistered(phone);
-        console.log('isRegistered', isRegistered);
         if (isRegistered) {
           this.handleOtp(phone);
           this.setState({
             //isUserRegistered: true,
           });
         } else {
-          console.log('You do not have an existing account.');
           this.setState({
             userNotRegisteredMessage: true,
           });
@@ -111,29 +115,28 @@ class Signin extends Component {
   };
 
   handleSubmit = async event => {
-    console.log('from handlesubmit');
-    const { phone, initialSubmit, otp, formError } = this.state;
+    const { phone, initialSubmit, otp } = this.state;
     event.preventDefault();
     this.fetchData();
     if (initialSubmit) {
       const isValid = this.validate();
-      if (isValid && formError) {
+      if (isValid) {
         this.disableInputField();
       }
       this.checkUser(phone);
     } else {
       const isValid = this.validate();
-      if (isValid && formError) {
+      if (isValid) {
         event.preventDefault();
-        const { phone } = this.state;
+        //const { phone } = this.state;
         const confirmationResult = window.confirmationResult;
         const userEnteredOtp = otp.val;
         try {
           await confirmationResult.confirm(userEnteredOtp);
-          await saveUser(phone);
+          // await saveUser(phone);
           this.props.history.push('./dashboard');
         } catch (err) {
-          this.setState({ errorMessageDisplay: true });
+          this.setState({ invalidOtpMsg: true });
         }
       }
     }
@@ -210,7 +213,7 @@ class Signin extends Component {
               />
             </div>
           )}
-          {this.errorMsg ? <h2>Incorrect Otp</h2> : null}
+          {/* {this.errorMsg ? <h2>Incorrect Otp</h2> : null} */}
 
           <div id="recaptcha">
             <Button
@@ -257,6 +260,28 @@ class Signin extends Component {
             <Button
               onClick={() => this.setState({ userNotRegisteredMessage: false })}
             >
+              Close
+            </Button>
+          </Modal.Footer>
+        </Modal>
+
+        <Modal show={this.state.invalidOtpMsg} size="lg" centered>
+          <Modal.Body>
+            <p>Invalid Otp!</p>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button onClick={() => this.setState({ invalidOtpMsg: false })}>
+              Close
+            </Button>
+          </Modal.Footer>
+        </Modal>
+
+        <Modal show={this.state.someError} size="lg" centered>
+          <Modal.Body>
+            <p>Your request could not be processed. Please try again later</p>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button onClick={() => this.setState({ someError: false })}>
               Close
             </Button>
           </Modal.Footer>
