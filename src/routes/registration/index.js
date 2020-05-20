@@ -149,20 +149,28 @@ class Registration extends Component {
     return true;
   };
 
-  checkUser = async phone => {
+  checkUser = phone => {
     const isValid = this.validate();
     if (isValid) {
-      let confirm = await isPhoneRegistered(phone);
-      if (confirm === '1') {
+      try {
+        isPhoneRegistered(phone).then(snapshot => {
+          let isRegistered = false;
+          snapshot.forEach(snapshotData => {
+            let data = snapshotData.val();
+            if (data.phone.val === phone.val) {
+              isRegistered = true;
+              this.setState({
+                isUserRegistered: true,
+              });
+            }
+          });
+          if (!isRegistered) {
+            this.handleOtp(phone);
+          }
+        });
+      } catch (err) {
         this.setState({
           someError: true,
-        });
-      }
-      if (!confirm) {
-        this.handleOtp(phone);
-      } else {
-        this.setState({
-          isUserRegistered: true,
         });
       }
     }
@@ -190,7 +198,7 @@ class Registration extends Component {
           await saveUser(firstName, lastName, phone, email);
           this.props.history.push('./dashboard');
         } catch (err) {
-          this.setState({ someError: true });
+          this.setState({ errorMessageDisplay: true });
         }
       }
     }
@@ -205,7 +213,9 @@ class Registration extends Component {
           otpSent: true,
           initialSubmit: false,
         }),
-      () => this.setState({ errorMessageDisplay: true }),
+      () => {
+        this.setState({ someError: true });
+      },
     );
   };
 
