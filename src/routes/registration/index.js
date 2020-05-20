@@ -149,25 +149,19 @@ class Registration extends Component {
     return true;
   };
 
-  checkUser = phone => {
+  checkUser = async phone => {
     const isValid = this.validate();
     if (isValid) {
       try {
-        isPhoneRegistered(phone).then(snapshot => {
-          let isRegistered = false;
-          snapshot.forEach(snapshotData => {
-            let data = snapshotData.val();
-            if (data.phone.val === phone.val) {
-              isRegistered = true;
-              this.setState({
-                isUserRegistered: true,
-              });
-            }
+        let isRegistered = await isPhoneRegistered(phone);
+        console.log(isRegistered);
+        if (isRegistered) {
+          this.setState({
+            isUserRegistered: true,
           });
-          if (!isRegistered) {
-            this.handleOtp(phone);
-          }
-        });
+        } else {
+          this.handleOtp(phone);
+        }
       } catch (err) {
         this.setState({
           someError: true,
