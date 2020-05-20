@@ -8,6 +8,7 @@ import {
 
 import history from '../utils/history';
 import Registration from './registration';
+import Signin from './Signin';
 import Dashboard from './Dashboard';
 import firebase from '../config/firebase';
 
@@ -40,6 +41,7 @@ class Routes extends Component {
           <Switch>
             <Redirect exact from="/" to="/user-registration" />
             <Route path="/user-registration" component={Registration} />
+            <Route path="/signin" component={Signin} />
             <Route path="/dashboard" component={Dashboard} />
           </Switch>
         </Router>
