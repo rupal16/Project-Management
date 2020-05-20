@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { Button, Spinner, Form } from 'react-bootstrap';
+import { Button, Spinner, Form, Modal } from 'react-bootstrap';
 import { withRouter } from 'react-router';
 
 import { isPhoneRegistered, saveUser } from '../../services/user-service';
@@ -30,6 +30,7 @@ class Signin extends Component {
       isUserRegistered: false,
       errorMsg: false,
       formError: false,
+      userNotRegisteredMessage: false,
       phone: {
         val: '',
         err: '',
@@ -97,6 +98,9 @@ class Signin extends Component {
           });
         } else {
           console.log('You do not have an existing account.');
+          this.setState({
+            userNotRegisteredMessage: true,
+          });
         }
       } catch (err) {
         this.setState({
@@ -242,8 +246,21 @@ class Signin extends Component {
               <Link to="/user-registration">Register here</Link>
             </p>
           </div>
+          {!otpSent && <div id="recaptcha-container" />}
         </div>
         <Form />
+        <Modal show={this.state.userNotRegisteredMessage} size="lg" centered>
+          <Modal.Body>
+            <p>You do not have an existing account!</p>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button
+              onClick={() => this.setState({ userNotRegisteredMessage: false })}
+            >
+              Close
+            </Button>
+          </Modal.Footer>
+        </Modal>
       </div>
     );
   }
