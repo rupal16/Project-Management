@@ -33,7 +33,6 @@ class Signin extends Component {
       isloading: false,
       errorMessageDisplay: false,
       isUserRegistered: false,
-      formError: false,
       userNotRegisteredMessage: false,
       invalidOtpMsg: false,
       phone: {
@@ -70,19 +69,15 @@ class Signin extends Component {
 
   validate = () => {
     const { phone } = this.state;
-    let formErr = false;
 
     if (!phone.val.trim()) {
       phone.err = 'Phone number cannot be blank!';
-      formErr = true;
     } else if (phone.val.length !== 14) {
       phone.err = 'Invalid number. Check the format';
-      formErr = true;
     }
 
-    if (formErr) {
+    if (phone.err) {
       this.setState({
-        formError: true,
         phone,
       });
       return false;
