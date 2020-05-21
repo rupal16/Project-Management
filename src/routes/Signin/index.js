@@ -33,7 +33,6 @@ class Signin extends Component {
       isloading: false,
       errorMessageDisplay: false,
       isUserRegistered: false,
-      errorMsg: false,
       formError: false,
       userNotRegisteredMessage: false,
       invalidOtpMsg: false,
@@ -98,9 +97,7 @@ class Signin extends Component {
         let isRegistered = await isPhoneRegistered(phone);
         if (isRegistered) {
           this.handleOtp(phone);
-          this.setState({
-            //isUserRegistered: true,
-          });
+          this.setState({});
         } else {
           this.setState({
             userNotRegisteredMessage: true,
@@ -128,12 +125,10 @@ class Signin extends Component {
       const isValid = this.validate();
       if (isValid) {
         event.preventDefault();
-        //const { phone } = this.state;
         const confirmationResult = window.confirmationResult;
         const userEnteredOtp = otp.val;
         try {
           await confirmationResult.confirm(userEnteredOtp);
-          // await saveUser(phone);
           this.props.history.push('./dashboard');
         } catch (err) {
           this.setState({ invalidOtpMsg: true });
@@ -213,7 +208,6 @@ class Signin extends Component {
               />
             </div>
           )}
-          {/* {this.errorMsg ? <h2>Incorrect Otp</h2> : null} */}
 
           <div id="recaptcha">
             <Button
