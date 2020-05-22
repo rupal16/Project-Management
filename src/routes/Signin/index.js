@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { Button, Spinner, Form, Modal } from 'react-bootstrap';
+import { Button, Spinner, Form } from 'react-bootstrap';
 import { withRouter } from 'react-router';
 import PropTypes from 'prop-types';
 
@@ -8,6 +8,7 @@ import { isPhoneRegistered } from '../../services/user-service';
 import sendOtp from '../../services/send-otp';
 
 import Input from '../../components/Input';
+import ErrorModal from '../../components/ErrorModal';
 
 import './style.scss';
 
@@ -27,14 +28,12 @@ class Signin extends Component {
     super(props);
 
     this.state = {
-      someError: false,
+      isError: false,
+      errorContent: '',
       otpSent: false,
       initialSubmit: true,
       isloading: false,
-      errorMessageDisplay: false,
       isUserRegistered: false,
-      userNotRegisteredMessage: false,
-      invalidOtpMsg: false,
       phone: {
         val: '',
         err: '',
@@ -94,13 +93,17 @@ class Signin extends Component {
           this.handleOtp(phone);
           this.setState({});
         } else {
+          console.log('user not registered');
           this.setState({
-            userNotRegisteredMessage: true,
+            isError: true,
+            errorContent: 'You are not registered!',
           });
         }
       } catch (err) {
         this.setState({
-          someError: true,
+          isError: true,
+          errorContent:
+            'Your request cannot be processed at the moment. Please try again later',
         });
       }
     }
@@ -126,7 +129,10 @@ class Signin extends Component {
           await confirmationResult.confirm(userEnteredOtp);
           this.props.history.push('./dashboard');
         } catch (err) {
-          this.setState({ invalidOtpMsg: true });
+          this.setState({
+            isError: true,
+            errorContent: 'Invalid Otp',
+          });
         }
       }
     }
@@ -142,7 +148,11 @@ class Signin extends Component {
           initialSubmit: false,
         }),
       () => {
-        this.setState({ someError: true });
+        this.setState({
+          isError: true,
+          errorContent:
+            'Your request cannot be processed at the moment. Please try again later',
+        });
       },
     );
   };
@@ -170,8 +180,14 @@ class Signin extends Component {
     }
   };
 
+  cancelButton = event => {
+    this.setState({
+      isError: false,
+    });
+  };
+
   render() {
-    const { phone, otp, otpSent } = this.state;
+    const { phone, otp, otpSent, isError } = this.state;
     return (
       <div className="container">
         <Form onKeyPress={this.onKeyPress} onSubmit={this.handlesubmit} />
@@ -241,40 +257,14 @@ class Signin extends Component {
           {!otpSent && <div id="recaptcha-container" />}
         </div>
         <Form />
-        <Modal show={this.state.userNotRegisteredMessage} size="lg" centered>
-          <Modal.Body>
-            <p>You do not have an existing account!</p>
-          </Modal.Body>
-          <Modal.Footer>
-            <Button
-              onClick={() => this.setState({ userNotRegisteredMessage: false })}
-            >
-              Close
-            </Button>
-          </Modal.Footer>
-        </Modal>
 
-        <Modal show={this.state.invalidOtpMsg} size="lg" centered>
-          <Modal.Body>
-            <p>Invalid Otp!</p>
-          </Modal.Body>
-          <Modal.Footer>
-            <Button onClick={() => this.setState({ invalidOtpMsg: false })}>
-              Close
-            </Button>
-          </Modal.Footer>
-        </Modal>
-
-        <Modal show={this.state.someError} size="lg" centered>
-          <Modal.Body>
-            <p>Your request could not be processed. Please try again later</p>
-          </Modal.Body>
-          <Modal.Footer>
-            <Button onClick={() => this.setState({ someError: false })}>
-              Close
-            </Button>
-          </Modal.Footer>
-        </Modal>
+        {isError && (
+          <ErrorModal
+            showError={this.state.isError}
+            errorContent={this.state.errorContent}
+            onClick={this.cancelButton}
+          />
+        )}
       </div>
     );
   }
