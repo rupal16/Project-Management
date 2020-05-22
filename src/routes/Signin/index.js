@@ -82,7 +82,6 @@ class Signin extends Component {
           this.handleOtp(phone);
           this.setState({});
         } else {
-          console.log('user not registered');
           this.setState({
             isError: true,
             errorContent: 'You are not registered!',
@@ -105,13 +104,7 @@ class Signin extends Component {
     if (initialSubmit) {
       const isValid = this.validate();
       if (isValid) {
-        this.setState({
-          isloading: false,
-        });
         this.disableInputField();
-        this.setState({
-          isloading: true,
-        });
       }
       this.setState({
         isloading: true,
