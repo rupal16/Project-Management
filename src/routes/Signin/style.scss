@@ -32,7 +32,7 @@ $wrapperbg: #ffe6e6;
   background-color: #008b8b;
   width: 390px;
   padding: 10px;
-  margin-top: 15px;
+  margin-top: 25px;
   margin-left: 15px;
   & :hover {
     transition: none;
@@ -40,11 +40,11 @@ $wrapperbg: #ffe6e6;
   }
 }
 
-.forgot-password {
+.registerHereLink {
   text-align: center;
   font-size: 13px;
   color: #7f7d7d;
-  margin-bottom: 15px;
+  margin-top: 32px;
   width: 24em;
 
   // margin-right: 50px;

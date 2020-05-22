@@ -251,8 +251,8 @@ class Signin extends Component {
               )}
             </Button>
           </div>
-          <div>
-            <p className="forgot-password">
+          <div className="registerHereLink">
+            <p>
               Do not have an existing account?{' '}
               <Link to="/user-registration">Register here</Link>
             </p>
