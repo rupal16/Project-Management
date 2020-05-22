@@ -12,14 +12,6 @@ import ErrorModal from '../../components/ErrorModal';
 
 import './style.scss';
 
-// const buttonStyle = {
-//     backgroundColor: '#008B8B',
-//     width: '390px',
-//     padding: '10px',
-//     marginTop: '15px',
-//     marginLeft: '15px',
-// };
-
 class Signin extends Component {
   static propTypes = {
     history: PropTypes.object.isRequired,
@@ -36,11 +28,9 @@ class Signin extends Component {
       isUserRegistered: false,
       phone: {
         val: '',
-        err: '',
       },
       otp: {
         val: '',
-        err: '',
       },
     };
   }
@@ -57,17 +47,15 @@ class Signin extends Component {
 
   validate = () => {
     const { phone } = this.state;
+    let formError = false;
 
     if (!phone.val.trim()) {
-      phone.err = 'Phone number cannot be blank!';
+      formError = true;
     } else if (phone.val.length !== 14) {
-      phone.err = 'Invalid number. Check the format';
+      formError = true;
     }
 
-    if (phone.err) {
-      this.setState({
-        phone,
-      });
+    if (formError) {
       return false;
     }
     return true;
@@ -77,16 +65,7 @@ class Signin extends Component {
     const isValid = this.validate();
     if (isValid) {
       try {
-        let isRegistered = await isPhoneRegistered(phone);
-        if (isRegistered) {
-          this.handleOtp(phone);
-          this.setState({});
-        } else {
-          this.setState({
-            isError: true,
-            errorContent: 'You are not registered!',
-          });
-        }
+        await isPhoneRegistered(phone);
       } catch (err) {
         this.setState({
           isError: true,
@@ -102,22 +81,27 @@ class Signin extends Component {
     event.preventDefault();
 
     if (initialSubmit) {
-      const isValid = this.validate();
-      if (isValid) {
-        this.disableInputField();
-      }
       this.setState({
         isloading: true,
       });
-
-      this.checkUser(phone);
-      this.setState({
-        isloading: false,
-      });
+      const isValid = this.validate();
+      if (isValid) {
+        this.disableInputField();
+        await this.checkUser(phone);
+        this.setState({
+          isloading: false,
+        });
+        await this.handleOtp(phone);
+      } else {
+        this.setState({
+          isError: true,
+          errorContent: 'Check your number',
+          isloading: false,
+        });
+      }
     } else {
       const isValid = this.validate();
       if (isValid) {
-        event.preventDefault();
         const confirmationResult = window.confirmationResult;
         const userEnteredOtp = otp.val;
         try {
@@ -133,8 +117,8 @@ class Signin extends Component {
     }
   };
 
-  handleOtp = phone => {
-    sendOtp(
+  handleOtp = async phone => {
+    await sendOtp(
       phone.val,
       () =>
         this.setState({
@@ -221,12 +205,11 @@ class Signin extends Component {
               variant="secondary"
               value="submit"
               onClick={this.handleSubmit}
-              // style={buttonStyle}
               className="buttonStyle"
               disabled={this.isloading}
             >
               {this.state.isloading && (
-                <div id="actionInProgressSpinner">
+                <div>
                   <Spinner
                     as="span"
                     animation="grow"

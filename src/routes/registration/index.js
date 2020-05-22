@@ -179,6 +179,7 @@ class Registration extends Component {
       if (isValid && formError) {
         this.disableInputField();
       }
+
       this.checkUser(phone);
     } else {
       const isValid = this.validate();
