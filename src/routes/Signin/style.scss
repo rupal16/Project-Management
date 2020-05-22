@@ -29,15 +29,13 @@ $wrapperbg: #ffe6e6;
 //     marginLeft: '15px',
 // };
 .buttonStyle {
-  background-color: #008b8b;
+  height: 40px;
+  font-size: 15px;
+  border-radius: 5px;
   width: 390px;
-  padding: 10px;
+  background-color: #008b8b;
   margin-top: 25px;
   margin-left: 15px;
-  & :hover {
-    transition: none;
-    border: none;
-  }
 }
 
 .registerHereLink {
