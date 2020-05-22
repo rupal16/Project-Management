@@ -45,17 +45,6 @@ class Signin extends Component {
     };
   }
 
-  fetchData = () => {
-    this.setState({
-      isloading: true,
-    });
-    setTimeout(() => {
-      this.setState({
-        isloading: false,
-      });
-    }, 2000);
-  };
-
   handleChange = event => {
     const { target } = event;
     const { value, name } = target;
@@ -112,13 +101,26 @@ class Signin extends Component {
   handleSubmit = async event => {
     const { phone, initialSubmit, otp } = this.state;
     event.preventDefault();
-    this.fetchData();
+
     if (initialSubmit) {
       const isValid = this.validate();
       if (isValid) {
+        this.setState({
+          isloading: false,
+        });
         this.disableInputField();
+        this.setState({
+          isloading: true,
+        });
       }
+      this.setState({
+        isloading: true,
+      });
+
       this.checkUser(phone);
+      this.setState({
+        isloading: false,
+      });
     } else {
       const isValid = this.validate();
       if (isValid) {
