@@ -12,13 +12,13 @@ import ErrorModal from '../../components/ErrorModal';
 
 import './style.scss';
 
-const buttonStyle = {
-  backgroundColor: '#008B8B',
-  width: '390px',
-  padding: '10px',
-  marginTop: '15px',
-  marginLeft: '15px',
-};
+// const buttonStyle = {
+//     backgroundColor: '#008B8B',
+//     width: '390px',
+//     padding: '10px',
+//     marginTop: '15px',
+//     marginLeft: '15px',
+// };
 
 class Signin extends Component {
   static propTypes = {
@@ -191,7 +191,7 @@ class Signin extends Component {
   render() {
     const { phone, otp, otpSent, isError } = this.state;
     return (
-      <div className="container">
+      <div className="signinpage">
         <Form onKeyPress={this.onKeyPress} onSubmit={this.handlesubmit} />
         <div className="form-wrapper">
           <h1>Sign-In</h1>
@@ -228,7 +228,8 @@ class Signin extends Component {
               variant="secondary"
               value="submit"
               onClick={this.handleSubmit}
-              style={buttonStyle}
+              // style={buttonStyle}
+              className="buttonStyle"
               disabled={this.isloading}
             >
               {this.state.isloading && (

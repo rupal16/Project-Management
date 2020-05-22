@@ -1,7 +1,7 @@
 $buttonhover: #519e8a;
 $wrapperbg: #ffe6e6;
 
-.container {
+.signinpage {
   height: 100vh;
   width: 100%;
   display: flex;
@@ -19,6 +19,25 @@ $wrapperbg: #ffe6e6;
   border-radius: 10px;
   box-shadow: 0px 10px 50px #555;
   background-color: #ffffff;
+}
+
+// buttonStyle = {
+//     backgroundColor: '#008B8B',
+//     width: '390px',
+//     padding: '10px',
+//     marginTop: '15px',
+//     marginLeft: '15px',
+// };
+.buttonStyle {
+  background-color: #008b8b;
+  width: 390px;
+  padding: 10px;
+  margin-top: 15px;
+  margin-left: 15px;
+  & :hover {
+    transition: none;
+    border: none;
+  }
 }
 
 .forgot-password {
