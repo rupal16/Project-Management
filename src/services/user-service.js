@@ -17,7 +17,6 @@ export const isPhoneRegistered = phone => {
 
 export const saveUser = (firstName, lastname, phone, email) => {
   const newUserRef = userDbRef.push();
-
   return newUserRef.set({
     firstName,
     lastname,

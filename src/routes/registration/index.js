@@ -190,7 +190,7 @@ class Registration extends Component {
         const userEnteredOtp = otp.val;
         try {
           await confirmationResult.confirm(userEnteredOtp);
-          await saveUser(firstName, lastName, phone, email);
+          await saveUser(firstName.val, lastName.val, phone.val, email.val);
           this.props.history.push('./dashboard');
         } catch (err) {
           this.setState({ errorMessageDisplay: true });
