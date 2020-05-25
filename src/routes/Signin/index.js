@@ -26,6 +26,7 @@ class Signin extends Component {
       initialSubmit: true,
       isloading: false,
       isUserRegistered: false,
+
       phone: {
         val: '',
       },
@@ -65,7 +66,15 @@ class Signin extends Component {
     const isValid = this.validate();
     if (isValid) {
       try {
-        await isPhoneRegistered(phone);
+        const x = await isPhoneRegistered(phone);
+        if (!x) {
+          this.setState({
+            isError: true,
+            errorContent: 'You are not registered',
+          });
+        } else {
+          this.handleOtp(phone);
+        }
       } catch (err) {
         this.setState({
           isError: true,
@@ -91,7 +100,6 @@ class Signin extends Component {
         this.setState({
           isloading: false,
         });
-        await this.handleOtp(phone);
       } else {
         this.setState({
           isError: true,
