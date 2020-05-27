@@ -148,20 +148,20 @@ class Registration extends Component {
     }
     return true;
   };
-
   checkUser = async phone => {
     const isValid = this.validate();
     if (isValid) {
       try {
-        let isRegistered = await isPhoneRegistered(phone);
-        console.log(isRegistered);
-        if (isRegistered) {
-          this.setState({
-            isUserRegistered: true,
-          });
-        } else {
-          this.handleOtp(phone);
-        }
+        isPhoneRegistered(phone, value => {
+          if (value) {
+            this.setState({
+              isUserRegistered: true,
+            });
+          } else {
+            this.handleOtp(phone);
+          }
+          console.log('value', value);
+        });
       } catch (err) {
         this.setState({
           someError: true,

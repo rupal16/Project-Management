@@ -66,15 +66,17 @@ class Signin extends Component {
     const isValid = this.validate();
     if (isValid) {
       try {
-        const x = await isPhoneRegistered(phone);
-        if (!x) {
-          this.setState({
-            isError: true,
-            errorContent: 'You are not registered',
-          });
-        } else {
-          this.handleOtp(phone);
-        }
+        isPhoneRegistered(phone, value => {
+          if (!value) {
+            this.setState({
+              isError: true,
+              errorContent: 'You are not registered',
+            });
+          } else {
+            this.handleOtp(phone);
+          }
+          console.log('value', value);
+        });
       } catch (err) {
         this.setState({
           isError: true,

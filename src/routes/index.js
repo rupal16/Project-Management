@@ -6,6 +6,8 @@ import {
   Redirect,
 } from 'react-router-dom';
 
+// import UserServices from '../services/user-service';
+
 import history from '../utils/history';
 import Registration from './registration';
 import Signin from './Signin';
@@ -19,18 +21,36 @@ class Routes extends Component {
     super(props);
 
     this.state = {
-      user: {},
+      user: null,
     };
   }
 
-  componentDidMount(user) {
+  // createUserObj = () => {
+  //     const { user } = this.state;
+  //     const userobj = {
+  //         uid: user.uid,
+  //         email: user.email,
+  //         phonNumber: user.phonNumber,
+  //         displayname: user.displayName,
+  //     }
+  //     return userobj;
+  // }
+
+  componentDidMount() {
     this.authListener();
   }
 
   authListener() {
     firebase.auth().onAuthStateChanged(user => {
       if (user !== undefined) {
-        this.setState({ user });
+        this.setState({
+          user: {
+            uid: user.uid,
+            phoneNumber: user.phoneNumber,
+            displayName: user.displayName,
+            email: user.email,
+          },
+        });
       } else {
         this.setState({ user: null });
       }
