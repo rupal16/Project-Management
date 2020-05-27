@@ -67,11 +67,10 @@ class Signin extends Component {
     if (isValid) {
       try {
         let value = await isPhoneRegistered(phone);
-        console.log('value', value);
         if (!value) {
           this.setState({
             isError: true,
-            errorContent: 'You are not registered',
+            errorContent: 'You do not have an existing account!',
           });
         } else {
           this.handleOtp(phone);
@@ -85,31 +84,6 @@ class Signin extends Component {
       }
     }
   };
-
-  //   checkUser =  phone => {
-  //     const isValid = this.validate();
-  //     if (isValid) {
-  //       try {
-  //         isPhoneRegistered(phone, value => {
-  //           if (!value) {
-  //             this.setState({
-  //               isError: true,
-  //               errorContent: 'You are not registered',
-  //             });
-  //           } else {
-  //             this.handleOtp(phone);
-  //           }
-  //           console.log('value', value);
-  //         });
-  //       } catch (err) {
-  //         this.setState({
-  //           isError: true,
-  //           errorContent:
-  //             'Your request cannot be processed at the moment. Please try again later',
-  //         });
-  //       }
-  //     }
-  //   };
 
   handleSubmit = async event => {
     const { phone, initialSubmit, otp } = this.state;

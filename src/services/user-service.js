@@ -3,20 +3,16 @@ import * as firebase from 'firebase';
 
 const userDbRef = firebaseApp.database();
 
-export const isPhoneRegistered = phone => {
+export const isPhoneRegistered = async phone => {
   return userDbRef
     .ref('users')
     .orderByChild('phone')
+    .equalTo(phone.val)
     .once('value')
     .then(snapshot => {
       let isRegistered = false;
       snapshot.forEach(function(childSnapshot) {
-        var num = childSnapshot.val().phone;
-        console.log('phone', phone);
-        if (num === phone.val) {
-          isRegistered = true;
-          return isRegistered;
-        }
+        isRegistered = true;
       });
       return isRegistered;
     });

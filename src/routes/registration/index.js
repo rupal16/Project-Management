@@ -160,7 +160,6 @@ class Registration extends Component {
         } else {
           this.handleOtp(phone);
         }
-        console.log('value', value);
       } catch (err) {
         this.setState({
           someError: true,
