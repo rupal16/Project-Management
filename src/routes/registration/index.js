@@ -148,14 +148,12 @@ class Registration extends Component {
     }
     return true;
   };
-
   checkUser = async phone => {
     const isValid = this.validate();
     if (isValid) {
       try {
-        let isRegistered = await isPhoneRegistered(phone);
-        console.log(isRegistered);
-        if (isRegistered) {
+        let value = await isPhoneRegistered(phone);
+        if (value) {
           this.setState({
             isUserRegistered: true,
           });
@@ -179,6 +177,7 @@ class Registration extends Component {
       if (isValid && formError) {
         this.disableInputField();
       }
+
       this.checkUser(phone);
     } else {
       const isValid = this.validate();
@@ -189,7 +188,7 @@ class Registration extends Component {
         const userEnteredOtp = otp.val;
         try {
           await confirmationResult.confirm(userEnteredOtp);
-          await saveUser(firstName, lastName, phone, email);
+          await saveUser(firstName.val, lastName.val, phone.val, email.val);
           this.props.history.push('./dashboard');
         } catch (err) {
           this.setState({ errorMessageDisplay: true });

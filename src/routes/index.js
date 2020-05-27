@@ -8,14 +8,18 @@ import {
 
 import history from '../utils/history';
 import Registration from './registration';
+import Signin from './Signin';
 import Dashboard from './Dashboard';
 import firebase from '../config/firebase';
+
+import PrivateRoute from '../components/PrivateRoute';
 
 class Routes extends Component {
   constructor(props) {
     super(props);
+
     this.state = {
-      user: {},
+      user: null,
     };
   }
 
@@ -25,8 +29,15 @@ class Routes extends Component {
 
   authListener() {
     firebase.auth().onAuthStateChanged(user => {
-      if (user) {
-        this.setState({ user });
+      if (user !== undefined) {
+        this.setState({
+          user: {
+            uid: user.uid,
+            phoneNumber: user.phoneNumber,
+            displayName: user.displayName,
+            email: user.email,
+          },
+        });
       } else {
         this.setState({ user: null });
       }
@@ -40,7 +51,21 @@ class Routes extends Component {
           <Switch>
             <Redirect exact from="/" to="/user-registration" />
             <Route path="/user-registration" component={Registration} />
-            <Route path="/dashboard" component={Dashboard} />
+            <Route
+              path="/signin"
+              render={props =>
+                this.state.user !== null ? (
+                  <Redirect to="/dashboard" />
+                ) : (
+                  <Signin />
+                )
+              }
+            />
+            <PrivateRoute
+              path="/dashboard"
+              component={Dashboard}
+              user={this.state.user}
+            />
           </Switch>
         </Router>
       </div>
