@@ -6,8 +6,6 @@ import {
   Redirect,
 } from 'react-router-dom';
 
-// import UserServices from '../services/user-service';
-
 import history from '../utils/history';
 import Registration from './registration';
 import Signin from './Signin';
@@ -24,17 +22,6 @@ class Routes extends Component {
       user: null,
     };
   }
-
-  // createUserObj = () => {
-  //     const { user } = this.state;
-  //     const userobj = {
-  //         uid: user.uid,
-  //         email: user.email,
-  //         phonNumber: user.phonNumber,
-  //         displayname: user.displayName,
-  //     }
-  //     return userobj;
-  // }
 
   componentDidMount() {
     this.authListener();

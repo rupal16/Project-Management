@@ -152,16 +152,15 @@ class Registration extends Component {
     const isValid = this.validate();
     if (isValid) {
       try {
-        isPhoneRegistered(phone, value => {
-          if (value) {
-            this.setState({
-              isUserRegistered: true,
-            });
-          } else {
-            this.handleOtp(phone);
-          }
-          console.log('value', value);
-        });
+        let value = await isPhoneRegistered(phone);
+        if (value) {
+          this.setState({
+            isUserRegistered: true,
+          });
+        } else {
+          this.handleOtp(phone);
+        }
+        console.log('value', value);
       } catch (err) {
         this.setState({
           someError: true,
