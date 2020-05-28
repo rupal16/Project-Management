@@ -31,3 +31,12 @@ export const saveUser = (firstName, lastname, phone, email) => {
       email,
     });
 };
+
+export const userSignOut = () => {
+  return firebase
+    .auth()
+    .signOut()
+    .then(() => {
+      console.log('user is signed out');
+    });
+};

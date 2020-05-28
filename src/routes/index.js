@@ -29,7 +29,9 @@ class Routes extends Component {
 
   authListener() {
     firebase.auth().onAuthStateChanged(user => {
-      if (user !== undefined) {
+      console.log('on auth');
+      console.log('user', user);
+      if (user) {
         this.setState({
           user: {
             uid: user.uid,
