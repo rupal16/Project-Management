@@ -7,7 +7,6 @@ const sendOtp = (phoneNumber, callback, errorCallback) => {
   window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier(
     'recaptcha-container',
   );
-  console.log('recaptcha');
   const appVerifier = window.recaptchaVerifier;
 
   return firebase

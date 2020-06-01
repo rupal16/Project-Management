@@ -36,7 +36,5 @@ export const userSignOut = () => {
   return firebase
     .auth()
     .signOut()
-    .then(() => {
-      console.log('user is signed out');
-    });
+    .then(() => {});
 };

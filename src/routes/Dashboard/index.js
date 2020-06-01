@@ -10,10 +10,7 @@ class Dashboard extends React.Component {
   };
 
   handleClick = async () => {
-    console.log('redirecting to signin page');
     await userSignOut();
-    // this.props.history.push('/signin');
-    console.log('user logged out');
   };
 
   render() {
