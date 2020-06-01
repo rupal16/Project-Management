@@ -1,5 +1,4 @@
 import React from 'react';
-import { withRouter } from 'react-router';
 import PropTypes from 'prop-types';
 
 import { userSignOut } from '../../services/user-service';
@@ -23,4 +22,4 @@ class Dashboard extends React.Component {
   }
 }
 
-export default withRouter(Dashboard);
+export default Dashboard;
