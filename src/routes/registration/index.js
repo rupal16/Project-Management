@@ -385,9 +385,7 @@ class Registration extends Component {
                       role="status"
                       aria-hidden="true"
                     />
-                    <span style={{ 'left-margin': '30px' }}>
-                      Please wait...
-                    </span>
+                    <span style={{ leftMargin: '30px' }}>Please wait...</span>
                   </div>
                 )}
                 {!this.state.isloading && (
