@@ -11,6 +11,7 @@ import Input from '../../components/Input';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './style.scss';
+// import { getDetails } from '../../services/user-details';
 
 const buttonStyle = {
   backgroundColor: '#008B8B',
@@ -189,6 +190,7 @@ class Registration extends Component {
         try {
           await confirmationResult.confirm(userEnteredOtp);
           await saveUser(firstName.val, lastName.val, phone.val, email.val);
+
           this.props.history.push('./dashboard');
         } catch (err) {
           this.setState({ errorMessageDisplay: true });
