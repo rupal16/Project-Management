@@ -18,7 +18,7 @@ export const isPhoneRegistered = async phone => {
     });
 };
 
-export const saveUser = (firstName, lastname, phone, email) => {
+export const saveUser = (firstName, lastName, phone, email) => {
   let userId = firebase.auth().currentUser.uid;
 
   return firebase
@@ -26,7 +26,7 @@ export const saveUser = (firstName, lastname, phone, email) => {
     .ref('users/' + userId)
     .set({
       firstName,
-      lastname,
+      lastName,
       phone,
       email,
     });

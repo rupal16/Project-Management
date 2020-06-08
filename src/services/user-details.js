@@ -7,7 +7,7 @@ export const getDetails = async () => {
 
   const snapshot = await userDbRef.ref('/users/' + userId).once('value');
   let firstName = snapshot.val().firstName;
-  let lastName = snapshot.val().lastname;
+  let lastName = snapshot.val().lastName;
   let email = snapshot.val().email;
   let phone = snapshot.val().phone;
 
