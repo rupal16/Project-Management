@@ -23,18 +23,18 @@ const userProfile = (
     case 'FETCH_USER_SUCCESS':
       return Object.assign({}, state, {
         isLoading: false,
-        firstName: action.firstName,
-        lastName: action.lastName,
-        email: action.email,
-        phone: action.phone,
+        firstName: action.payload.firstName,
+        lastName: action.payload.lastName,
+        email: action.payload.email,
+        phone: action.payload.phone,
       });
 
     case 'EDIT_USER_DETAILS_REQUEST':
       return Object.assign({}, state, {
-        firstName: action.firstName,
-        lastName: action.lastName,
-        email: action.email,
-        phone: action.phone,
+        firstName: action.payload.firstName,
+        lastName: action.payload.lastName,
+        email: action.payload.email,
+        phone: action.payload.phone,
       });
 
     case 'EDIT_USER_DETAILS_FAILURE':
@@ -46,10 +46,10 @@ const userProfile = (
     case 'EDIT_USER_DETAILS_SUCCESS':
       return Object.assign({}, state, {
         isLoading: false,
-        firstName: action.firstName,
-        lastName: action.lastName,
-        email: action.email,
-        phone: action.phone,
+        firstName: action.payload.firstName,
+        lastName: action.payload.lastName,
+        email: action.payload.email,
+        phone: action.payload.phone,
       });
     default:
       return state;

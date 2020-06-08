@@ -11,24 +11,29 @@ export const requestUser = () => ({
 
 export const requestUserFailure = error => ({
   type: 'FETCH_USER_FAILURE',
+
   error: error,
 });
 
 export const requestUserSuccess = (firstName, lastName, email, phone) => ({
   type: 'FETCH_USER_SUCCESS',
-  firstName: firstName,
-  lastName: lastName,
-  email: email,
-  phone: phone,
+  payload: {
+    firstName: firstName,
+    lastName: lastName,
+    email: email,
+    phone: phone,
+  },
 });
 
 export const editUserDetails = (firstName, lastName, email, phone) => {
   return {
     type: 'EDIT_USER_DETAILS_REQUEST',
-    firstName: firstName,
-    lastName: lastName,
-    email: email,
-    phone: phone,
+    payload: {
+      firstName: firstName,
+      lastName: lastName,
+      email: email,
+      phone: phone,
+    },
   };
 };
 
@@ -39,8 +44,10 @@ export const editUserDetailsFailure = error => ({
 
 export const editUserDetailsSuccess = (firstName, lastName, email, phone) => ({
   type: 'EDIT_USER_DETAILS_SUCCESS',
-  firstName: firstName,
-  lastName: lastName,
-  email: email,
-  phone: phone,
+  payload: {
+    firstName: firstName,
+    lastName: lastName,
+    email: email,
+    phone: phone,
+  },
 });

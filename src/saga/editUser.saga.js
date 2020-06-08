@@ -3,9 +3,16 @@ import { userUpdate } from '../services/user-service';
 
 import { editUserDetailsFailure, editUserDetailsSuccess } from '../actions';
 
-function* updateUserAsync({ firstName, lastName, email, phone }) {
+function* updateUserAsync({ payload }) {
   try {
-    const userData = yield call(userUpdate(firstName, lastName, email, phone));
+    const userData = yield call(
+      userUpdate(
+        payload.firstName,
+        payload.lastName,
+        payload.email,
+        payload.phone,
+      ),
+    );
     yield put(
       editUserDetailsSuccess(
         userData.firstName,
