@@ -7,12 +7,6 @@ class Dashboard extends React.Component {
   static propTypes = {
     history: PropTypes.object.isRequired,
   };
-  constructor(props) {
-    super(props);
-    this.state = {
-      isProfile: false,
-    };
-  }
 
   handleClick = async () => {
     await userSignOut();
