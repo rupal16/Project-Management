@@ -11,7 +11,6 @@ import Input from '../../components/Input';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './style.scss';
-// import { getDetails } from '../../services/user-details';
 
 const buttonStyle = {
   backgroundColor: '#008B8B',

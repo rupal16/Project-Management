@@ -5,8 +5,6 @@ import { editUserDetailsFailure, editUserDetailsSuccess } from '../actions';
 
 function* updateUserAsync({ firstName, lastName, email, phone }) {
   try {
-    console.log('inside update saga');
-    console.log('firstname from saga', firstName);
     const userData = yield call(userUpdate(firstName, lastName, email, phone));
     yield put(
       editUserDetailsSuccess(
@@ -16,14 +14,11 @@ function* updateUserAsync({ firstName, lastName, email, phone }) {
         userData.phone,
       ),
     );
-
-    console.log('data', userData);
   } catch (error) {
     yield put(editUserDetailsFailure(error.message));
   }
 }
 
 export function* watchEditUser() {
-  console.log('watcher edit user');
   yield takeEvery('EDIT_USER_DETAILS_REQUEST', updateUserAsync);
 }

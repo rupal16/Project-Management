@@ -23,8 +23,6 @@ export const requestUserSuccess = (firstName, lastName, email, phone) => ({
 });
 
 export const editUserDetails = (firstName, lastName, email, phone) => {
-  console.log('inside edit user action');
-  console.log('firstname', firstName);
   return {
     type: 'EDIT_USER_DETAILS_REQUEST',
     firstName: firstName,

@@ -10,6 +10,6 @@ export const getDetails = async () => {
   let lastName = snapshot.val().lastname;
   let email = snapshot.val().email;
   let phone = snapshot.val().phone;
-  // throw new Error('hello');
+
   return { firstName, lastName, email, phone };
 };

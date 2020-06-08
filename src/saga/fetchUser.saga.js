@@ -6,7 +6,7 @@ import { requestUserFailure, requestUserSuccess } from '../actions';
 function* fetchUserAsync() {
   try {
     const userData = yield call(getDetails);
-    console.log('useeerr data', userData);
+
     yield put(
       requestUserSuccess(
         userData.firstName,
@@ -15,8 +15,6 @@ function* fetchUserAsync() {
         userData.phone,
       ),
     );
-
-    console.log('data', userData);
   } catch (error) {
     yield put(requestUserFailure(error.message));
   }
@@ -25,5 +23,3 @@ function* fetchUserAsync() {
 export function* watchFetchUser() {
   yield takeEvery('FETCH_USER_REQUEST', fetchUserAsync);
 }
-
-// export default [takeEvery('FETCH_USER_REQUEST', fetchUserAsync)];

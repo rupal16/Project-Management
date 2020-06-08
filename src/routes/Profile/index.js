@@ -62,7 +62,6 @@ const Profile = ({ error, firstName, lastName, email, phone }) => {
           className="edit"
           onClick={() => {
             setUpdate(true);
-            console.log('isupdate is clicked', isUpdate);
           }}
         />
       </div>
@@ -73,7 +72,6 @@ const Profile = ({ error, firstName, lastName, email, phone }) => {
 };
 
 const mapStateToProps = state => {
-  console.log('state userprofile', state.userProfile);
   return {
     isLoading: state.userProfile.isLoading,
     error: state.userProfile.error,

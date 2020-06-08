@@ -18,23 +18,12 @@ class Dashboard extends React.Component {
     await userSignOut();
   };
 
-  // profileHandler = async () => {
-  //   try {
-  //     await getDetails();
-  //     this.setState({
-  //       isProfile: true,
-  //     });
-  //   } catch (error) {}
-  // };
-
   render() {
-    // const { isProfile } = this.state;
     return (
       <div>
         <h1>Welcome to Dashboard!</h1>
         <button onClick={this.handleClick}>SignOut</button>
         <button onClick={this.profileHandler}>Profile page</button>
-        {/* {isProfile && <Profile />} */}
       </div>
     );
   }

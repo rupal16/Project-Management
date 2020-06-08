@@ -28,15 +28,12 @@ class EditDetails extends Component {
 
   handleChange = e => {
     const { value, name } = e.target;
-    console.log('value', value, name);
     this.setState({
       [name]: value,
     });
-    console.log(this.state);
   };
 
   render() {
-    console.log('from edit details');
     return (
       <div>
         <Dialog open={this.state.open} onClose={this.handleClose}>
@@ -90,14 +87,12 @@ class EditDetails extends Component {
             <Button onClick={this.handleClose}>Cancel</Button>
             <Button
               onClick={() => {
-                console.log('inside inclick');
                 this.props.click(
                   this.state.firstName,
                   this.state.lastName,
                   this.state.email,
                   this.state.phone,
                 );
-                console.log('from onclick', this.state.firstName);
                 this.handleClose();
               }}
             >

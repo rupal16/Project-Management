@@ -40,14 +40,12 @@ export const userSignOut = () => {
 };
 
 export const userUpdate = async (firstName, lastName, email, phone) => {
-  console.log('hiiiiii');
   let userId = firebase.auth().currentUser.uid;
-  console.log('inside update srvice');
-  console.log('firstName', firstName);
+
   userDbRef.ref('users/' + userId + '/firstName').set(firstName);
   userDbRef.ref('users/' + userId + '/lastName').set(lastName);
   userDbRef.ref('users/' + userId + '/email').set(email);
   userDbRef.ref('users/' + userId + '/phone').set(phone);
-  console.log('lastName', lastName);
+
   return { firstName, lastName, email, phone };
 };
