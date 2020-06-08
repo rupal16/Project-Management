@@ -25,5 +25,5 @@ function* updateUserAsync({ firstName, lastName, email, phone }) {
 
 export function* watchEditUser() {
   console.log('watcher edit user');
-  yield takeEvery('EDIT_USER_DETAILS', updateUserAsync);
+  yield takeEvery('EDIT_USER_DETAILS_REQUEST', updateUserAsync);
 }

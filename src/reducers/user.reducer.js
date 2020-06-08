@@ -33,7 +33,7 @@ const userProfile = (
         phone: action.phone,
       });
 
-    case 'EDIT_USER_DETAILS':
+    case 'EDIT_USER_DETAILS_REQUEST':
       console.log('from reducer');
       console.log('user details to be updated');
       console.log('action', action);

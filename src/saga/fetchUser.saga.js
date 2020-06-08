@@ -7,9 +7,6 @@ function* fetchUserAsync() {
   try {
     const userData = yield call(getDetails);
     console.log('useeerr data', userData);
-    // let firstName = userData.firstName;
-    // let lastName = userData.lastName;
-    // yield put(requestUserSucceeded(firstName, lastName));
     yield put(
       requestUserSuccess(
         userData.firstName,
