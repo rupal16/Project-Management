@@ -11,6 +11,7 @@ import Registration from './registration';
 import Signin from './Signin';
 import Dashboard from './Dashboard';
 import Profile from './Profile';
+import Projects from './Projects';
 
 import firebase from '../config/firebase';
 
@@ -54,6 +55,7 @@ class Routes extends Component {
             <Redirect exact from="/" to="/user-registration" />
             <Route path="/user-registration" component={Registration} />
             {/* <Route path="/user-profile" component={Profile} /> */}
+            <Route path="/user-profile/projects" component={Projects} />
             <Route
               path="/signin"
               render={props =>

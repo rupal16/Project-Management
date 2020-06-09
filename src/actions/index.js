@@ -4,6 +4,9 @@ export const FETCH_USER_FAILURE = 'FETCH_USER_FAILURE';
 export const EDIT_USER_DETAILS_REQUEST = 'EDIT_USER_DETAILS_REQUEST';
 export const EDIT_USER_DETAILS_FAILURE = 'EDIT_USER_DETAILS_FAILURE';
 export const EDIT_USER_DETAILS_SUCCESS = 'EDIT_USER_DETAILS_SUCCESS';
+export const FETCH_PROJECT_REQUEST = 'FETCH_PROJECT_REQUEST';
+export const FETCH_PROJECT_SUCCESS = 'FETCH_PROJECT_SUCCESS';
+export const FETCH_PROJECT_FAILURE = 'FETCH_PROJECT_FAILURE';
 
 export const requestUser = () => ({
   type: 'FETCH_USER_REQUEST',
@@ -50,4 +53,57 @@ export const editUserDetailsSuccess = (firstName, lastName, email, phone) => ({
     email: email,
     phone: phone,
   },
+});
+
+// export const createProjectRequest = (projectTitle, projectDescription) => ({
+//   type: 'CREATE_PROJECT_REQUEST',
+//   payload: {
+//     projectTitle: projectTitle,
+//     projectDescription: projectDescription,
+//   },
+// });
+
+export const createProjectRequest = (projectTitle, projectDescription) => {
+  console.log('inside create proejvt action');
+  console.log('inside action details', projectTitle);
+  return {
+    type: 'CREATE_PROJECT_REQUEST',
+    payload: {
+      projectTitle: projectTitle,
+      projectDescription: projectDescription,
+    },
+  };
+};
+
+export const createProjectSuccess = (projectTitle, projectDescription) => {
+  console.log('create project suucessfyl');
+  return {
+    type: 'CREATE_PROJECT_SUCCESS',
+    payload: {
+      projectTitle: projectTitle,
+      projectDescription: projectDescription,
+    },
+  };
+};
+
+export const createProjectFailure = error => ({
+  type: 'CREATE_PROJECT_FAILURE',
+  error: error,
+});
+
+export const fetchProjectRequest = () => ({
+  type: 'FETCH_PROJECT_REQUEST',
+});
+
+export const fetchProjectSuccess = (projectTitle, projectDescription) => ({
+  type: 'FETCH_PROJECT_SUCCESS',
+  payload: {
+    projectTitle: projectTitle,
+    projectDescription: projectDescription,
+  },
+});
+
+export const fetchProjectFailure = error => ({
+  type: 'FETCH_PROJECT_FAILURE',
+  error: error,
 });
