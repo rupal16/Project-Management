@@ -5,6 +5,13 @@ import Sidebar from '../../components/sideBar';
 import Input from '../../components/Input';
 import { createProjectRequest } from '../../actions';
 
+import {
+  fetchAllProjects,
+  fetchProjectById,
+  deleteProject,
+  updateProject,
+} from '../../services/user.project';
+
 import './style.scss';
 
 class Projects extends Component {
@@ -12,7 +19,6 @@ class Projects extends Component {
     super(props);
     this.state = {
       projectTitle: '',
-      projectDescription: '',
     };
   }
 
@@ -23,28 +29,34 @@ class Projects extends Component {
     });
   };
 
+  fetchAllHandler = e => {
+    e.preventDefault();
+    const projects = fetchAllProjects();
+    console.log('projects', projects);
+  };
+
+  fetchProjectById = e => {
+    e.preventDefault();
+    fetchProjectById('-M9OJNXNCNCl_C90CawH');
+  };
+
+  deleteProjectById = e => {
+    e.preventDefault();
+    deleteProject('-M9OJNXNCNCl_C90CawH');
+  };
+
+  updateProject = e => {
+    e.preventDefault();
+    updateProject('-M9OMQqwdvMNTSK4FK-0', 'rupal');
+  };
+
   render() {
-    const { projectTitle, projectDescription } = this.state;
+    const { projectTitle } = this.state;
     return (
       <div>
         <div>
           <Sidebar page="projects" />
         </div>
-        {/* <div className="cards">
-          <Card>
-            <Card.Header as="h5">Project Name</Card.Header>
-            <Card.Body>
-              <Card.Title>Project Description</Card.Title>
-              <Card.Text>Description</Card.Text>
-              <Button variant="primary" className="button">
-                Open Project
-              </Button>
-            </Card.Body>
-          </Card>
-          <Button variant="primary" className="addproject button">
-            <FontAwesome name="plus" /> Create New Project
-          </Button> */}
-        {/* </div> */}
         <form className="project-form">
           <div>
             <Input
@@ -56,29 +68,23 @@ class Projects extends Component {
               value={projectTitle}
             />
           </div>
-          <div>
-            <Input
-              labelname="Project Description"
-              type="text"
-              name="projectDescription"
-              placeholder=" Project Description"
-              handleChange={this.handleChange}
-              value={projectDescription}
-            />
-          </div>
           <button
             onClick={e => {
               e.preventDefault();
               console.log('calling createProject');
               console.log('e target', this.state.projectTitle);
-              this.props.createProject(
-                this.state.projectTitle,
-                this.state.projectDescription,
-              );
+              this.props.createProject(this.state.projectTitle);
             }}
           >
             Create project
           </button>
+          {/* <button onClick={this.props.fetchAllProject()}>
+            Fetch all projects
+          </button> */}
+          <button onClick={this.fetchAllHandler}>Fetch All projects</button>
+          <button onClick={this.fetchProjectById}>Fetch Project bY id</button>
+          <button onClick={this.deleteProjectById}>Delete by Id</button>
+          <button onClick={this.updateProject}>Update</button>
         </form>
       </div>
     );
@@ -89,9 +95,12 @@ class Projects extends Component {
 
 const mapDispatchToProps = dispatch => {
   return {
-    createProject: (projectTitle, projectDescription) => {
-      dispatch(createProjectRequest(projectTitle, projectDescription));
+    createProject: projectTitle => {
+      dispatch(createProjectRequest(projectTitle));
     },
+    // fetchAllProject: () => {
+    //   dispatch(fetchAllProjectRequest());
+    // },
   };
 };
 

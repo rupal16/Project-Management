@@ -3,24 +3,64 @@ import * as firebase from 'firebase';
 
 export const userDbRef = firebaseApp.database();
 
-export const createProject = async (projectTitle, projectDescription) => {
-  let userId = firebase.auth().currentUser.uid;
-  console.log('userid inside user project service', userId);
-  console.log('project details', projectTitle, projectDescription);
-  return firebase
-    .database()
-    .ref('projects/' + userId)
-    .set({
-      projectTitle,
-      projectDescription,
+// create project
+export const createProject = async projectTitle => {
+  let projectRef = firebase.database().ref('project');
+  console.log('userid inside user project service');
+  console.log('project details', projectTitle);
+  projectRef
+    .push()
+    .child('title')
+    .set(projectTitle);
+};
+
+// fetch all projects
+export const fetchAllProjects = async () => {
+  console.log('inside fetch all service');
+  let projectRef = firebase.database().ref('project');
+  projectRef
+    .orderByChild('title')
+    .once('value')
+    .then(snapshot => {
+      snapshot.forEach(function(childSnapshot) {
+        console.log('snapshot', snapshot.val());
+      });
     });
 };
 
-export const fetchProject = async () => {
-  let userId = firebase.auth().currentUser.uid;
+//fetch project by id
+export const fetchProjectById = async id => {
+  let projectRef = firebase.database().ref('project');
+  projectRef
+    .orderByChild('title')
+    .once('value')
+    .then(snapshot => {
+      snapshot.forEach(function(childSnapshot) {
+        if (childSnapshot.key === id) {
+          console.log('selected one', childSnapshot.val());
+        }
+      });
+    });
+};
 
-  const snapshot = await userDbRef.ref('/projects/' + userId).once('value');
-  let projectTitle = snapshot.val().projectTitle;
-  let projectDescription = snapshot.val().projectDescription;
-  return { projectTitle, projectDescription };
+//delete project by id
+
+export const deleteProject = async id => {
+  firebase
+    .database()
+    .ref('project')
+    .child(id)
+    .remove();
+  console.log('deleted', id);
+};
+
+//update project details
+
+export const updateProject = async (id, title) => {
+  firebase
+    .database()
+    .ref('project')
+    .child(id)
+    .child('title')
+    .set(title);
 };
