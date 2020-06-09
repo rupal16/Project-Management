@@ -189,6 +189,7 @@ class Registration extends Component {
         try {
           await confirmationResult.confirm(userEnteredOtp);
           await saveUser(firstName.val, lastName.val, phone.val, email.val);
+
           this.props.history.push('./dashboard');
         } catch (err) {
           this.setState({ errorMessageDisplay: true });

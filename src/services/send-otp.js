@@ -1,5 +1,6 @@
 import * as firebase from 'firebase';
 import firebaseApp from '../config/firebase';
+export const auth = firebase.auth();
 
 const sendOtp = (phoneNumber, callback, errorCallback) => {
   firebaseApp.auth().useDeviceLanguage();

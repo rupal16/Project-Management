@@ -1,7 +1,7 @@
 import firebaseApp from '../config/firebase';
 import * as firebase from 'firebase';
 
-const userDbRef = firebaseApp.database();
+export const userDbRef = firebaseApp.database();
 
 export const isPhoneRegistered = async phone => {
   return userDbRef
@@ -18,7 +18,7 @@ export const isPhoneRegistered = async phone => {
     });
 };
 
-export const saveUser = (firstName, lastname, phone, email) => {
+export const saveUser = (firstName, lastName, phone, email) => {
   let userId = firebase.auth().currentUser.uid;
 
   return firebase
@@ -26,7 +26,7 @@ export const saveUser = (firstName, lastname, phone, email) => {
     .ref('users/' + userId)
     .set({
       firstName,
-      lastname,
+      lastName,
       phone,
       email,
     });
@@ -37,4 +37,15 @@ export const userSignOut = () => {
     .auth()
     .signOut()
     .then(() => {});
+};
+
+export const userUpdate = async (firstName, lastName, email, phone) => {
+  let userId = firebase.auth().currentUser.uid;
+
+  userDbRef.ref('users/' + userId + '/firstName').set(firstName);
+  userDbRef.ref('users/' + userId + '/lastName').set(lastName);
+  userDbRef.ref('users/' + userId + '/email').set(email);
+  userDbRef.ref('users/' + userId + '/phone').set(phone);
+
+  return { firstName, lastName, email, phone };
 };

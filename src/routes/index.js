@@ -10,6 +10,8 @@ import history from '../utils/history';
 import Registration from './registration';
 import Signin from './Signin';
 import Dashboard from './Dashboard';
+import Profile from './Profile';
+
 import firebase from '../config/firebase';
 
 import PrivateRoute from '../components/PrivateRoute';
@@ -51,17 +53,25 @@ class Routes extends Component {
           <Switch>
             <Redirect exact from="/" to="/user-registration" />
             <Route path="/user-registration" component={Registration} />
+            {/* <Route path="/user-profile" component={Profile} /> */}
             <Route
               path="/signin"
               render={props =>
                 this.state.user !== null ? (
-                  <Redirect to="/dashboard" />
+                  <Redirect to="/user-profile" />
                 ) : (
                   <Signin />
                 )
               }
             />
             <PrivateRoute
+              exact
+              path="/user-profile"
+              component={Profile}
+              user={this.state.user}
+            />
+            <PrivateRoute
+              exact
               path="/dashboard"
               component={Dashboard}
               user={this.state.user}
