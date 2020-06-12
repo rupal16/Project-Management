@@ -1,9 +1,13 @@
 import React, { Component } from 'react';
-import { Nav, Navbar, Dropdown, Modal, Button } from 'react-bootstrap';
+import { Nav, Navbar, Modal, Button, NavDropdown } from 'react-bootstrap';
 import { connect } from 'react-redux';
-import { createProjectRequest } from '../../actions';
+import { createProjectRequest, fetchAllProjectsRequest } from '../../actions';
+
+import { userSignOut } from '../../services/user-service';
 
 import Input from '../Input';
+
+import './style.scss';
 
 class NavBar extends Component {
   constructor(props) {
@@ -15,11 +19,19 @@ class NavBar extends Component {
     };
   }
 
+  componentDidMount = () => {
+    this.props.click();
+  };
+
   handleChange = e => {
     const { value, name } = e.target;
     this.setState({
       [name]: value,
     });
+  };
+
+  signOutHandler = async () => {
+    await userSignOut();
   };
 
   createProjectClicked = () => {
@@ -34,25 +46,67 @@ class NavBar extends Component {
     console.log('create', createProject);
     return (
       <div>
-        <Navbar fixed="top" bg="light" variant="light">
+        {/* fixed="top" */}
+        {/* <Navbar bg="light" variant="light">
           <Navbar.Brand href="/dashboard">Dashboard</Navbar.Brand>
-          <Nav className="mr-auto">
+          <Nav>
             <Nav.Link onClick={this.createProjectClicked}>
               Create Project
             </Nav.Link>
-            <Nav.Link href="/user-profile">Profile</Nav.Link>
+          </Nav>
+          <Nav>
             <Dropdown>
-              <Dropdown.Toggle variant="success" id="dropdown-basic">
-                Dropdown Button
+              <Dropdown.Toggle className="projectList" id="dropdown-basic">
+                Projects
               </Dropdown.Toggle>
 
               <Dropdown.Menu>
-                <Dropdown.Item href="#/action-1">Action</Dropdown.Item>
-                <Dropdown.Item href="#/action-2">Another action</Dropdown.Item>
-                <Dropdown.Item href="#/action-3">Something else</Dropdown.Item>
+                {Object.keys(this.props.projects).map(key => (
+                  <Dropdown.Item id={key}>
+                    {this.props.projects[key].title.projectTitle}
+                  </Dropdown.Item>
+                ))}
               </Dropdown.Menu>
             </Dropdown>
+            <Nav.Link href="/user-profile">Profile</Nav.Link>
+            <Button className="projectList" onClick={this.signOutHandler}>
+              Log Out
+            </Button>
           </Nav>
+        </Navbar> */}
+        <Navbar
+          collapseOnSelect
+          expand="lg"
+          bg="light"
+          variant="light"
+          fixe="top"
+        >
+          <Navbar.Brand href="/dashboard">Dashboard</Navbar.Brand>
+          <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+          <Navbar.Collapse id="responsive-navbar-nav">
+            <Nav className="mr-auto">
+              <Nav.Link onClick={this.createProjectClicked}>
+                Create Project
+              </Nav.Link>
+              <NavDropdown
+                title="Projects"
+                id="collasible-nav-dropdown"
+                // className="projectList"
+              >
+                {Object.keys(this.props.projects).map(key => (
+                  <NavDropdown.Item id={key}>
+                    {this.props.projects[key].title.projectTitle}
+                  </NavDropdown.Item>
+                ))}
+              </NavDropdown>
+            </Nav>
+            <Nav>
+              <Nav.Link href="/user-profile">Profile</Nav.Link>
+              <Nav.Link eventKey={2} onClick={this.signOutHandler}>
+                Logout
+              </Nav.Link>
+            </Nav>
+          </Navbar.Collapse>
         </Navbar>
         {createProject && (
           <Modal show={this.state.createProject} size="sm" centered>
@@ -109,12 +163,21 @@ class NavBar extends Component {
   }
 }
 
+const mapStateToProps = state => {
+  return {
+    projects: state.userProject.projects,
+  };
+};
+
 const mapDispatchToProps = dispatch => {
   return {
     createNewProject: (projectTitle, projectDescription) => {
       dispatch(createProjectRequest(projectTitle, projectDescription));
     },
+    click: () => {
+      dispatch(fetchAllProjectsRequest());
+    },
   };
 };
 
-export default connect(null, mapDispatchToProps)(NavBar);
+export default connect(mapStateToProps, mapDispatchToProps)(NavBar);

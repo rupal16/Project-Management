@@ -74,10 +74,10 @@ class Dashboard extends React.Component {
             ))}
           </div>
         </div>
-        <div>
+        {/* <div>
           <button onClick={this.handleClick}>SignOut</button>
           <button onClick={this.profileHandler}>Profile page</button>
-        </div>
+        </div> */}
       </div>
     );
   }
