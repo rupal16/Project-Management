@@ -49,7 +49,7 @@ const ProjectCard = props => {
             margin="dense"
             id="projectTitle"
             name="projectTitle"
-            label="projectTitle"
+            label="Project Title"
             type="text"
             fullWidth
             value={props.projectTitle}
@@ -60,9 +60,9 @@ const ProjectCard = props => {
           <Card.Title>
             <TextField
               margin="dense"
-              id="projectTitle"
-              name="projectTitle"
-              label="projectTitle"
+              id="projectDescription"
+              name="projectDescription"
+              label="Project Description"
               type="text"
               fullWidth
               value={props.projectDescription}
