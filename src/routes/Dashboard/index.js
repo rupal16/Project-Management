@@ -5,6 +5,7 @@ import { withRouter } from 'react-router';
 
 import ProjectCard from '../../components/projectCard';
 import { fetchAllProjectsRequest } from '../../actions';
+import NavBar from '../../components/navBar';
 
 import { userSignOut } from '../../services/user-service';
 
@@ -49,6 +50,7 @@ class Dashboard extends React.Component {
   render() {
     return (
       <div>
+        <NavBar />
         <div className="project-list-wrap">
           <div className="projects-list">
             {/* (this.props.projects).map */}
