@@ -1,0 +1,22 @@
+.cards {
+  width: 900px;
+  margin-left: 380px;
+  margin-top: 100px;
+  border: 3px solid rgba(47, 79, 79, 0.3);
+  border-radius: 10px;
+}
+
+.cards .addproject {
+  width: 300px;
+  margin-left: 597px;
+}
+
+.button {
+  background-color: rgba(47, 79, 79, 0.8);
+}
+
+.project-form {
+  width: 500px;
+  margin-left: 500px;
+}
+/*# sourceMappingURL=style.css.map */

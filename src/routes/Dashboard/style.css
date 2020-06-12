@@ -1,0 +1,47 @@
+.project-list-wrap {
+  height: 100vh;
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  background-color: #ffe6e6;
+}
+
+.projects-list {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -ms-flex-pack: distribute;
+  justify-content: space-around;
+  margin-top: 80px;
+}
+
+.project-btn {
+  background-color: gainsboro;
+  color: black;
+  float: right;
+  border: none;
+  margin: 0px 7px;
+}
+
+.project-ele {
+  height: 200px !important;
+  width: 700px;
+  margin: 20px;
+  border-radius: 10px;
+  -webkit-box-shadow: 0px 10px 50px #555;
+  box-shadow: 0px 10px 50px #555;
+  border: 1px solid black;
+}
+/*# sourceMappingURL=style.css.map */

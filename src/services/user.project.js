@@ -5,7 +5,7 @@ export const userDbRef = firebaseApp.database();
 
 // create project
 export const createProject = async (projectTitle, projectDescription) => {
-  let projectRef = firebase.database().ref('project');
+  let projectRef = firebase.database().ref('Projects');
   console.log('userid inside user project service');
   console.log('project details', projectTitle);
   projectRef
@@ -17,7 +17,7 @@ export const createProject = async (projectTitle, projectDescription) => {
 // fetch all projects
 export const fetchAllProjects = async cb => {
   console.log('inside fetch all service');
-  let projectRef = firebase.database().ref('project');
+  let projectRef = firebase.database().ref('Projects');
   let projects = await projectRef.orderByChild('title').once('value');
 
   return projects.val();
@@ -25,7 +25,7 @@ export const fetchAllProjects = async cb => {
 
 //fetch project by id
 export const fetchProjectById = async id => {
-  let projectRef = firebase.database().ref('project');
+  let projectRef = firebase.database().ref('Projects');
   projectRef
     .orderByChild('title')
     .once('value')
@@ -43,7 +43,7 @@ export const fetchProjectById = async id => {
 export const removeProject = async id => {
   firebase
     .database()
-    .ref('project')
+    .ref('Projects')
     .child(id)
     .remove();
   console.log('deleted', id);
@@ -54,7 +54,7 @@ export const removeProject = async id => {
 export const updateProject = async (id, title) => {
   firebase
     .database()
-    .ref('project')
+    .ref('Projects')
     .child(id)
     .child('title')
     .set(title);
