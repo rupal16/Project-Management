@@ -1,0 +1,29 @@
+.project-list-wrap {
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  background-color: #ffe6e6;
+}
+
+.projects-list {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+.project-btn {
+  background-color: rgb(220, 220, 220);
+  color: black;
+  float: right;
+  border: none;
+  margin: 0px 7px;
+}
+
+.project-ele {
+  width: 700px;
+  margin: 20px;
+  border-radius: 10px;
+  box-shadow: 0px 10px 50px #555;
+}

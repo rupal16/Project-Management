@@ -10,14 +10,19 @@ const userProfile = (
   action,
 ) => {
   switch (action.type) {
+    case 'FETCH_USER_REQUEST':
+      return Object.assign({}, state, {
+        isLoading: true,
+        error: '',
+      });
+    // return {...state,{
+    //   isLoading: true,
+    //   error: ''
+    // }}
     case 'FETCH_USER_FAILURE':
       return Object.assign({}, state, {
         isLoading: false,
         error: action.error,
-      });
-    case 'FETCH_USER_REQUEST':
-      return Object.assign({}, state, {
-        isLoading: true,
       });
 
     case 'FETCH_USER_SUCCESS':
@@ -35,6 +40,7 @@ const userProfile = (
         lastName: action.payload.lastName,
         email: action.payload.email,
         phone: action.payload.phone,
+        error: '',
       });
 
     case 'EDIT_USER_DETAILS_FAILURE':

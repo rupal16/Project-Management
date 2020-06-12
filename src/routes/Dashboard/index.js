@@ -1,26 +1,118 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { withRouter } from 'react-router';
+
+import ProjectCard from '../../components/projectCard';
+import { fetchAllProjectsRequest } from '../../actions';
 
 import { userSignOut } from '../../services/user-service';
+
+import './style.scss';
 
 class Dashboard extends React.Component {
   static propTypes = {
     history: PropTypes.object.isRequired,
+  };
+  constructor(props) {
+    super(props);
+    this.project = [];
+  }
+
+  componentDidMount = () => {
+    this.props.click();
+  };
+
+  state = {
+    projectTitle: this.props.projectTitle,
+    projectDescription: this.props.projectDescription,
   };
 
   handleClick = async () => {
     await userSignOut();
   };
 
+  removeProjectHandler = event => {
+    console.log('remove button cliked');
+    console.log('key', event);
+  };
+
+  handleChange = e => {
+    const { value, name } = e.target;
+    console.log('name', name);
+    this.setState({
+      [name]: value,
+    });
+    console.log('handlechange', this.state);
+  };
+
   render() {
     return (
       <div>
-        <h1>Welcome to Dashboard!</h1>
-        <button onClick={this.handleClick}>SignOut</button>
-        <button onClick={this.profileHandler}>Profile page</button>
+        <div className="project-list-wrap">
+          <div className="projects-list">
+            {/* (this.props.projects).map */}
+            {/* {Object.values(this.props.projects).map(project => (
+              <ProjectCard
+              id={}
+                projectTitle={project.title.projectTitle}
+                projectDescription={project.title.projectDescription}
+                members="members"
+              />
+            ))} */}
+            {Object.keys(this.props.projects).map(key => (
+              <ProjectCard
+                id={key}
+                projectTitle={this.props.projects[key].title.projectTitle}
+                projectDescription={
+                  this.props.projects[key].title.projectDescription
+                }
+                handleChange={this.handleChange}
+              />
+            ))}
+          </div>
+        </div>
+        <div>
+          <button onClick={this.handleClick}>SignOut</button>
+          <button onClick={this.profileHandler}>Profile page</button>
+        </div>
       </div>
     );
   }
 }
 
-export default Dashboard;
+const mapStateToProps = state => {
+  return {
+    projects: state.userProject.projects,
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    click: () => {
+      dispatch(fetchAllProjectsRequest());
+    },
+  };
+};
+
+export default withRouter(
+  connect(mapStateToProps, mapDispatchToProps)(Dashboard),
+);
+
+// const mapDispatchToProps = dispatch => {
+//   return {
+//     click: (firstName, lastName, email, phone) => {
+//       dispatch(editUserDetails(firstName, lastName, email, phone));
+//     },
+//   };
+// };
+
+// class ProjectsList extends Component {
+//   render() {
+//     return (
+
+//     );
+//   }
+// }
+
+// export default ProjectsList;

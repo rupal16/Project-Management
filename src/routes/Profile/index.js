@@ -66,7 +66,6 @@ const Profile = ({ error, firstName, lastName, email, phone }) => {
         />
       </div>
       {isUpdate && <EditDetails {...userObj} onUpdate={handleUpdateComplete} />}
-      {error}
     </div>
   );
 };
