@@ -5,8 +5,6 @@ import Sidebar from '../../components/sideBar';
 import Input from '../../components/Input';
 import { createProjectRequest } from '../../actions';
 
-import OpenProject from '../openProject';
-
 import {
   fetchAllProjects,
   fetchProjectById,
@@ -21,7 +19,7 @@ class Projects extends Component {
     super(props);
     this.state = {
       projectTitle: '',
-      showProject: true,
+
       projectDescription: '',
     };
   }
@@ -55,7 +53,7 @@ class Projects extends Component {
   };
 
   render() {
-    const { projectTitle, projectDescription, showProject } = this.state;
+    const { projectTitle, projectDescription } = this.state;
     return (
       <div>
         <div>
@@ -84,22 +82,17 @@ class Projects extends Component {
           </div>
           <button
             onClick={e => {
-              const { showProject } = this.state;
+              // const { showProject } = this.state;
               e.preventDefault();
-              console.log('calling createProject');
-              console.log(
-                'e target',
-                this.state.projectTitle,
-                this.state.projectDescription,
-              );
+
               this.props.createProject(
                 this.state.projectTitle,
                 this.state.projectDescription,
               );
-              this.setState({
-                showProject: true,
-              });
-              console.log('show project', showProject);
+              // this.setState({
+              //   showProject: true,
+              // });
+              // console.log('show project', showProject);
             }}
           >
             Create project
@@ -112,12 +105,6 @@ class Projects extends Component {
           <button onClick={this.deleteProjectById}>Delete by Id</button>
           <button onClick={this.updateProject}>Update</button>
         </form>
-
-        {showProject && (
-          <div>
-            <OpenProject />
-          </div>
-        )}
       </div>
     );
   }
