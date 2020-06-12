@@ -51,11 +51,11 @@ export const removeProject = async id => {
 
 //update project details
 
-export const updateProject = async (id, title) => {
+export const updateProject = async (id, { title, description }) => {
   firebase
     .database()
     .ref('Projects')
     .child(id)
     .child('title')
-    .set(title);
+    .set({ title, description });
 };
