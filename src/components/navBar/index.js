@@ -35,12 +35,12 @@ class NavBar extends Component {
     return (
       <div>
         <Navbar fixed="top" bg="light" variant="light">
-          <Navbar.Brand href="#home">Navbar</Navbar.Brand>
+          <Navbar.Brand href="/dashboard">Dashboard</Navbar.Brand>
           <Nav className="mr-auto">
             <Nav.Link onClick={this.createProjectClicked}>
               Create Project
             </Nav.Link>
-            <Nav.Link href="#pricing">Profile</Nav.Link>
+            <Nav.Link href="/user-profile">Profile</Nav.Link>
             <Dropdown>
               <Dropdown.Toggle variant="success" id="dropdown-basic">
                 Dropdown Button

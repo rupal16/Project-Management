@@ -5,6 +5,7 @@ import { Edit, AddAPhoto } from '@material-ui/icons';
 
 import { requestUser } from '../../actions';
 
+import NavBar from '../../components/navBar';
 import EditDetails from '../../components/editDetails';
 
 import './style.scss';
@@ -30,6 +31,7 @@ const Profile = ({ error, firstName, lastName, email, phone }) => {
 
   return (
     <div className="field-wrapper">
+      <NavBar />
       <h1>User Profile</h1>
 
       <div className="user-profile-box">
