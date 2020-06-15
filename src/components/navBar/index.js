@@ -79,7 +79,8 @@ class NavBar extends Component {
           expand="lg"
           bg="light"
           variant="light"
-          fixe="top"
+          fixed="top"
+          className="navbar-wrap"
         >
           <Navbar.Brand href="/dashboard">Dashboard</Navbar.Brand>
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />

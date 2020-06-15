@@ -2,11 +2,16 @@ import React from 'react';
 import { Card, Button } from 'react-bootstrap';
 import { connect, useDispatch } from 'react-redux';
 import TextField from '@material-ui/core/TextField';
+import { withRouter } from 'react-router';
 
+import history from '../../utils/history';
 import { removeProjectRequest } from '../../actions';
 
 import './style.scss';
 
+// propTypes = {
+//   history: PropTypes.object.isRequired,
+// };
 const ProjectCard = props => {
   const dispatch = useDispatch();
   console.log('id', props.id);
@@ -30,8 +35,10 @@ const ProjectCard = props => {
   //   );
 
   const openHandler = () => {
-    // let id = props.id;
+    let id = props.id;
+    console.log('open id', id);
     console.log('open button clicked');
+    history.push(`./projects/${id}`);
   };
 
   const remove = () => {
@@ -91,4 +98,4 @@ const ProjectCard = props => {
 //   };
 // };
 
-export default connect(null, null)(ProjectCard);
+export default connect(null, null)(withRouter(ProjectCard));

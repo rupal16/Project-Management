@@ -15,7 +15,7 @@ export const createProject = async (projectTitle, projectDescription) => {
 };
 
 // fetch all projects
-export const fetchAllProjects = async cb => {
+export const fetchAllProjects = async () => {
   console.log('inside fetch all service');
   let projectRef = firebase.database().ref('Projects');
   let projects = await projectRef.orderByChild('title').once('value');
