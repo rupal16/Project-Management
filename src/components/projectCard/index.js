@@ -14,9 +14,11 @@ import './style.scss';
 // };
 const ProjectCard = props => {
   const dispatch = useDispatch();
+  console.log('props', props);
   console.log('id', props.id);
   let id = props.id;
   console.log('iidd', id);
+  console.log('title', props.projectTitle);
   // const openHandler = () => {
   //   console.log('open');
   //   console.log('props id', props.id);
@@ -38,7 +40,7 @@ const ProjectCard = props => {
     let id = props.id;
     console.log('open id', id);
     console.log('open button clicked');
-    history.push(`./projects/${id}`);
+    history.push(`./dashboard/projects/${id}`);
   };
 
   const remove = () => {

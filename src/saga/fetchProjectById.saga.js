@@ -1,22 +1,15 @@
 import { put, call, takeEvery } from 'redux-saga/effects';
 import { fetchProjectById } from '../services/user-details';
 
-import { requestUserFailure, requestUserSuccess } from '../actions';
+import { fetchProjectByIdSuccess, fetchProjectByIdFailure } from '../actions';
 
 function* fetchProjectByIdAsync({ payload }) {
   try {
-    const userData = yield call(fetchProjectById);
+    const project = yield call(fetchProjectById(payload.id));
 
-    yield put(
-      requestUserSuccess(
-        userData.firstName,
-        userData.lastName,
-        userData.email,
-        userData.phone,
-      ),
-    );
+    yield put(fetchProjectByIdSuccess(project));
   } catch (error) {
-    yield put(requestUserFailure(error.message));
+    yield put(fetchProjectByIdFailure(error.message));
   }
 }
 

@@ -4,6 +4,15 @@ import * as firebase from 'firebase';
 export const userDbRef = firebaseApp.database();
 
 // create project
+// export const createProject = async (projectTitle, projectDescription) => {
+//   let projectRef = firebase.database().ref('Projects');
+//   console.log('userid inside user project service');
+//   console.log('project details', projectTitle);
+//   projectRef
+//     .push()
+//     .child('title')
+//     .set({ projectTitle, projectDescription });
+// };
 export const createProject = async (projectTitle, projectDescription) => {
   let projectRef = firebase.database().ref('Projects');
   console.log('userid inside user project service');
@@ -12,6 +21,10 @@ export const createProject = async (projectTitle, projectDescription) => {
     .push()
     .child('title')
     .set({ projectTitle, projectDescription });
+  // projectRef
+  //   .push()
+  //   .child('description')
+  //   .set({ projectDescription });
 };
 
 // fetch all projects

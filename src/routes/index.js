@@ -60,6 +60,8 @@ class Routes extends Component {
             <Route path="/user-profile/projects" component={Projects} />
             <Route path="/open-project" component={OpenProject} />
             <Route path="/projects-list" component={ProjectsList} />
+            <Route path="/dashboard/projects/:id" component={OpenProject} />
+
             <Route
               path="/signin"
               render={props =>

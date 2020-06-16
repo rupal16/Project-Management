@@ -1,7 +1,11 @@
 import React, { Component } from 'react';
 import { Nav, Navbar, Modal, Button, NavDropdown } from 'react-bootstrap';
 import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 import { createProjectRequest, fetchAllProjectsRequest } from '../../actions';
+
+import { withRouter } from 'react-router';
+import history from '../../utils/history';
 
 import { userSignOut } from '../../services/user-service';
 
@@ -36,6 +40,7 @@ class NavBar extends Component {
 
   createProjectClicked = () => {
     console.log('create project is clicked');
+    history.push(`./projects/create`);
     this.setState({
       createProject: true,
     });
@@ -95,7 +100,12 @@ class NavBar extends Component {
                 // className="projectList"
               >
                 {Object.keys(this.props.projects).map(key => (
-                  <NavDropdown.Item id={key}>
+                  <NavDropdown.Item
+                    id={key}
+                    onClick={id => {
+                      console.log('id open', id);
+                    }}
+                  >
                     {this.props.projects[key].title.projectTitle}
                   </NavDropdown.Item>
                 ))}
@@ -153,12 +163,17 @@ class NavBar extends Component {
               >
                 Create
               </Button>
-              <Button onClick={() => this.setState({ createProject: false })}>
+              <Button
+                onClick={() => {
+                  this.setState({ createProject: false });
+                }}
+              >
                 Close
               </Button>
             </Modal.Footer>
           </Modal>
         )}
+        {!createProject && <Redirect to="/dashboard" />}
       </div>
     );
   }
@@ -181,4 +196,4 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(NavBar);
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(NavBar));

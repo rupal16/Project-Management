@@ -50,6 +50,20 @@ const userProject = (
       console.log('project id inside ', state.projects.id);
       return state.filter(projects => state.projects.id !== action.payload.id);
 
+    case 'FETCH_PROJECT_BY_ID_REQUEST':
+      return Object.assign({}, state, { isLoading: true });
+
+    case 'FETCH_PROJECT_BY_ID_SUCCESS':
+      return Object.assign({}, state, {
+        projectTitle: action.payload.projectTitle,
+        projectDescription: action.payload.projectDescription,
+      });
+
+    case 'FETCH_PROJECT_BY_ID_FAILURE':
+      return Object.assign({}, state, {
+        error: action.error,
+      });
+
     default:
       return state;
   }

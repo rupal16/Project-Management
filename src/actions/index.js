@@ -160,3 +160,24 @@ export const fetchProjectByIdFailure = id => ({
   type: 'FETCH_PROJECT_BY_ID_FAILURE',
   error: 'error',
 });
+
+export const updateProjectRequest = (projectTitle, projectDescription) => ({
+  type: 'UPDATE_PROJECT',
+  payload: {
+    projectTitle: projectTitle,
+    projectDescription: projectDescription,
+  },
+});
+
+export const updateProjectSuccess = (projectTitle, projectDescription) => ({
+  type: 'UPDATE_PROJECT_SUCCESS',
+  payload: {
+    projectTitle: projectTitle,
+    projectDescription: projectDescription,
+  },
+});
+
+export const updateProjectFailure = error => ({
+  type: 'UPDATE_PROJECT_FAILURE',
+  error: error,
+});

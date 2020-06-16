@@ -62,8 +62,14 @@ class Dashboard extends React.Component {
                 members="members"
               />
             ))} */}
+            {/* {console.log('rpops', this.props.projects[key].title.projectTitle)} */}
             {Object.keys(this.props.projects).map(key => (
               <ProjectCard
+                // id={key}
+                // projectTitle={this.props.projects[key].title.projectTitle}
+                // projectDescription={
+                //   this.props.projects[key].title.projectDescription
+                // }
                 id={key}
                 projectTitle={this.props.projects[key].title.projectTitle}
                 projectDescription={
