@@ -3,70 +3,75 @@ import TrelloList from '../../components/TrelloList';
 import TextField from '@material-ui/core/TextField';
 import { connect } from 'react-redux';
 
-import { updateProjectRequest } from '../../actions';
+import { fetchProjectByIdRequest, updateProjectRequest } from '../../actions';
 import Navbar from '../../components/navBar';
 
 import './style.scss';
 
 class OpenProject extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      projectTitle: this.props.projectTitle,
-      projectDescription: this.props.projectDescription,
-      updateProject: false,
-    };
+  // constructor(props) {
+  //   super(props);
+  //   this.state = {
+  //     project: this.props.projects[`${this.props.match.params.id}`],
+  //   };
+  // }
+
+  componentDidMount() {
+    this.props.requestProject(this.props.match.params.id);
+    console.log('Component did mount');
+    console.log('project title');
   }
+
+  state = {
+    projectTitle: this.props.projectTitle,
+    projectDesignation: this.props.projectDesignation,
+  };
 
   handleChange = e => {
     const { value, name } = e.target;
     this.setState({
       [name]: value,
     });
+    console.log(name, value);
   };
 
-  menuHandler = e => {
-    console.log('showmenu', this.state.showMenu);
-    e.preventDefault();
-    this.setState({
-      showMenu: true,
-    });
-    console.log('showmenu', this.state.showMenu);
+  onBlurHandler = () => {
+    console.log('on blur ');
+    this.props.update(
+      this.props.match.params.id,
+      this.state.projectTitle,
+      this.state.projectDescription,
+    );
+    // this.props.click(this.props.projectTitle, this.props.projectDescription);
   };
 
   render() {
-    const { updateProject } = this.state;
     return (
       <div className="projectViewBg">
         <Navbar />
         <div className="top-menu-bar">
-          <p
-            className="project-title"
-            onClick={() => {
-              this.setState({
-                updateProject: true,
-              });
-              console.log('updating details');
-              this.props.click(
-                this.state.projectTitle,
-                this.state.projectDescription,
-              );
-            }}
-          >
-            Title
-          </p>
-          {updateProject && (
-            <TextField
-              margin="dense"
-              id="firstName"
-              name="firstName"
-              label="FirstName"
-              type="text"
-              fullWidth
-              value={this.state.projectTitle}
-              onChange={this.handleChange}
-            />
-          )}
+          <TextField
+            margin="dense"
+            id="projectTitle"
+            name="projectTitle"
+            type="text"
+            fullWidth
+            value={this.props.projectTitle}
+            onChange={this.handleChange}
+            onBlur={this.onBlurHandler}
+            // onFocus={this.onFocusHandler}
+          />
+          <br />
+          <TextField
+            margin="dense"
+            id="projectDescription"
+            name="projectDescription"
+            type="text"
+            fullWidth
+            value={this.props.projectDescription}
+            onChange={this.handleChange}
+            onBlur={this.onBlurHandler}
+          />
         </div>
         <br />
         <div className="list">
@@ -82,6 +87,7 @@ class OpenProject extends Component {
 
 const mapStateToProps = state => {
   return {
+    // projects: state.userProject.projects,
     projectTitle: state.userProject.projectTitle,
     projectDescription: state.userProject.projectDescription,
   };
@@ -89,8 +95,12 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    click: (projectTitle, projectDescription) => {
-      dispatch(updateProjectRequest(projectTitle, projectDescription));
+    requestProject: id => {
+      dispatch(fetchProjectByIdRequest(id));
+    },
+
+    update: (id, projectTitle, projectDesignation) => {
+      dispatch(updateProjectRequest(id, projectTitle, projectDesignation));
     },
   };
 };

@@ -10,6 +10,9 @@ export const FETCH_ALL_PROJECTS_FAILURE = 'FETCH_ALL_PROJECTS_FAILURE';
 export const REMOVE_PROJECT_REQUEST = 'REMOVE_PROJECT_REQUEST';
 export const REMOVE_PROJECT_SUCCESS = 'REMOVE_PROJECT_SUCCESS';
 export const REMOVE_PROJECT_FAILURE = 'REMOVE_PROJECT_FAILURE';
+export const UPDATE_PROJECT_REQUEST = 'UPDATE_PROJECT_REQUEST';
+export const UPDATE_PROJECT_SUCCESS = 'UPDATE_PROJECT_SUCCESS';
+export const UPDATE_PROJECT_FAILURE = 'UPDATE_PROJECT_FAILURE';
 
 export const requestUser = () => ({
   type: 'FETCH_USER_REQUEST',
@@ -149,21 +152,23 @@ export const fetchProjectByIdRequest = id => ({
   },
 });
 
-export const fetchProjectByIdSuccess = id => ({
+export const fetchProjectByIdSuccess = (projectTitle, projectDescription) => ({
   type: 'FETCH_PROJECT_BY_ID_SUCCESS',
   payload: {
-    id: id,
+    projectTitle: projectTitle,
+    projectDescription: projectDescription,
   },
 });
 
-export const fetchProjectByIdFailure = id => ({
+export const fetchProjectByIdFailure = error => ({
   type: 'FETCH_PROJECT_BY_ID_FAILURE',
-  error: 'error',
+  error: error,
 });
 
-export const updateProjectRequest = (projectTitle, projectDescription) => ({
-  type: 'UPDATE_PROJECT',
+export const updateProjectRequest = (id, projectTitle, projectDescription) => ({
+  type: 'UPDATE_PROJECT_REQUEST',
   payload: {
+    id: id,
     projectTitle: projectTitle,
     projectDescription: projectDescription,
   },

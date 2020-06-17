@@ -38,17 +38,13 @@ export const fetchAllProjects = async () => {
 
 //fetch project by id
 export const fetchProjectById = async id => {
+  console.log('fetch service');
   let projectRef = firebase.database().ref('Projects');
-  projectRef
-    .orderByChild('title')
-    .once('value')
-    .then(snapshot => {
-      snapshot.forEach(function(childSnapshot) {
-        if (childSnapshot.key === id) {
-          console.log('selected one', childSnapshot.val());
-        }
-      });
-    });
+  let snapshot = await projectRef.orderByChild('title').once('value');
+  console.log('snapshot', snapshot.val());
+  let project = snapshot.val()[id];
+  console.log('projectttt', project);
+  return project;
 };
 
 //delete project by id
@@ -64,11 +60,12 @@ export const removeProject = async id => {
 
 //update project details
 
-export const updateProject = async (id, { title, description }) => {
+export const updateProject = async (id, projectTitle, projectDescription) => {
+  console.log('inside update service');
   firebase
     .database()
     .ref('Projects')
     .child(id)
     .child('title')
-    .set({ title, description });
+    .set({ projectTitle, projectDescription });
 };
