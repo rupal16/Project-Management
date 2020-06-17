@@ -71,9 +71,11 @@ class Dashboard extends React.Component {
                 //   this.props.projects[key].title.projectDescription
                 // }
                 id={key}
-                projectTitle={this.props.projects[key].title.projectTitle}
+                // projectTitle={this.props.projects[key].title.projectTitle}
+                projectTitle={this.props.projects[key].projectTitle}
                 projectDescription={
-                  this.props.projects[key].title.projectDescription
+                  // this.props.projects[key].title.projectDescription
+                  this.props.projects[key].projectDescription
                 }
                 handleChange={this.handleChange}
               />

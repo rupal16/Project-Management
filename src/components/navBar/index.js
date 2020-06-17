@@ -5,7 +5,7 @@ import { Redirect } from 'react-router-dom';
 import { createProjectRequest, fetchAllProjectsRequest } from '../../actions';
 
 import { withRouter } from 'react-router';
-// import history from '../../utils/history';
+import history from '../../utils/history';
 
 import { userSignOut } from '../../services/user-service';
 
@@ -103,10 +103,12 @@ class NavBar extends Component {
                   <NavDropdown.Item
                     id={key}
                     onClick={id => {
-                      console.log('id open', id);
+                      console.log('id open', key);
+                      history.push(`/dashboard/projects/${id}`);
                     }}
                   >
-                    {this.props.projects[key].title.projectTitle}
+                    {/* {this.props.projects[key].title.projectTitle} */}
+                    {this.props.projects[key].projectTitle}
                   </NavDropdown.Item>
                 ))}
               </NavDropdown>

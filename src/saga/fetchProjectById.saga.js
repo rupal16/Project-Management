@@ -9,10 +9,7 @@ function* fetchProjectByIdAsync({ payload }) {
     let project = yield call(fetchProjectById, payload.id);
     console.log('project from saga', project);
     yield put(
-      fetchProjectByIdSuccess(
-        project.title.projectTitle,
-        project.title.projectDescription,
-      ),
+      fetchProjectByIdSuccess(project.projectTitle, project.projectDescription),
     );
   } catch (error) {
     yield put(fetchProjectByIdFailure(error.message));

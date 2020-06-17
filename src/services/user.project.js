@@ -19,7 +19,7 @@ export const createProject = async (projectTitle, projectDescription) => {
   console.log('project details', projectTitle);
   projectRef
     .push()
-    .child('title')
+    // .child('title')
     .set({ projectTitle, projectDescription });
   // projectRef
   //   .push()
@@ -31,7 +31,8 @@ export const createProject = async (projectTitle, projectDescription) => {
 export const fetchAllProjects = async () => {
   console.log('inside fetch all service');
   let projectRef = firebase.database().ref('Projects');
-  let projects = await projectRef.orderByChild('title').once('value');
+  let projects = await projectRef.once('value');
+  // .orderByChild('title')
 
   return projects.val();
 };
@@ -40,7 +41,7 @@ export const fetchAllProjects = async () => {
 export const fetchProjectById = async id => {
   console.log('fetch service');
   let projectRef = firebase.database().ref('Projects');
-  let snapshot = await projectRef.orderByChild('title').once('value');
+  let snapshot = await projectRef.once('value');
   console.log('snapshot', snapshot.val());
   let project = snapshot.val()[id];
   console.log('projectttt', project);
@@ -66,6 +67,6 @@ export const updateProject = async (id, projectTitle, projectDescription) => {
     .database()
     .ref('Projects')
     .child(id)
-    .child('title')
+    // .child('title')
     .set({ projectTitle, projectDescription });
 };

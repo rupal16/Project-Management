@@ -46,6 +46,7 @@ class OpenProject extends Component {
   };
 
   render() {
+    console.log('ptoject title from open project', this.props.projectTitle);
     return (
       <div className="projectViewBg">
         <Navbar />
