@@ -12,7 +12,6 @@ class OpenProject extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      showMenu: false,
       projectTitle: this.props.projectTitle,
       projectDescription: this.props.projectDescription,
       updateProject: false,

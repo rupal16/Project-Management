@@ -40,7 +40,7 @@ const ProjectCard = props => {
     let id = props.id;
     console.log('open id', id);
     console.log('open button clicked');
-    history.push(`./dashboard/projects/${id}`);
+    history.push(`/dashboard/projects/${id}`);
   };
 
   const remove = () => {

@@ -5,7 +5,7 @@ import { Redirect } from 'react-router-dom';
 import { createProjectRequest, fetchAllProjectsRequest } from '../../actions';
 
 import { withRouter } from 'react-router';
-import history from '../../utils/history';
+// import history from '../../utils/history';
 
 import { userSignOut } from '../../services/user-service';
 
@@ -40,7 +40,7 @@ class NavBar extends Component {
 
   createProjectClicked = () => {
     console.log('create project is clicked');
-    history.push(`./projects/create`);
+    // history.push(`./projects/create`);
     this.setState({
       createProject: true,
     });
@@ -147,11 +147,7 @@ class NavBar extends Component {
               <Button
                 onClick={e => {
                   e.preventDefault();
-                  console.log(
-                    'project created',
-                    this.props.projectTitle,
-                    this.props.projectDescription,
-                  );
+
                   this.props.createNewProject(
                     this.state.projectTitle,
                     this.state.projectDescription,
@@ -159,6 +155,7 @@ class NavBar extends Component {
                   this.setState({
                     createProject: false,
                   });
+                  return <Redirect to="/dashboard" />;
                 }}
               >
                 Create
@@ -166,6 +163,7 @@ class NavBar extends Component {
               <Button
                 onClick={() => {
                   this.setState({ createProject: false });
+                  return <Redirect to="/dashboard" />;
                 }}
               >
                 Close
@@ -173,7 +171,7 @@ class NavBar extends Component {
             </Modal.Footer>
           </Modal>
         )}
-        {!createProject && <Redirect to="/dashboard" />}
+        {/* {!createProject && <Redirect to="/dashboard" />} */}
       </div>
     );
   }

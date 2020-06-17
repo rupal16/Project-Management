@@ -6,6 +6,7 @@ import {
   Redirect,
 } from 'react-router-dom';
 
+// import CreateProject from '../components/createProject';
 import history from '../utils/history';
 import Registration from './registration';
 import Signin from './Signin';
@@ -55,12 +56,17 @@ class Routes extends Component {
         <Router history={history}>
           <Switch>
             <Redirect exact from="/" to="/user-registration" />
-            <Route path="/user-registration" component={Registration} />
+            <Route exact path="/user-registration" component={Registration} />
             {/* <Route path="/user-profile" component={Profile} /> */}
-            <Route path="/user-profile/projects" component={Projects} />
-            <Route path="/open-project" component={OpenProject} />
-            <Route path="/projects-list" component={ProjectsList} />
-            <Route path="/dashboard/projects/:id" component={OpenProject} />
+            <Route exact path="/user-profile/projects" component={Projects} />
+            <Route exact path="/open-project" component={OpenProject} />
+            <Route exact path="/projects-list" component={ProjectsList} />
+            {/* <Route exact path="/projects/create" component={CreateProject} /> */}
+            <Route
+              exact
+              path="/dashboard/projects/:id"
+              component={OpenProject}
+            />
 
             <Route
               path="/signin"
