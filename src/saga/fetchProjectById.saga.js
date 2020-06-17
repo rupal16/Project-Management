@@ -5,9 +5,8 @@ import { fetchProjectByIdSuccess, fetchProjectByIdFailure } from '../actions';
 
 function* fetchProjectByIdAsync({ payload }) {
   try {
-    console.log('inside fetch saga', payload.id);
     let project = yield call(fetchProjectById, payload.id);
-    console.log('project from saga', project);
+
     yield put(
       fetchProjectByIdSuccess(project.projectTitle, project.projectDescription),
     );

@@ -46,15 +46,12 @@ const userProject = (
       });
 
     case 'REMOVE_PROJECT_SUCCESS':
-      console.log('action payload', action.payload.id);
-      console.log('project id inside ', state.projects.id);
       return state.filter(projects => state.projects.id !== action.payload.id);
 
     case 'FETCH_PROJECT_BY_ID_REQUEST':
       return Object.assign({}, state, { isLoading: true });
 
     case 'FETCH_PROJECT_BY_ID_SUCCESS':
-      console.log('from reducer', action.payload);
       return Object.assign({}, state, {
         projectTitle: action.payload.projectTitle,
         projectDescription: action.payload.projectDescription,

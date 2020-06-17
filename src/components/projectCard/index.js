@@ -14,39 +14,16 @@ import './style.scss';
 // };
 const ProjectCard = props => {
   const dispatch = useDispatch();
-  console.log('props', props);
-  console.log('id', props.id);
-  let id = props.id;
-  console.log('iidd', id);
-  console.log('title', props.projectTitle);
-  // const openHandler = () => {
-  //   console.log('open');
-  //   console.log('props id', props.id);
-  // };
-
-  // const removeHandler = () => {
-  //   removeHandler(props.id);
-  //   console.log('remove ');
-  // };
-  // onClick={() => {
-  //   this.props.click(
-  //     this.state.firstName,
-  //     this.state.lastName,
-  //     this.state.email,
-  //     this.state.phone,
-  //   );
 
   const openHandler = () => {
     let id = props.id;
-    console.log('open id', id);
-    console.log('open button clicked');
+
     history.push(`/dashboard/projects/${id}`);
   };
 
   const remove = () => {
     let id = props.id;
-    console.log('id inside remove', id);
-    console.log('inside remove');
+
     dispatch(removeProjectRequest(id));
   };
 

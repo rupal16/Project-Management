@@ -18,8 +18,6 @@ class OpenProject extends Component {
 
   componentDidMount() {
     this.props.requestProject(this.props.match.params.id);
-    console.log('Component did mount');
-    console.log('project title');
   }
 
   state = {
@@ -32,11 +30,9 @@ class OpenProject extends Component {
     this.setState({
       [name]: value,
     });
-    console.log(name, value);
   };
 
   onBlurHandler = () => {
-    console.log('on blur ');
     this.props.update(
       this.props.match.params.id,
       this.state.projectTitle,
@@ -46,7 +42,6 @@ class OpenProject extends Component {
   };
 
   render() {
-    console.log('ptoject title from open project', this.props.projectTitle);
     return (
       <div className="projectViewBg">
         <Navbar />

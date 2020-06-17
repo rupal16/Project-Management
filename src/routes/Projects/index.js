@@ -33,8 +33,7 @@ class Projects extends Component {
 
   fetchAllHandler = e => {
     e.preventDefault();
-    const projects = fetchAllProjects();
-    console.log('projects', projects);
+    fetchAllProjects();
   };
 
   fetchProjectById = e => {
@@ -92,7 +91,6 @@ class Projects extends Component {
               // this.setState({
               //   showProject: true,
               // });
-              // console.log('show project', showProject);
             }}
           >
             Create project

@@ -39,7 +39,6 @@ class NavBar extends Component {
   };
 
   createProjectClicked = () => {
-    console.log('create project is clicked');
     // history.push(`./projects/create`);
     this.setState({
       createProject: true,
@@ -48,7 +47,6 @@ class NavBar extends Component {
 
   render() {
     const { createProject, projectTitle, projectDescription } = this.state;
-    console.log('create', createProject);
     return (
       <div>
         {/* fixed="top" */}
@@ -103,7 +101,6 @@ class NavBar extends Component {
                   <NavDropdown.Item
                     id={key}
                     onClick={id => {
-                      console.log('id open', key);
                       history.push(`/dashboard/projects/${id}`);
                     }}
                   >

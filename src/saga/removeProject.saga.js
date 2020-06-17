@@ -5,7 +5,6 @@ import { removeProjectSuccess, removeProjectFailure } from '../actions';
 
 function* removeProjectAsync({ payload }) {
   try {
-    console.log('inside saga', payload.id);
     yield call(removeProject(payload.id));
 
     yield put(removeProjectSuccess(payload.id));

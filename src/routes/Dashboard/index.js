@@ -33,18 +33,14 @@ class Dashboard extends React.Component {
     await userSignOut();
   };
 
-  removeProjectHandler = event => {
-    console.log('remove button cliked');
-    console.log('key', event);
-  };
+  removeProjectHandler = event => {};
 
   handleChange = e => {
     const { value, name } = e.target;
-    console.log('name', name);
+
     this.setState({
       [name]: value,
     });
-    console.log('handlechange', this.state);
   };
 
   render() {
@@ -62,7 +58,7 @@ class Dashboard extends React.Component {
                 members="members"
               />
             ))} */}
-            {/* {console.log('rpops', this.props.projects[key].title.projectTitle)} */}
+
             {Object.keys(this.props.projects).map(key => (
               <ProjectCard
                 // id={key}

@@ -61,8 +61,6 @@ export const editUserDetailsSuccess = (firstName, lastName, email, phone) => ({
 });
 
 export const createProjectRequest = (projectTitle, projectDescription) => {
-  console.log('inside create proejvt action');
-  console.log('inside action details', projectTitle);
   return {
     type: 'CREATE_PROJECT_REQUEST',
     payload: {
@@ -73,7 +71,6 @@ export const createProjectRequest = (projectTitle, projectDescription) => {
 };
 
 export const createProjectSuccess = (projectTitle, projectDescription) => {
-  console.log('create project suucessfyl');
   return {
     type: 'CREATE_PROJECT_SUCCESS',
     payload: {
@@ -95,7 +92,6 @@ export const createProjectFailure = error => ({
 //remove project
 
 export const removeProjectRequest = id => {
-  console.log('remove action', id);
   return {
     type: 'REMOVE_PROJECT_REQUEST',
     payload: {
@@ -126,7 +122,6 @@ export const removeProjectFailure = error => ({
 // });
 
 export const fetchAllProjectsRequest = () => {
-  console.log('inside action');
   return {
     type: 'FETCH_ALL_PROJECTS_REQUEST',
   };
