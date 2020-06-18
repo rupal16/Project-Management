@@ -2,20 +2,34 @@ let listId = 2;
 let cardId = 0;
 
 const initialState = [
-  // {
-  //   title: 'last episode',
-  //   id: 0,
-  //   cards: [
-  //     {
-  //       id: 0,
-  //       text: 'task 1',
-  //     },
-  //     {
-  //       id: 1,
-  //       text: 'task 2',
-  //     },
-  //   ],
-  // },
+  {
+    title: 'last episode',
+    id: 0,
+    cards: [
+      {
+        id: 0,
+        text: 'task 1',
+      },
+      {
+        id: 1,
+        text: 'task 2',
+      },
+    ],
+  },
+  {
+    title: 'first episode',
+    id: 1,
+    cards: [
+      {
+        id: 0,
+        text: 'task 1',
+      },
+      {
+        id: 1,
+        text: 'task 2',
+      },
+    ],
+  },
 ];
 
 const listsReducer = (state = initialState, action) => {
