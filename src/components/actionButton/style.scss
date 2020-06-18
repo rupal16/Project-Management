@@ -1,0 +1,31 @@
+.action-button-style {
+  display: flex;
+
+  cursor: pointer;
+  padding-left: 10px;
+}
+
+.textarea-style {
+  resize: none;
+  width: 100%;
+  outline: none;
+  border: none;
+}
+
+.card-style {
+  overflow: visible;
+  min-height: 80px;
+  min-width: 272px;
+  padding: 6px 8px 2px;
+}
+
+.button-close {
+  cursor: pointer;
+  margin-left: 8px;
+}
+
+.form-buttons {
+  margin-top: 8px;
+  display: flex;
+  align-items: center;
+}

@@ -9,7 +9,7 @@ const TrelloCard = props => {
     <div className="trello-cards">
       <Card>
         <Card.Body>
-          {props.cardTitle}
+          {props.text}
           <CloseIcon className="cancel-btn" />
         </Card.Body>
       </Card>

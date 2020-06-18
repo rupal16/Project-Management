@@ -1,5 +1,5 @@
 .projectViewBg {
-  height: 100vh;
+  height: 100%;
   width: 100%;
   display: flex;
   // flex-direction: column;
@@ -63,6 +63,7 @@
   flex-direction: column;
   justify-content: space-between;
   margin-top: 55px;
+  margin-left: 15px;
 }
 
 .menu-btn {
@@ -80,4 +81,15 @@
   display: flex;
   flex-direction: row;
   justify-content: space-around;
+}
+
+.list-view {
+  display: flex;
+  flex-direction: row;
+}
+
+.textfield {
+  width: 150px;
+  margin-left: 100px;
+  height: 50px;
 }

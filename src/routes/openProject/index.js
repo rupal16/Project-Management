@@ -3,6 +3,7 @@ import TrelloList from '../../components/TrelloList';
 import TextField from '@material-ui/core/TextField';
 import { connect } from 'react-redux';
 
+import ActionButton from '../../components/actionButton';
 import { fetchProjectByIdRequest, updateProjectRequest } from '../../actions';
 import Navbar from '../../components/navBar';
 
@@ -42,39 +43,52 @@ class OpenProject extends Component {
   };
 
   render() {
+    // const { lists } = this.props;
     return (
       <div className="projectViewBg">
         <Navbar />
         <div className="top-menu-bar">
           <TextField
+            className="textfield"
             margin="dense"
             id="projectTitle"
             name="projectTitle"
             type="text"
-            fullWidth
             value={this.props.projectTitle}
             onChange={this.handleChange}
             onBlur={this.onBlurHandler}
             // onFocus={this.onFocusHandler}
           />
           <br />
+
           <TextField
+            className="textfield"
             margin="dense"
             id="projectDescription"
             name="projectDescription"
             type="text"
-            fullWidth
             value={this.props.projectDescription}
             onChange={this.handleChange}
             onBlur={this.onBlurHandler}
           />
         </div>
         <br />
-        <div className="list">
+        {/* <div className="list">
           <TrelloList title="todo" />
           <TrelloList title="doing" />
           <TrelloList title="done" />
           <TrelloList title="list 4" />
+        </div> */}
+        <div className="list-view">
+          {this.props.listsReducer.map(list => (
+            <TrelloList
+              listId={list.id}
+              key={list.id}
+              title={list.title}
+              cards={list.cards}
+            />
+          ))}
+          <ActionButton list />
         </div>
       </div>
     );
@@ -86,6 +100,7 @@ const mapStateToProps = state => {
     // projects: state.userProject.projects,
     projectTitle: state.userProject.projectTitle,
     projectDescription: state.userProject.projectDescription,
+    listsReducer: state.listsReducer,
   };
 };
 

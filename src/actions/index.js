@@ -13,6 +13,8 @@ export const REMOVE_PROJECT_FAILURE = 'REMOVE_PROJECT_FAILURE';
 export const UPDATE_PROJECT_REQUEST = 'UPDATE_PROJECT_REQUEST';
 export const UPDATE_PROJECT_SUCCESS = 'UPDATE_PROJECT_SUCCESS';
 export const UPDATE_PROJECT_FAILURE = 'UPDATE_PROJECT_FAILURE';
+export const ADD_LIST = 'ADD_LIST';
+export const ADD_CARD = 'ADD_CARD';
 
 export const requestUser = () => ({
   type: 'FETCH_USER_REQUEST',
@@ -181,3 +183,24 @@ export const updateProjectFailure = error => ({
   type: 'UPDATE_PROJECT_FAILURE',
   error: error,
 });
+
+export const addList = (listId, title) => {
+  console.log('from add list action', listId, title);
+  return {
+    type: 'ADD_LIST',
+    payload: {
+      listId: listId,
+      title: title,
+    },
+  };
+};
+
+export const addCard = (listId, text) => {
+  return {
+    type: 'ADD_CARD',
+    payload: {
+      listId: listId,
+      text: text,
+    },
+  };
+};
