@@ -1,31 +1,31 @@
 let listId = 2;
-let cardId = 0;
+let cardId = 4;
 
 const initialState = [
   {
     title: 'last episode',
-    id: 0,
+    id: `list-${0}`,
     cards: [
       {
-        id: 0,
+        id: `card-${0}`,
         text: 'task 1',
       },
       {
-        id: 1,
+        id: `card-${1}`,
         text: 'task 2',
       },
     ],
   },
   {
     title: 'first episode',
-    id: 1,
+    id: `list-${1}`,
     cards: [
       {
-        id: 0,
+        id: `card-${2}`,
         text: 'task 1',
       },
       {
-        id: 1,
+        id: `card-${3}`,
         text: 'task 2',
       },
     ],
@@ -38,16 +38,16 @@ const listsReducer = (state = initialState, action) => {
       const newList = {
         title: action.payload.title,
         cards: [],
-        id: listId,
+        id: `list-${listId}`,
       };
       console.log('listid form reducer', listId);
       listId += 1;
       return [...state, newList];
 
-    case 'ADD_CARD':
+    case 'ADD_CARD': {
       const newCard = {
         text: action.payload.text,
-        id: cardId,
+        id: `card-${cardId}`,
       };
       cardId += 1;
       console.log('add card action');
@@ -61,6 +61,23 @@ const listsReducer = (state = initialState, action) => {
           return list;
         }
       });
+      return newState;
+    }
+
+    case 'DRAG_HAPPENED':
+      const {
+        droppableIdStart,
+        droppableIdEnd,
+        droppableIndexStart,
+        droppableIndexEnd,
+      } = action.payload;
+      const newState = [...state];
+      //in the same list
+      if (droppableIdStart === droppableIdEnd) {
+        const list = state.find(list => droppableIdStart === list.id);
+        const card = list.cards.splice(droppableIndexStart, 1);
+        list.cards.splice(droppableIndexEnd, 0, ...card);
+      }
       return newState;
 
     default:

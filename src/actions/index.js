@@ -15,6 +15,7 @@ export const UPDATE_PROJECT_SUCCESS = 'UPDATE_PROJECT_SUCCESS';
 export const UPDATE_PROJECT_FAILURE = 'UPDATE_PROJECT_FAILURE';
 export const ADD_LIST = 'ADD_LIST';
 export const ADD_CARD = 'ADD_CARD';
+export const DRAG_HAPPENED = 'DRAG_HAPPENED';
 
 export const requestUser = () => ({
   type: 'FETCH_USER_REQUEST',
@@ -201,6 +202,25 @@ export const addCard = (listId, text) => {
     payload: {
       listId: listId,
       text: text,
+    },
+  };
+};
+
+export const sort = (
+  droppableIdStart,
+  droppableIdEnd,
+  droppableIndexStart,
+  droppableIndexEnd,
+  draggableId,
+) => {
+  return {
+    type: 'DRAG_HAPPENED',
+    payload: {
+      droppableIdStart,
+      droppableIdEnd,
+      droppableIndexStart,
+      droppableIndexEnd,
+      draggableId,
     },
   };
 };

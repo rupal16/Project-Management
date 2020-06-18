@@ -2,9 +2,14 @@ import React, { Component } from 'react';
 import TrelloList from '../../components/TrelloList';
 import TextField from '@material-ui/core/TextField';
 import { connect } from 'react-redux';
+import { DragDropContext } from 'react-beautiful-dnd';
 
 import ActionButton from '../../components/actionButton';
-import { fetchProjectByIdRequest, updateProjectRequest } from '../../actions';
+import {
+  fetchProjectByIdRequest,
+  updateProjectRequest,
+  sort,
+} from '../../actions';
 import Navbar from '../../components/navBar';
 
 import './style.scss';
@@ -31,6 +36,32 @@ class OpenProject extends Component {
     this.setState({
       [name]: value,
     });
+  };
+
+  onDragEnd = result => {
+    console.log('on drag end fired');
+    const { destination, source, draggableId } = result;
+
+    if (!destination) {
+      return;
+    }
+
+    // this.props.dispatch(
+    //   sort(
+    //     source.droppableId,
+    //     destination.droppableId,
+    //     source.index,
+    //     destination.index,
+    //     draggableId,
+    //   ),
+    // );
+    this.props.drag(
+      source.droppableId,
+      destination.droppableId,
+      source.index,
+      destination.index,
+      draggableId,
+    );
   };
 
   onBlurHandler = () => {
@@ -79,17 +110,19 @@ class OpenProject extends Component {
           <TrelloList title="done" />
           <TrelloList title="list 4" />
         </div> */}
-        <div className="list-view">
-          {this.props.listsReducer.map(list => (
-            <TrelloList
-              listId={list.id}
-              key={list.id}
-              title={list.title}
-              cards={list.cards}
-            />
-          ))}
-          <ActionButton list />
-        </div>
+        <DragDropContext onDragEnd={this.onDragEnd}>
+          <div className="list-view">
+            {this.props.listsReducer.map(list => (
+              <TrelloList
+                listId={list.id}
+                key={list.id}
+                title={list.title}
+                cards={list.cards}
+              />
+            ))}
+            <ActionButton list />
+          </div>
+        </DragDropContext>
       </div>
     );
   }
@@ -97,7 +130,6 @@ class OpenProject extends Component {
 
 const mapStateToProps = state => {
   return {
-    // projects: state.userProject.projects,
     projectTitle: state.userProject.projectTitle,
     projectDescription: state.userProject.projectDescription,
     listsReducer: state.listsReducer,
@@ -113,6 +145,23 @@ const mapDispatchToProps = dispatch => {
     update: (id, projectTitle, projectDesignation) => {
       dispatch(updateProjectRequest(id, projectTitle, projectDesignation));
     },
+
+    drag: (
+      sourcedroppableId,
+      destinationdroppableId,
+      sourceindex,
+      destinationindex,
+      draggableId,
+    ) =>
+      dispatch(
+        sort(
+          sourcedroppableId,
+          destinationdroppableId,
+          sourceindex,
+          destinationindex,
+          draggableId,
+        ),
+      ),
   };
 };
 
