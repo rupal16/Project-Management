@@ -39,7 +39,6 @@ class NavBar extends Component {
   };
 
   createProjectClicked = () => {
-    // history.push(`./projects/create`);
     this.setState({
       createProject: true,
     });
@@ -49,34 +48,6 @@ class NavBar extends Component {
     const { createProject, projectTitle, projectDescription } = this.state;
     return (
       <div>
-        {/* fixed="top" */}
-        {/* <Navbar bg="light" variant="light">
-          <Navbar.Brand href="/dashboard">Dashboard</Navbar.Brand>
-          <Nav>
-            <Nav.Link onClick={this.createProjectClicked}>
-              Create Project
-            </Nav.Link>
-          </Nav>
-          <Nav>
-            <Dropdown>
-              <Dropdown.Toggle className="projectList" id="dropdown-basic">
-                Projects
-              </Dropdown.Toggle>
-
-              <Dropdown.Menu>
-                {Object.keys(this.props.projects).map(key => (
-                  <Dropdown.Item id={key}>
-                    {this.props.projects[key].title.projectTitle}
-                  </Dropdown.Item>
-                ))}
-              </Dropdown.Menu>
-            </Dropdown>
-            <Nav.Link href="/user-profile">Profile</Nav.Link>
-            <Button className="projectList" onClick={this.signOutHandler}>
-              Log Out
-            </Button>
-          </Nav>
-        </Navbar> */}
         <Navbar
           collapseOnSelect
           expand="lg"
@@ -92,11 +63,7 @@ class NavBar extends Component {
               <Nav.Link onClick={this.createProjectClicked}>
                 Create Project
               </Nav.Link>
-              <NavDropdown
-                title="Projects"
-                id="collasible-nav-dropdown"
-                // className="projectList"
-              >
+              <NavDropdown title="Projects" id="collasible-nav-dropdown">
                 {Object.keys(this.props.projects).map(key => (
                   <NavDropdown.Item
                     id={key}
@@ -104,7 +71,6 @@ class NavBar extends Component {
                       history.push(`/dashboard/projects/${id}`);
                     }}
                   >
-                    {/* {this.props.projects[key].title.projectTitle} */}
                     {this.props.projects[key].projectTitle}
                   </NavDropdown.Item>
                 ))}
@@ -170,7 +136,6 @@ class NavBar extends Component {
             </Modal.Footer>
           </Modal>
         )}
-        {/* {!createProject && <Redirect to="/dashboard" />} */}
       </div>
     );
   }

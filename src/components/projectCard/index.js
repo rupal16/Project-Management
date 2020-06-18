@@ -9,9 +9,6 @@ import { removeProjectRequest } from '../../actions';
 
 import './style.scss';
 
-// propTypes = {
-//   history: PropTypes.object.isRequired,
-// };
 const ProjectCard = props => {
   const dispatch = useDispatch();
 
@@ -68,13 +65,5 @@ const ProjectCard = props => {
     </div>
   );
 };
-
-// const mapDispatchToProps = dispatch => {
-//   return {
-//     removeHandler: id => {
-//       dispatch(removeProjectRequest(id));
-//     },
-//   };
-// };
 
 export default connect(null, null)(withRouter(ProjectCard));

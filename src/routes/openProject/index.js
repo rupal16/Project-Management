@@ -15,13 +15,6 @@ import Navbar from '../../components/navBar';
 import './style.scss';
 
 class OpenProject extends Component {
-  // constructor(props) {
-  //   super(props);
-  //   this.state = {
-  //     project: this.props.projects[`${this.props.match.params.id}`],
-  //   };
-  // }
-
   componentDidMount() {
     this.props.requestProject(this.props.match.params.id);
   }
@@ -46,15 +39,6 @@ class OpenProject extends Component {
       return;
     }
 
-    // this.props.dispatch(
-    //   sort(
-    //     source.droppableId,
-    //     destination.droppableId,
-    //     source.index,
-    //     destination.index,
-    //     draggableId,
-    //   ),
-    // );
     this.props.drag(
       source.droppableId,
       destination.droppableId,
@@ -71,11 +55,9 @@ class OpenProject extends Component {
       this.state.projectTitle,
       this.state.projectDescription,
     );
-    // this.props.click(this.props.projectTitle, this.props.projectDescription);
   };
 
   render() {
-    // const { lists } = this.props;
     return (
       <div className="projectViewBg">
         <Navbar />
@@ -89,7 +71,6 @@ class OpenProject extends Component {
             value={this.props.projectTitle}
             onChange={this.handleChange}
             onBlur={this.onBlurHandler}
-            // onFocus={this.onFocusHandler}
           />
           <br />
 
@@ -105,12 +86,7 @@ class OpenProject extends Component {
           />
         </div>
         <br />
-        {/* <div className="list">
-          <TrelloList title="todo" />
-          <TrelloList title="doing" />
-          <TrelloList title="done" />
-          <TrelloList title="list 4" />
-        </div> */}
+
         <DragDropContext onDragEnd={this.onDragEnd}>
           <Droppable droppableId="all-lists" direction="horizontal" type="list">
             {provided => (

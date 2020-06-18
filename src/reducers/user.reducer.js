@@ -15,10 +15,7 @@ const userProfile = (
         isLoading: true,
         error: '',
       });
-    // return {...state,{
-    //   isLoading: true,
-    //   error: ''
-    // }}
+
     case 'FETCH_USER_FAILURE':
       return Object.assign({}, state, {
         isLoading: false,

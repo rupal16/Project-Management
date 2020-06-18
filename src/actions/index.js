@@ -88,12 +88,6 @@ export const createProjectFailure = error => ({
   error: error,
 });
 
-// export const fetchAllProjectsRequest = () => ({
-//   type: 'FETCH_ALL_PROJECT_REQUEST',
-// });
-
-//remove project
-
 export const removeProjectRequest = id => {
   return {
     type: 'REMOVE_PROJECT_REQUEST',
@@ -114,15 +108,6 @@ export const removeProjectFailure = error => ({
   type: 'REMOVE_PROJECT_FAILURE',
   error: error,
 });
-
-//fetch all project
-
-// export const fetchAllProjectsRequest = () => ({
-//   type: 'FETCH_ALL_PROJECTS_REQUEST',
-//   // payload: {
-//   //   projects: [],
-//   // },
-// });
 
 export const fetchAllProjectsRequest = () => {
   return {

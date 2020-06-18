@@ -81,23 +81,16 @@ class Projects extends Component {
           </div>
           <button
             onClick={e => {
-              // const { showProject } = this.state;
               e.preventDefault();
 
               this.props.createProject(
                 this.state.projectTitle,
                 this.state.projectDescription,
               );
-              // this.setState({
-              //   showProject: true,
-              // });
             }}
           >
             Create project
           </button>
-          {/* <button onClick={this.props.fetchAllProject()}>
-            Fetch all projects
-          </button> */}
           <button onClick={this.fetchAllHandler}>Fetch All projects</button>
           <button onClick={this.fetchProjectById}>Fetch Project bY id</button>
           <button onClick={this.deleteProjectById}>Delete by Id</button>
@@ -108,16 +101,11 @@ class Projects extends Component {
   }
 }
 
-// const mapStateToProps = state => {};
-
 const mapDispatchToProps = dispatch => {
   return {
     createProject: (projectTitle, projectDescription) => {
       dispatch(createProjectRequest(projectTitle, projectDescription));
     },
-    // fetchAllProject: () => {
-    //   dispatch(fetchAllProjectRequest());
-    // },
   };
 };
 

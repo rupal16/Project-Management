@@ -16,10 +16,7 @@ const TrelloCard = props => {
           {...provided.dragHandleProps}
         >
           <Card>
-            <Card.Body>
-              {props.text}
-              {/* <CloseIcon className="cancel-btn" /> */}
-            </Card.Body>
+            <Card.Body>{props.text}</Card.Body>
           </Card>
         </div>
       )}
