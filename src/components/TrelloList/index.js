@@ -1,34 +1,41 @@
 import React from 'react';
-import { Droppable } from 'react-beautiful-dnd';
+import { Droppable, Draggable } from 'react-beautiful-dnd';
 
 import TrelloCard from '../TrelloCard';
 import ActionButton from '../actionButton';
 
 import './style.scss';
-const TrelloList = ({ title, cards, listId }) => {
+const TrelloList = ({ title, cards, listId, index }) => {
   return (
-    <Droppable droppableId={String(listId)}>
+    <Draggable draggableId={String(listId)} index={index}>
       {provided => (
         <div
-          {...provided.droppableProps}
+          {...provided.draggableProps}
           ref={provided.innerRef}
+          {...provided.dragHandleProps}
           lassName="taskList"
         >
-          <div>{title}</div>
+          <Droppable droppableId={String(listId)}>
+            {provided => (
+              <div {...provided.droppableProps} ref={provided.innerRef}>
+                <div>{title}</div>
 
-          {cards.map((card, index) => (
-            <TrelloCard
-              key={card.id}
-              index={index}
-              text={card.text}
-              id={card.id}
-            />
-          ))}
-          <ActionButton listId={listId} />
-          {provided.placeholder}
+                {cards.map((card, index) => (
+                  <TrelloCard
+                    key={card.id}
+                    index={index}
+                    text={card.text}
+                    id={card.id}
+                  />
+                ))}
+                <ActionButton listId={listId} />
+                {provided.placeholder}
+              </div>
+            )}
+          </Droppable>
         </div>
       )}
-    </Droppable>
+    </Draggable>
   );
 };
 

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import TrelloList from '../../components/TrelloList';
 import TextField from '@material-ui/core/TextField';
 import { connect } from 'react-redux';
-import { DragDropContext } from 'react-beautiful-dnd';
+import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 
 import ActionButton from '../../components/actionButton';
 import {
@@ -40,7 +40,7 @@ class OpenProject extends Component {
 
   onDragEnd = result => {
     console.log('on drag end fired');
-    const { destination, source, draggableId } = result;
+    const { destination, source, draggableId, type } = result;
 
     if (!destination) {
       return;
@@ -61,6 +61,7 @@ class OpenProject extends Component {
       source.index,
       destination.index,
       draggableId,
+      type,
     );
   };
 
@@ -111,17 +112,26 @@ class OpenProject extends Component {
           <TrelloList title="list 4" />
         </div> */}
         <DragDropContext onDragEnd={this.onDragEnd}>
-          <div className="list-view">
-            {this.props.listsReducer.map(list => (
-              <TrelloList
-                listId={list.id}
-                key={list.id}
-                title={list.title}
-                cards={list.cards}
-              />
-            ))}
-            <ActionButton list />
-          </div>
+          <Droppable droppableId="all-lists" direction="horizontal" type="list">
+            {provided => (
+              <div
+                className="list-view"
+                {...provided.droppableProps}
+                ref={provided.innerRef}
+              >
+                {this.props.listsReducer.map((list, index) => (
+                  <TrelloList
+                    listId={list.id}
+                    key={list.id}
+                    title={list.title}
+                    cards={list.cards}
+                    index={index}
+                  />
+                ))}
+                <ActionButton list />
+              </div>
+            )}
+          </Droppable>
         </DragDropContext>
       </div>
     );
@@ -152,6 +162,7 @@ const mapDispatchToProps = dispatch => {
       sourceindex,
       destinationindex,
       draggableId,
+      type,
     ) =>
       dispatch(
         sort(
@@ -160,6 +171,7 @@ const mapDispatchToProps = dispatch => {
           sourceindex,
           destinationindex,
           draggableId,
+          type,
         ),
       ),
   };
