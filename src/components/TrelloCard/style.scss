@@ -2,7 +2,10 @@
   float: right;
 }
 
-.trello-cards {
+.trelloCards {
   margin: 8px;
   border-radius: 10px;
+  &:hover {
+    background-color: rgb(226, 221, 221);
+  }
 }

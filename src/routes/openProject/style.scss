@@ -53,20 +53,21 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  margin-top: 55px;
+  margin-top: 80px;
+  // line-height: 2em;
   margin-left: 15px;
 }
 
-.menu-btn {
-  width: 100px;
-  height: 50px;
-  margin: 10px 10px;
-  border: none;
-  border-radius: 10px;
-  background-color: rgb(220, 220, 220);
-  box-shadow: 0px 10px 50px #555;
-  margin-right: 30px;
-}
+// .menu-btn {
+//   width: 100px;
+//   height: 50px;
+//   margin: 10px 10px;
+//   border: none;
+//   border-radius: 10px;
+//   background-color: rgb(220, 220, 220);
+//   box-shadow: 0px 10px 50px #555;
+//   // margin-right: 30px;
+// }
 
 .list {
   display: flex;
@@ -81,6 +82,14 @@
 
 .textfield {
   width: 150px;
-  margin-left: 100px;
-  height: 50px;
+  margin-top: -10px !important;
+  // margin-left: 100px;
+  // height: 30px;
+}
+
+.project-label {
+  font-size: 20px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
+    Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-weight: lighter;
 }

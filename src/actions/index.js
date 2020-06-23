@@ -13,8 +13,12 @@ export const REMOVE_PROJECT_FAILURE = 'REMOVE_PROJECT_FAILURE';
 export const UPDATE_PROJECT_REQUEST = 'UPDATE_PROJECT_REQUEST';
 export const UPDATE_PROJECT_SUCCESS = 'UPDATE_PROJECT_SUCCESS';
 export const UPDATE_PROJECT_FAILURE = 'UPDATE_PROJECT_FAILURE';
-export const ADD_LIST = 'ADD_LIST';
-export const ADD_CARD = 'ADD_CARD';
+export const ADD_LIST_REQUEST = 'ADD_LIST_REQUEST';
+export const ADD_LIST_SUCCESS = 'ADD_LIST_SUCCESS';
+export const ADD_LIST_FAILURE = 'ADD_LIST_FAILURE';
+export const ADD_CARD_REQUEST = 'ADD_CARD_REQUEST';
+export const ADD_CARD_SUCCESS = 'ADD_CARD_SUCCESS';
+export const ADD_CARD_FAILURE = 'ADD_CARD_FAILURE';
 export const DRAG_HAPPENED = 'DRAG_HAPPENED';
 
 export const requestUser = () => ({
@@ -106,7 +110,7 @@ export const removeProjectSuccess = id => ({
 
 export const removeProjectFailure = error => ({
   type: 'REMOVE_PROJECT_FAILURE',
-  error: error,
+  error: error.message,
 });
 
 export const fetchAllProjectsRequest = () => {
@@ -170,10 +174,11 @@ export const updateProjectFailure = error => ({
   error: error,
 });
 
-export const addList = (listId, title) => {
+//add list
+export const addListRequest = (listId, title) => {
   console.log('from add list action', listId, title);
   return {
-    type: 'ADD_LIST',
+    type: 'ADD_LIST_REQUEST',
     payload: {
       listId: listId,
       title: title,
@@ -181,13 +186,52 @@ export const addList = (listId, title) => {
   };
 };
 
-export const addCard = (listId, text) => {
+export const addListSuccess = (listId, title) => {
+  console.log('from addlist success action', listId);
+  console.log('from add list action', listId, title);
   return {
-    type: 'ADD_CARD',
+    type: 'ADD_LIST_SUCCESS',
+    payload: {
+      listId: listId,
+      title: title,
+    },
+  };
+};
+
+export const addListFailure = error => {
+  return {
+    type: 'ADD_LIST_FAILURE',
+    error: error,
+  };
+};
+
+export const addCardRequest = (listId, text) => {
+  console.log('add card request');
+  return {
+    type: 'ADD_CARD_REQUEST',
     payload: {
       listId: listId,
       text: text,
     },
+  };
+};
+
+export const addCardSuccess = (listId, text) => {
+  console.log('add card success');
+  return {
+    type: 'ADD_CARD_SUCCESS',
+    payload: {
+      listId: listId,
+      text: text,
+    },
+  };
+};
+
+export const addCardFailure = error => {
+  console.log('add card failure');
+  return {
+    type: 'ADD_CARD_FAILURE',
+    error: error,
   };
 };
 

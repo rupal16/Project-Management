@@ -47,7 +47,7 @@ class Dashboard extends React.Component {
     return (
       <div>
         <NavBar />
-        <div className="project-list-wrap">
+        <div className="project-list-wrap ">
           <div className="projects-list">
             {Object.keys(this.props.projects).map(key => (
               <ProjectCard

@@ -4,7 +4,7 @@ import { connect, useDispatch } from 'react-redux';
 import TextField from '@material-ui/core/TextField';
 import { withRouter } from 'react-router';
 
-import history from '../../utils/history';
+// import history from '../../utils/history';
 import { removeProjectRequest } from '../../actions';
 
 import './style.scss';
@@ -14,18 +14,20 @@ const ProjectCard = props => {
 
   const openHandler = () => {
     let id = props.id;
-
-    history.push(`/dashboard/projects/${id}`);
+    // console.log('historyy', props.history);
+    props.history.push(`/dashboard/projects/${id}`);
   };
 
   const remove = () => {
     let id = props.id;
 
     dispatch(removeProjectRequest(id));
+    props.history.push(`/dashboard`);
   };
 
   return (
     <div className="project-card">
+      <Card.Title>Project Title</Card.Title>
       <Card className="a">
         <Card.Header>
           <TextField

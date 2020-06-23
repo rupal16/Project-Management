@@ -46,7 +46,12 @@ const userProject = (
       });
 
     case 'REMOVE_PROJECT_SUCCESS':
-      return state.filter(projects => state.projects.id !== action.payload.id);
+      return {
+        ...state,
+        projects: state.projects.filter(
+          project => project.id !== action.payload.id,
+        ),
+      };
 
     case 'FETCH_PROJECT_BY_ID_REQUEST':
       return Object.assign({}, state, { isLoading: true });

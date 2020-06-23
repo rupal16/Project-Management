@@ -3,7 +3,7 @@ let cardId = 4;
 
 const initialState = [
   {
-    title: 'last episode',
+    title: 'todo',
     id: `list-${0}`,
     cards: [
       {
@@ -17,7 +17,7 @@ const initialState = [
     ],
   },
   {
-    title: 'first episode',
+    title: 'done',
     id: `list-${1}`,
     cards: [
       {
@@ -34,7 +34,21 @@ const initialState = [
 
 const listsReducer = (state = initialState, action) => {
   switch (action.type) {
-    case 'ADD_LIST':
+    case 'ADD_LIST_REQUEST':
+      // {
+      //   const newList = {
+      //     title: action.payload.title,
+      //     cards: [],
+      //     id: `list-${listId}`,
+      //   };
+      //   console.log('listid form reducer', listId);
+      //   console.log('listid form reducer', newList.id);
+      //   listId += 1;
+      //   return [...state, newList];
+      // }
+      console.log('action add list request', action.payload);
+
+    case 'ADD_LIST_SUCCESS':
       const newList = {
         title: action.payload.title,
         cards: [],
@@ -44,7 +58,10 @@ const listsReducer = (state = initialState, action) => {
       listId += 1;
       return [...state, newList];
 
-    case 'ADD_CARD': {
+    case 'ADD_CARD_REQUEST':
+      break;
+
+    case 'ADD_CARD_SUCCESS': {
       const newCard = {
         text: action.payload.text,
         id: `card-${cardId}`,

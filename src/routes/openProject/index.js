@@ -32,7 +32,6 @@ class OpenProject extends Component {
   };
 
   onDragEnd = result => {
-    console.log('on drag end fired');
     const { destination, source, draggableId, type } = result;
 
     if (!destination) {
@@ -62,28 +61,34 @@ class OpenProject extends Component {
       <div className="projectViewBg">
         <Navbar />
         <div className="top-menu-bar">
-          <TextField
-            className="textfield"
-            margin="dense"
-            id="projectTitle"
-            name="projectTitle"
-            type="text"
-            value={this.props.projectTitle}
-            onChange={this.handleChange}
-            onBlur={this.onBlurHandler}
-          />
-          <br />
+          <div className="project">
+            <p className="project-label">Project Title</p>
+            <TextField
+              className="textfield"
+              margin="dense"
+              id="projectTitle"
+              name="projectTitle"
+              type="text"
+              value={this.props.projectTitle}
+              onChange={this.handleChange}
+              onBlur={this.onBlurHandler}
+            />
+          </div>
 
-          <TextField
-            className="textfield"
-            margin="dense"
-            id="projectDescription"
-            name="projectDescription"
-            type="text"
-            value={this.props.projectDescription}
-            onChange={this.handleChange}
-            onBlur={this.onBlurHandler}
-          />
+          <br />
+          <div className="project">
+            <p className="project-label">Project Description</p>
+            <TextField
+              className="textfield"
+              margin="dense"
+              id="projectDescription"
+              name="projectDescription"
+              type="text"
+              value={this.props.projectDescription}
+              onChange={this.handleChange}
+              onBlur={this.onBlurHandler}
+            />
+          </div>
         </div>
         <br />
 

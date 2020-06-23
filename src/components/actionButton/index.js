@@ -3,12 +3,16 @@ import { Add, Close } from '@material-ui/icons';
 import { Card, Button } from 'react-bootstrap';
 import TextArea from 'react-textarea-autosize';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
-import { addList, addCard } from '../../actions';
+import { addListRequest, addCardRequest } from '../../actions';
 
 import './style.scss';
 
 class ActionButton extends Component {
+  static propTypes = {
+    list: PropTypes.object.isRequired,
+  };
   state = {
     formOpen: false,
     text: '',
@@ -33,20 +37,28 @@ class ActionButton extends Component {
   };
 
   handleAddList = () => {
-    const { dispatch, listId } = this.props;
-    const { text } = this.state;
-    console.log('handle add list', listId, text);
+    // console.log('listid', this.props.listId);
+    // const { dispatch, listId } = this.props;
+    // const { text } = this.state;
+    // console.log('handle add list', listId, text);
+    // console.log('props', this.props);
+    // console.log('list id rom addList', this.props.index);
     this.setState({
       text: '',
     });
-    if (text) {
-      dispatch(addList(listId, text));
+    if (this.state.text) {
+      console.log('list info', this.props.listId, this.state.text);
+      this.props.addList(this.props.listId, this.state.text);
     }
+    console.log('porps inside add list', this.props);
 
     return;
   };
 
   handleAddCard = () => {
+    console.log('inisde add card', this.props.listId);
+    console.log('props from add card', this.props);
+
     const { dispatch, listId } = this.props;
     const { text } = this.state;
     console.log('handle add card', listId, text);
@@ -54,11 +66,12 @@ class ActionButton extends Component {
       text: '',
     });
     if (text) {
-      dispatch(addCard(listId, text));
+      dispatch(addCardRequest(listId, text));
     }
   };
 
   renderAddButton = () => {
+    console.log('render add button', this.props);
     const { list } = this.props;
 
     const buttonText = list ? 'Add another list' : 'Add another card';
@@ -107,4 +120,12 @@ class ActionButton extends Component {
   }
 }
 
-export default connect()(ActionButton);
+const mapDispatchToProps = dispatch => {
+  return {
+    addList: (listId, text) => {
+      dispatch(addListRequest(listId, text));
+    },
+  };
+};
+
+export default connect(null, mapDispatchToProps)(ActionButton);

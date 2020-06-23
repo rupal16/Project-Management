@@ -31,9 +31,9 @@ export const fetchProjectById = async id => {
 };
 
 //delete project by id
-
+//return promises
 export const removeProject = async id => {
-  firebase
+  return firebase
     .database()
     .ref('Projects')
     .child(id)

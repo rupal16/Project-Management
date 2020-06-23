@@ -24,14 +24,19 @@ class Routes extends Component {
 
     this.state = {
       user: null,
+      lastVisitedPath: null,
     };
   }
 
-  componentDidMount() {
+  // componentDidMount() {
+  //   this.authListener();
+  // }
+
+  componentWillMount() {
     this.authListener();
   }
-
-  authListener() {
+  //check local storage
+  authListener = () => {
     firebase.auth().onAuthStateChanged(user => {
       if (user) {
         this.setState({
@@ -46,14 +51,15 @@ class Routes extends Component {
         this.setState({ user: null });
       }
     });
-  }
+  };
 
   render() {
+    console.log('hisotryy', history);
     return (
       <div>
         <Router history={history}>
           <Switch>
-            <Redirect exact from="/" to="/user-registration" />
+            <Redirect exact from="/" to="/signin" />
             <Route exact path="/user-registration" component={Registration} />
 
             <Route exact path="/user-profile/projects" component={Projects} />
