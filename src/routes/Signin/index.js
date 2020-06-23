@@ -152,7 +152,7 @@ class Signin extends Component {
 
   disableInputField = function() {
     var nameList = ['phone'];
-    var inputDomElements = document.getElementsByTagName('input');
+    var inputDomElements = document.getElementsByTagName('input'); //change to fieldset
     nameList.forEach(inputName => {
       var inputElement = inputDomElements[inputName];
       if (inputElement !== undefined) {

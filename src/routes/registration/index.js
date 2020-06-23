@@ -247,7 +247,7 @@ class Registration extends Component {
       'password',
       'confirmPassword',
     ];
-    var inputDomElements = document.getElementsByTagName('input');
+    var inputDomElements = document.getElementsByTagName('input'); //change
     nameList.forEach(inputName => {
       var inputElement = inputDomElements[inputName];
       if (inputElement !== undefined) {

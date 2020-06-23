@@ -5,7 +5,6 @@ import { Redirect } from 'react-router-dom';
 import { createProjectRequest, fetchAllProjectsRequest } from '../../actions';
 
 import { withRouter } from 'react-router';
-import history from '../../utils/history';
 
 import { userSignOut } from '../../services/user-service';
 
@@ -45,6 +44,7 @@ class NavBar extends Component {
   };
 
   render() {
+    console.log('from navbar', this.props.projects);
     const { createProject, projectTitle, projectDescription } = this.state;
     return (
       <div>
@@ -68,8 +68,10 @@ class NavBar extends Component {
                   {Object.keys(this.props.projects).map(key => (
                     <NavDropdown.Item
                       id={key}
-                      onClick={id => {
-                        history.push(`/dashboard/projects/${id}`);
+                      onClick={() => {
+                        console.log('clikceddd', key);
+                        console.log(`/dashboard/projects/${key}`);
+                        this.props.history.push(`/dashboard/projects/${key}`);
                       }}
                     >
                       {this.props.projects[key].projectTitle}
@@ -116,7 +118,11 @@ class NavBar extends Component {
               <Button
                 onClick={e => {
                   e.preventDefault();
-
+                  console.log(
+                    'new project',
+                    this.state.projectTitle,
+                    this.state.projectDescription,
+                  );
                   this.props.createNewProject(
                     this.state.projectTitle,
                     this.state.projectDescription,
@@ -124,7 +130,7 @@ class NavBar extends Component {
                   this.setState({
                     createProject: false,
                   });
-                  return <Redirect to="/dashboard" />;
+                  // return <Redirect to="/dashboard" />;
                 }}
               >
                 Create

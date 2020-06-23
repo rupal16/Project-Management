@@ -24,7 +24,7 @@ class Routes extends Component {
 
     this.state = {
       user: null,
-      lastVisitedPath: null,
+      // lastVisitedPath: null,
     };
   }
 
@@ -72,6 +72,7 @@ class Routes extends Component {
             />
 
             <Route
+              exact
               path="/signin"
               render={props =>
                 this.state.user !== null ? (

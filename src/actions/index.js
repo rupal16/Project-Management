@@ -77,12 +77,13 @@ export const createProjectRequest = (projectTitle, projectDescription) => {
   };
 };
 
-export const createProjectSuccess = (projectTitle, projectDescription) => {
+export const createProjectSuccess = projects => {
   return {
     type: 'CREATE_PROJECT_SUCCESS',
     payload: {
-      projectTitle: projectTitle,
-      projectDescription: projectDescription,
+      // projectTitle: projectTitle,
+      // projectDescription: projectDescription,
+      projects,
     },
   };
 };

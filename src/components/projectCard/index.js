@@ -22,7 +22,7 @@ const ProjectCard = props => {
     let id = props.id;
 
     dispatch(removeProjectRequest(id));
-    props.history.push(`/dashboard`);
+    // props.history.push(`/dashboard`);
   };
 
   return (
