@@ -27,7 +27,7 @@ const ProjectCard = props => {
 
   return (
     <div className="project-card">
-      <Card.Title>Project Title</Card.Title>
+      {/* <Card.Title>Project Title</Card.Title> */}
       <Card className="a">
         <Card.Header>
           <TextField

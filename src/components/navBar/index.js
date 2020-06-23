@@ -63,18 +63,22 @@ class NavBar extends Component {
               <Nav.Link onClick={this.createProjectClicked}>
                 Create Project
               </Nav.Link>
-              <NavDropdown title="Projects" id="collasible-nav-dropdown">
-                {Object.keys(this.props.projects).map(key => (
-                  <NavDropdown.Item
-                    id={key}
-                    onClick={id => {
-                      history.push(`/dashboard/projects/${id}`);
-                    }}
-                  >
-                    {this.props.projects[key].projectTitle}
-                  </NavDropdown.Item>
-                ))}
-              </NavDropdown>
+              {this.props.projects ? (
+                <NavDropdown title="Projects" id="collasible-nav-dropdown">
+                  {Object.keys(this.props.projects).map(key => (
+                    <NavDropdown.Item
+                      id={key}
+                      onClick={id => {
+                        history.push(`/dashboard/projects/${id}`);
+                      }}
+                    >
+                      {this.props.projects[key].projectTitle}
+                    </NavDropdown.Item>
+                  ))}
+                </NavDropdown>
+              ) : (
+                <NavDropdown title="Projects" id="collasible-nav-dropdown" />
+              )}
             </Nav>
             <Nav>
               <Nav.Link href="/user-profile">Profile</Nav.Link>

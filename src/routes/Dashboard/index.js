@@ -48,16 +48,22 @@ class Dashboard extends React.Component {
       <div>
         <NavBar />
         <div className="project-list-wrap ">
-          <div className="projects-list">
-            {Object.keys(this.props.projects).map(key => (
-              <ProjectCard
-                id={key}
-                projectTitle={this.props.projects[key].projectTitle}
-                projectDescription={this.props.projects[key].projectDescription}
-                handleChange={this.handleChange}
-              />
-            ))}
-          </div>
+          {this.props.projects ? (
+            <div className="projects-list">
+              {Object.keys(this.props.projects).map(key => (
+                <ProjectCard
+                  id={key}
+                  projectTitle={this.props.projects[key].projectTitle}
+                  projectDescription={
+                    this.props.projects[key].projectDescription
+                  }
+                  handleChange={this.handleChange}
+                />
+              ))}
+            </div>
+          ) : (
+            <div />
+          )}
         </div>
       </div>
     );
