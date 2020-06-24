@@ -24,13 +24,8 @@ class Routes extends Component {
 
     this.state = {
       user: null,
-      // lastVisitedPath: null,
     };
   }
-
-  // componentDidMount() {
-  //   this.authListener();
-  // }
 
   componentWillMount() {
     this.authListener();
@@ -54,7 +49,6 @@ class Routes extends Component {
   };
 
   render() {
-    console.log('hisotryy', history);
     return (
       <div>
         <Router history={history}>

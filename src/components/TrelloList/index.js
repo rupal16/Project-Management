@@ -9,16 +9,11 @@ import './style.scss';
 const TrelloList = ({ title, cards, listId, index }) => {
   const [isUpdate, setUpdate] = useState(false);
 
-  // const inputClickHandler = () => {
-  //   setUpdate(false);
-  // };
-
   const clickHandler = () => {
     setUpdate(true);
   };
 
   const blurHandler = () => {
-    console.log('blurrr');
     setUpdate(false);
   };
 
@@ -39,7 +34,6 @@ const TrelloList = ({ title, cards, listId, index }) => {
                     <input
                       type="text"
                       defaultValue={title}
-                      // onClick={inputClickHandler}
                       onBlur={blurHandler}
                     />
                   ) : (
@@ -56,7 +50,7 @@ const TrelloList = ({ title, cards, listId, index }) => {
                     />
                   ))}
                   <ActionButton listId={listId} index={index} />
-                  {console.log('trellil list', listId)}
+
                   {provided.placeholder}
                 </div>
               )}

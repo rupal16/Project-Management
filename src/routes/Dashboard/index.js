@@ -44,7 +44,6 @@ class Dashboard extends React.Component {
   };
 
   render() {
-    console.log('form dashboard', this.props);
     return (
       <div>
         <NavBar />

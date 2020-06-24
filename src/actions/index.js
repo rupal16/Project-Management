@@ -81,8 +81,6 @@ export const createProjectSuccess = projects => {
   return {
     type: 'CREATE_PROJECT_SUCCESS',
     payload: {
-      // projectTitle: projectTitle,
-      // projectDescription: projectDescription,
       projects,
     },
   };
@@ -132,7 +130,6 @@ export const fetchAllProjectsFailure = error => ({
   error: error,
 });
 
-//
 export const fetchProjectByIdRequest = id => ({
   type: 'FETCH_PROJECT_BY_ID_REQUEST',
   payload: {
@@ -177,7 +174,6 @@ export const updateProjectFailure = error => ({
 
 //add list
 export const addListRequest = (listId, title) => {
-  console.log('from add list action', listId, title);
   return {
     type: 'ADD_LIST_REQUEST',
     payload: {
@@ -188,8 +184,6 @@ export const addListRequest = (listId, title) => {
 };
 
 export const addListSuccess = (listId, title) => {
-  console.log('from addlist success action', listId);
-  console.log('from add list action', listId, title);
   return {
     type: 'ADD_LIST_SUCCESS',
     payload: {
@@ -207,7 +201,6 @@ export const addListFailure = error => {
 };
 
 export const addCardRequest = (listId, text) => {
-  console.log('add card request');
   return {
     type: 'ADD_CARD_REQUEST',
     payload: {
@@ -218,7 +211,6 @@ export const addCardRequest = (listId, text) => {
 };
 
 export const addCardSuccess = (listId, text) => {
-  console.log('add card success');
   return {
     type: 'ADD_CARD_SUCCESS',
     payload: {
@@ -229,7 +221,6 @@ export const addCardSuccess = (listId, text) => {
 };
 
 export const addCardFailure = error => {
-  console.log('add card failure');
   return {
     type: 'ADD_CARD_FAILURE',
     error: error,

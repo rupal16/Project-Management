@@ -6,19 +6,6 @@ import { Draggable } from 'react-beautiful-dnd';
 
 import './style.scss';
 
-// let cardClicked = false;
-
-// const clickHandler = () => {
-//   console.log(cardClicked);
-//   console.log('clicked');
-//   cardClicked = true;
-//   console.log(cardClicked);
-// };
-
-// useEffect(() => {
-//   dispatch(requestUser());
-// }, []);
-
 const TrelloCard = props => {
   const [isUpdate, setUpdate] = useState(false);
 
@@ -26,11 +13,8 @@ const TrelloCard = props => {
     setUpdate(false);
   };
 
-  const updateCallBack = newText => {
-    console.log('update callback', newText);
-  };
+  const updateCallBack = newText => {};
 
-  console.log('from card', props.listTitle);
   return (
     <Draggable draggableId={String(props.id)} index={props.index}>
       {provided => (

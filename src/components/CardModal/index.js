@@ -12,35 +12,15 @@ class CardModal extends Component {
       listTitle: this.props.listTitle,
     };
   }
-  // state = {
-  //   open: true,
-  //   newText: this.props.text,
-  //   listTitle: this.props.listTitle,
-  // };
 
   handleClose = () => {
-    console.log('newtext', this.state.newText);
     this.props.onUpdate();
     this.setState({
       open: false,
     });
   };
 
-  // changeHandler = e => {
-  //   console.log('e', e);
-  //   const { newText } = this.state;
-  //   console.log('change hanlder', newText);
-  //   const { value, name } = e.target;
-  //   this.setState({
-  //     [name]: value,
-  //   });
-  // };
   handleChange = e => {
-    // const { value, name } = e.target;
-    // this.setState({
-    //   [name]: value,
-    // });
-    // const { newText } = this.state;
     this.setState({
       newText: e.target.value,
     });
@@ -50,14 +30,6 @@ class CardModal extends Component {
     const { updateCallBack } = this.props;
     updateCallBack(this.state.newText);
   };
-
-  // onBlurHandler = () => {
-  //   this.props.update(
-  //     this.props.match.params.id,
-  //     this.state.projectTitle,
-  //     this.state.projectDescription,
-  //   );
-  // };
 
   render() {
     return (

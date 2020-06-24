@@ -44,7 +44,6 @@ class NavBar extends Component {
   };
 
   render() {
-    console.log('from navbar', this.props.projects);
     const { createProject, projectTitle, projectDescription } = this.state;
     return (
       <div>
@@ -69,8 +68,6 @@ class NavBar extends Component {
                     <NavDropdown.Item
                       id={key}
                       onClick={() => {
-                        console.log('clikceddd', key);
-                        console.log(`/dashboard/projects/${key}`);
                         this.props.history.push(`/dashboard/projects/${key}`);
                       }}
                     >
@@ -118,11 +115,7 @@ class NavBar extends Component {
               <Button
                 onClick={e => {
                   e.preventDefault();
-                  console.log(
-                    'new project',
-                    this.state.projectTitle,
-                    this.state.projectDescription,
-                  );
+
                   this.props.createNewProject(
                     this.state.projectTitle,
                     this.state.projectDescription,
@@ -130,7 +123,6 @@ class NavBar extends Component {
                   this.setState({
                     createProject: false,
                   });
-                  // return <Redirect to="/dashboard" />;
                 }}
               >
                 Create

@@ -37,31 +37,20 @@ class ActionButton extends Component {
   };
 
   handleAddList = () => {
-    // console.log('listid', this.props.listId);
-    // const { dispatch, listId } = this.props;
-    // const { text } = this.state;
-    // console.log('handle add list', listId, text);
-    // console.log('props', this.props);
-    // console.log('list id rom addList', this.props.index);
     this.setState({
       text: '',
     });
     if (this.state.text) {
-      console.log('list info', this.props.listId, this.state.text);
       this.props.addList(this.props.listId, this.state.text);
     }
-    console.log('porps inside add list', this.props);
 
     return;
   };
 
   handleAddCard = () => {
-    console.log('inisde add card', this.props.listId);
-    console.log('props from add card', this.props);
-
     const { dispatch, listId } = this.props;
     const { text } = this.state;
-    console.log('handle add card', listId, text);
+
     this.setState({
       text: '',
     });
@@ -71,7 +60,6 @@ class ActionButton extends Component {
   };
 
   renderAddButton = () => {
-    console.log('render add button', this.props);
     const { list } = this.props;
 
     const buttonText = list ? 'Add another list' : 'Add another card';
