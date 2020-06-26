@@ -5,9 +5,15 @@ import { addListSuccess, addListFailure } from '../actions';
 
 function* createListAsync({ payload }) {
   try {
-    yield call(createList(payload.title));
-
-    yield put(addListSuccess, payload.title);
+    const a = yield call(createList, payload.title, payload.projectId);
+    console.log('listref', a.path);
+    yield put(
+      addListSuccess(
+        payload.title,
+        payload.projectId,
+        a.path.pieces_[a.path.pieces_.length - 1],
+      ),
+    );
   } catch (error) {
     yield put(addListFailure(error.message));
   }

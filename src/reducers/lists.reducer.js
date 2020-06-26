@@ -1,50 +1,91 @@
-let listId = 2;
-let cardId = 4;
-
-const initialState = [
-  {
-    title: 'todo',
-    id: `list-${0}`,
-    cards: [
-      {
-        id: `card-${0}`,
-        text: 'task 1',
-      },
-      {
-        id: `card-${1}`,
-        text: 'task 2',
-      },
-    ],
+const listsReducer = (
+  state = {
+    isLoading: false,
+    error: '',
+    lists: {},
   },
-  {
-    title: 'done',
-    id: `list-${1}`,
-    cards: [
-      {
-        id: `card-${2}`,
-        text: 'task 1',
-      },
-      {
-        id: `card-${3}`,
-        text: 'task 2',
-      },
-    ],
-  },
-];
-
-const listsReducer = (state = initialState, action) => {
+  action,
+) => {
   switch (action.type) {
-    case 'ADD_LIST_REQUEST':
-
     case 'ADD_LIST_SUCCESS':
-      const newList = {
-        title: action.payload.title,
-        cards: [],
-        id: `list-${listId}`,
+      console.log('add list reducer', action.payload.title);
+
+      return {
+        ...state,
+        lists: {
+          ...state.lists,
+          [action.payload.listId]: {
+            projectId: action.payload.projectId,
+            title: action.payload.title,
+          },
+        },
       };
 
-      listId += 1;
-      return [...state, newList];
+    case 'ADD_LIST_REQUEST': {
+      // const newList = {
+      //   title: action.payload.title,
+      //   projectId: action.payload.projectId,
+      //   cards: [],
+      //   // listId: `list-${listId}`,
+      //   // listId: action.payload.listId,
+      // };
+
+      // listId += 1;
+      return { ...state };
+    }
+
+    case 'UPDATE_LIST_TITLE_REQUEST':
+      return { ...state };
+    // return {
+    //   ...state,
+    //   lists: [
+    //     ...state.lists,
+    //     ([action.payload.listId] = action.payload.title),
+    //   ],
+    // };
+
+    case 'UPDATE_LIST_TITLE_SUCCESS':
+      console.log(
+        'success reducer',
+        action.payload.listId,
+        action.payload.title,
+      );
+      return {
+        ...state,
+        lists: {
+          ...state.lists,
+          [action.payload.listId]: {
+            ...state.lists[action.payload.listId],
+            title: action.payload.title,
+          },
+        },
+      };
+    // state.lists.map(list => {
+    //   console.log('list', list);
+    // if (list.id === action.payload.id) {
+    //   list.title = action.payload.title;
+    // }
+    // });
+
+    // return { ...state };
+
+    // console.log('list state', state.lists.action.payload.listId);
+    // return {
+    //   ...state,
+    //   lists: {
+    //     ...state.lists,
+    //     {
+    //       state.map(list => )
+    //     }
+    //     // [action.payload.listId]: action.payload.title,
+    //   },
+    // };
+
+    case 'UPDATE_LIST_TITLE_FAILURE':
+      return {
+        ...state,
+        error: action.payload.error,
+      };
 
     case 'ADD_CARD_REQUEST':
       break;
@@ -52,9 +93,9 @@ const listsReducer = (state = initialState, action) => {
     case 'ADD_CARD_SUCCESS': {
       const newCard = {
         text: action.payload.text,
-        id: `card-${cardId}`,
+        // id: `card-${cardId}`,
       };
-      cardId += 1;
+      // cardId += 1;
 
       const newState = state.map(list => {
         if (list.id === action.payload.listId) {
@@ -68,6 +109,22 @@ const listsReducer = (state = initialState, action) => {
       });
       return newState;
     }
+    case 'FETCH_ALL_LISTS_REQUEST':
+      return Object.assign({}, state, {
+        isLoading: true,
+      });
+
+    case 'FETCH_ALL_LISTS_SUCCESS':
+      return Object.assign({}, state, {
+        isLoading: false,
+        lists: action.payload.lists,
+      });
+
+    case 'FETCH_ALL_LISTS_FAILURE':
+      return Object.assign({}, state, {
+        isLoading: false,
+        error: action.error,
+      });
 
     case 'DRAG_HAPPENED':
       const {
@@ -110,3 +167,19 @@ const listsReducer = (state = initialState, action) => {
 };
 
 export { listsReducer };
+
+// case 'FETCH_ALL_PROJECTS_FAILURE':
+//       return Object.assign({}, state, {
+//         isLoading: false,
+//         error: action.error,
+//       });
+//     case 'FETCH_ALL_PROJECTS_REQUEST':
+//       return Object.assign({}, state, {
+//         isLoading: true,
+//       });
+
+//     case 'FETCH_ALL_PROJECTS_SUCCESS':
+//       return Object.assign({}, state, {
+//         isLoading: false,
+//         projects: action.payload.projects,
+//       });

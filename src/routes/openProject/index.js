@@ -6,7 +6,7 @@ import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 
 import ActionButton from '../../components/actionButton';
 import {
-  fetchProjectByIdRequest,
+  fetchAllListsRequest,
   updateProjectRequest,
   sort,
 } from '../../actions';
@@ -15,14 +15,22 @@ import Navbar from '../../components/navBar';
 import './style.scss';
 
 class OpenProject extends Component {
-  componentDidMount() {
-    this.props.requestProject(this.props.match.params.id);
-  }
+  // constructor(props) {
+  //   super(props);
+
+  // componentDidMount() {//api call
+  //   this.props.requestProject(this.props.match.params.id);
+  // }
+
+  componentDidMount = () => {
+    this.props.click();
+  };
 
   state = {
     projectTitle: this.props.projectTitle,
-    projectDesignation: this.props.projectDesignation,
+    projectDescription: this.props.projectDescription,
   };
+  // }
 
   handleChange = e => {
     const { value, name } = e.target;
@@ -48,7 +56,11 @@ class OpenProject extends Component {
     );
   };
 
-  onBlurHandler = () => {
+  onBlurHandler = e => {
+    // this.handleChange();
+    console.log('e from onblur', e);
+    console.log('props', this.props);
+    console.log('state', this.state);
     this.props.update(
       this.props.match.params.id,
       this.state.projectTitle,
@@ -57,6 +69,9 @@ class OpenProject extends Component {
   };
 
   render() {
+    console.log('lists from open roject', this.props.listsReducer.lists);
+    console.log('this.props', this.props);
+    console.log('this.state', this.state);
     return (
       <div className="projectViewBg">
         <Navbar />
@@ -69,7 +84,7 @@ class OpenProject extends Component {
               id="projectTitle"
               name="projectTitle"
               type="text"
-              value={this.props.projectTitle}
+              value={this.state.projectTitle}
               onChange={this.handleChange}
               onBlur={this.onBlurHandler}
             />
@@ -84,7 +99,7 @@ class OpenProject extends Component {
               id="projectDescription"
               name="projectDescription"
               type="text"
-              value={this.props.projectDescription}
+              value={this.state.projectDescription}
               onChange={this.handleChange}
               onBlur={this.onBlurHandler}
             />
@@ -100,16 +115,27 @@ class OpenProject extends Component {
                 {...provided.droppableProps}
                 ref={provided.innerRef}
               >
-                {this.props.listsReducer.map((list, index) => (
-                  <TrelloList
-                    listId={list.id}
-                    key={list.id}
-                    title={list.title}
-                    cards={list.cards}
-                    index={index}
-                  />
-                ))}
-                <ActionButton list />
+                {console.log(
+                  'listReducer',
+                  Object.keys(this.props.listsReducer.lists),
+                )}
+
+                {Object.keys(this.props.listsReducer.lists)
+                  .filter(
+                    listId =>
+                      this.props.listsReducer.lists[listId].projectId ===
+                      this.props.match.params.id,
+                  )
+                  .map((list, index) => (
+                    <TrelloList
+                      listId={list}
+                      key={this.props.listsReducer.lists[list].id}
+                      title={this.props.listsReducer.lists[list].title}
+                      cards={this.props.listsReducer.lists[list].cards}
+                      index={index}
+                    />
+                  ))}
+                <ActionButton list projectId={this.props.match.params.id} />
               </div>
             )}
           </Droppable>
@@ -119,22 +145,28 @@ class OpenProject extends Component {
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state, props) => {
   return {
-    projectTitle: state.userProject.projectTitle,
-    projectDescription: state.userProject.projectDescription,
+    projectTitle:
+      state.userProject.projects[props.match.params.id].projectTitle,
+    projectDescription:
+      state.userProject.projects[props.match.params.id].projectDescription,
     listsReducer: state.listsReducer,
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    requestProject: id => {
-      dispatch(fetchProjectByIdRequest(id));
-    },
+    // requestProject: id => {
+    //   dispatch(fetchProjectByIdRequest(id));
+    // },
 
     update: (id, projectTitle, projectDesignation) => {
       dispatch(updateProjectRequest(id, projectTitle, projectDesignation));
+    },
+
+    click: () => {
+      dispatch(fetchAllListsRequest());
     },
 
     drag: (

@@ -4,6 +4,7 @@ import { updateProject } from '../services/user.project';
 import { updateProjectSuccess, updateProjectFailure } from '../actions';
 
 function* updateProjectAsync({ payload }) {
+  console.log('update saga', payload);
   try {
     yield call(
       updateProject,

@@ -14,6 +14,8 @@ const ProjectCard = props => {
   const openHandler = () => {
     let id = props.id;
 
+    // let projectTitle = props.projectTitle;
+    // let projectDescription = props.projectDescription;
     props.history.push(`/dashboard/projects/${id}`);
   };
 

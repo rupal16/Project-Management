@@ -8,6 +8,8 @@ import { watchRemoveProject } from './removeProject.saga';
 import { watchFetchProjectById } from './fetchProjectById.saga';
 import { watchUpdateProject } from './updateProject.saga';
 import { watchCreateList } from './createList.saga';
+import { watchFetchAllLists } from './fetchAllLists.saga';
+import { watchUpdateListTitle } from './updateListTitle.saga';
 
 export function* rootSaga() {
   yield all([
@@ -19,5 +21,7 @@ export function* rootSaga() {
     watchFetchProjectById(),
     watchUpdateProject(),
     watchCreateList(),
+    watchFetchAllLists(),
+    watchUpdateListTitle(),
   ]);
 }

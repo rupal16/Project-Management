@@ -16,6 +16,7 @@ class ActionButton extends Component {
   state = {
     formOpen: false,
     text: '',
+    // listId: this.props.listId,
   };
 
   openForm = () => {
@@ -37,11 +38,19 @@ class ActionButton extends Component {
   };
 
   handleAddList = () => {
+    console.log('projectId', this.props.projectId);
     this.setState({
       text: '',
     });
     if (this.state.text) {
-      this.props.addList(this.props.listId, this.state.text);
+      console.log('listid', this.props.listId);
+      console.log('porps', this.props, this.state);
+      console.log('list props', this.state.text);
+      this.props.addList(
+        this.state.text,
+        this.props.projectId,
+        // this.props.listId,
+      );
     }
 
     return;
@@ -108,10 +117,20 @@ class ActionButton extends Component {
   }
 }
 
+// const mapStateToProps = state = {
+//   return
+// }
+
+// const mapStateToProps = state => {
+//   return {
+//     listId: state.listsReducer[0].listId,
+//   };
+// };
+
 const mapDispatchToProps = dispatch => {
   return {
-    addList: (listId, text) => {
-      dispatch(addListRequest(listId, text));
+    addList: (text, projectId, listId) => {
+      dispatch(addListRequest(text, projectId, listId));
     },
   };
 };

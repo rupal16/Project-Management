@@ -22,6 +22,14 @@ const userProject = (
 
       return newData;
 
+    // case 'UPDATE_PROJECT_SUCCESS':
+    //   Object.assign({}, state, {
+    //     isLoading: false,
+    //     error: '',
+    //     projects
+    //   })
+    //   });
+
     case 'CREATE_PROJECT_FAILURE':
       return Object.assign({}, state, {
         error: action.error,
@@ -52,6 +60,7 @@ const userProject = (
       let ids = Object.keys(state.projects).filter(
         id => id !== action.payload.id,
       );
+
       let projects = {};
       ids.map(id => {
         projects[id] = state.projects[id];
@@ -60,6 +69,14 @@ const userProject = (
         ...state,
         projects,
       };
+
+    case 'UPDATE_PROJECT_SUCCESS':
+      return Object.assign({}, state, {
+        isLoading: false,
+        error: '',
+        projectTitle: action.payload.projectTitle,
+        projectDescription: action.payload.projectDescription,
+      });
 
     case 'REMOVE_PROJECT_FAILURE':
       return Object.assign({}, state, {
@@ -86,11 +103,12 @@ const userProject = (
         projectDescription: action.payload.projectDescription,
       });
 
-    case 'UPDATE_PROJECT_SUCCESS':
-      return Object.assign({}, state, {
-        projectTitle: action.payload.projectTitle,
-        projectDescription: action.payload.projectDescription,
-      });
+    // case 'UPDATE_PROJECT_REQUEST':
+    //   return{
+    //     ...state, {
+
+    //     }
+    //   }
 
     case 'UPDATE_PROJECT_FAILURE':
       return Object.assign({}, state, {

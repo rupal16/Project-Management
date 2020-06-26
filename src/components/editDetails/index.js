@@ -34,6 +34,7 @@ class EditDetails extends Component {
   };
 
   render() {
+    console.log('this.state', this.state);
     return (
       <div>
         <Dialog open={this.state.open} onClose={this.handleClose}>

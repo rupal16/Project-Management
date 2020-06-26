@@ -42,7 +42,7 @@ export const removeProject = async id => {
 //update project details
 
 export const updateProject = async (id, projectTitle, projectDescription) => {
-  firebase
+  return firebase
     .database()
     .ref('Projects')
     .child(id)
