@@ -5,6 +5,7 @@ export const userDbRef = firebaseApp.database();
 
 //create list
 export const createList = async (title, projectId) => {
+  console.log('create list service', title, projectId);
   let listRef = await firebase
     .database()
     .ref('Lists')

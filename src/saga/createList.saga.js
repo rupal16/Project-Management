@@ -17,5 +17,6 @@ function* createListAsync({ payload }) {
 }
 
 export function* watchCreateList() {
+  console.log('inside saga');
   yield takeEvery('ADD_LIST_REQUEST', createListAsync);
 }

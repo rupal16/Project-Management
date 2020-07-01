@@ -52,8 +52,6 @@ class ActionButton extends Component {
         // this.props.listId,
       );
     }
-
-    return;
   };
 
   handleAddCard = () => {
@@ -141,6 +139,13 @@ const mapDispatchToProps = dispatch => {
     addList: (text, projectId) => {
       dispatch(addListRequest(text, projectId));
     },
+    // addList: () => {dispatch({
+    //   type: 'ADD_LIST_REQUEST',
+    //   payload: {
+    //     text: this.state.text,
+    //     projectId: this.props.projectId,
+    //   },
+    // });}
 
     addCard: (text, listId) => {
       dispatch(addCardRequest(text, listId));

@@ -246,7 +246,7 @@ export const updateProjectFailure = error => ({
 
 //add list
 export const addListRequest = (title, projectId) => {
-  console.log('add list action', title);
+  console.log('add list action', title, projectId);
   return {
     type: 'ADD_LIST_REQUEST',
     payload: {
