@@ -41,6 +41,7 @@ class OpenProject extends Component {
 
   onDragEnd = result => {
     const { destination, source, draggableId, type } = result;
+    console.log('resultt', result);
 
     if (!destination) {
       return;
@@ -58,9 +59,7 @@ class OpenProject extends Component {
 
   onBlurHandler = e => {
     // this.handleChange();
-    console.log('e from onblur', e);
-    console.log('props', this.props);
-    console.log('state', this.state);
+
     this.props.update(
       this.props.match.params.id,
       this.state.projectTitle,
@@ -69,9 +68,6 @@ class OpenProject extends Component {
   };
 
   render() {
-    console.log('lists from open roject', this.props.listsReducer.lists);
-    console.log('this.props', this.props);
-    console.log('this.state', this.state);
     return (
       <div className="projectViewBg">
         <Navbar />
@@ -115,26 +111,15 @@ class OpenProject extends Component {
                 {...provided.droppableProps}
                 ref={provided.innerRef}
               >
-                {console.log(
-                  'listReducer',
-                  Object.keys(this.props.listsReducer.lists),
-                )}
-
-                {Object.keys(this.props.listsReducer.lists)
-                  .filter(
-                    listId =>
-                      this.props.listsReducer.lists[listId].projectId ===
-                      this.props.match.params.id,
-                  )
-                  .map((list, index) => (
-                    <TrelloList
-                      listId={list}
-                      key={this.props.listsReducer.lists[list].id}
-                      title={this.props.listsReducer.lists[list].title}
-                      cards={this.props.listsReducer.lists[list].cards}
-                      index={index}
-                    />
-                  ))}
+                {this.props.listsReducer.list.map((list, index) => (
+                  <TrelloList
+                    listId={list}
+                    key={list.id}
+                    title={list.title}
+                    // cards={this.props.listsReducer.lists[list].cards}
+                    index={index}
+                  />
+                ))}
                 <ActionButton list projectId={this.props.match.params.id} />
               </div>
             )}
@@ -155,7 +140,7 @@ const mapStateToProps = (state, props) => {
   };
 };
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch, props) => {
   return {
     // requestProject: id => {
     //   dispatch(fetchProjectByIdRequest(id));
@@ -166,7 +151,7 @@ const mapDispatchToProps = dispatch => {
     },
 
     click: () => {
-      dispatch(fetchAllListsRequest());
+      dispatch(fetchAllListsRequest(props.match.params.id));
     },
 
     drag: (

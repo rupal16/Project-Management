@@ -57,15 +57,24 @@ class ActionButton extends Component {
   };
 
   handleAddCard = () => {
-    const { dispatch, listId } = this.props;
-    const { text } = this.state;
+    // const { listId } = this.props;
+    // const { text } = this.state;
+    console.log('props from add card', this.props);
+    console.log('text card', this.state.text);
+    console.log('cardid', this.props.listId);
 
+    if (this.state.text) {
+      // console.log('if text exists', props.listId);
+      console.log('text', this.state.text);
+      console.log('card id', this.state.cardId);
+      // dispatch(addCardRequest(listId, text));
+      this.props.addCard(this.state.text, this.props.listId);
+
+      // this.props.addCard(this.state.text, this.props.listId);
+    }
     this.setState({
       text: '',
     });
-    if (text) {
-      dispatch(addCardRequest(listId, text));
-    }
   };
 
   renderAddButton = () => {
@@ -129,8 +138,12 @@ class ActionButton extends Component {
 
 const mapDispatchToProps = dispatch => {
   return {
-    addList: (text, projectId, listId) => {
-      dispatch(addListRequest(text, projectId, listId));
+    addList: (text, projectId) => {
+      dispatch(addListRequest(text, projectId));
+    },
+
+    addCard: (text, listId) => {
+      dispatch(addCardRequest(text, listId));
     },
   };
 };

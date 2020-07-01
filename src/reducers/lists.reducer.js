@@ -2,7 +2,7 @@ const listsReducer = (
   state = {
     isLoading: false,
     error: '',
-    lists: {},
+    list: [],
   },
   action,
 ) => {
@@ -12,16 +12,16 @@ const listsReducer = (
 
       return {
         ...state,
-        lists: {
-          ...state.lists,
-          [action.payload.listId]: {
-            projectId: action.payload.projectId,
+        list: [
+          ...state.list,
+          {
             title: action.payload.title,
+            id: action.payload.listId,
           },
-        },
+        ],
       };
 
-    case 'ADD_LIST_REQUEST': {
+    case 'ADD_LIST_REQUEST':
       // const newList = {
       //   title: action.payload.title,
       //   projectId: action.payload.projectId,
@@ -32,7 +32,6 @@ const listsReducer = (
 
       // listId += 1;
       return { ...state };
-    }
 
     case 'UPDATE_LIST_TITLE_REQUEST':
       return { ...state };
@@ -87,38 +86,40 @@ const listsReducer = (
         error: action.payload.error,
       };
 
-    case 'ADD_CARD_REQUEST':
-      break;
+    // case 'ADD_CARD_REQUEST':
+    //   break;
 
-    case 'ADD_CARD_SUCCESS': {
-      const newCard = {
-        text: action.payload.text,
-        // id: `card-${cardId}`,
-      };
-      // cardId += 1;
+    // case 'ADD_CARD_SUCCESS': {
+    //   const newCard = {
+    //     text: action.payload.text,
+    //     // id: `card-${cardId}`,
+    //   };
+    //   // cardId += 1;
 
-      const newState = state.map(list => {
-        if (list.id === action.payload.listId) {
-          return {
-            ...list,
-            cards: [...list.cards, newCard],
-          };
-        } else {
-          return list;
-        }
-      });
-      return newState;
-    }
+    //   const newState = state.map(list => {
+    //     if (list.id === action.payload.listId) {
+    //       return {
+    //         ...list,
+    //         cards: [...list.cards, newCard],
+    //       };
+    //     } else {
+    //       return list;
+    //     }
+    //   });
+    //   return newState;
+    // }
     case 'FETCH_ALL_LISTS_REQUEST':
       return Object.assign({}, state, {
         isLoading: true,
       });
 
     case 'FETCH_ALL_LISTS_SUCCESS':
-      return Object.assign({}, state, {
-        isLoading: false,
-        lists: action.payload.lists,
-      });
+      console.log('payload', action.payload);
+      return {
+        ...state,
+        isloading: false,
+        list: action.payload.listsById,
+      };
 
     case 'FETCH_ALL_LISTS_FAILURE':
       return Object.assign({}, state, {
@@ -134,20 +135,28 @@ const listsReducer = (
         droppableIndexEnd,
         type,
       } = action.payload;
-      const newState = [...state];
+      const newListById = [...state.listById];
 
       //dragging lists around
       if (type === 'list') {
-        const list = newState.splice(droppableIndexStart, 1);
-        newState.splice(droppableIndexEnd, 0, ...list);
-        return newState;
+        console.log(
+          'dropss',
+          droppableIdStart,
+          droppableIdEnd,
+          droppableIndexStart,
+          droppableIndexEnd,
+        );
+        console.log('list dragged');
+        const list = newListById.splice(droppableIndexStart, 1);
+        newListById.splice(droppableIndexEnd, 0, ...list);
+        return { ...state, listById: newListById };
       }
 
       //in the same list
       if (droppableIdStart === droppableIdEnd) {
         const list = state.find(list => droppableIdStart === list.id);
         const card = list.cards.splice(droppableIndexStart, 1);
-        list.cards.splice(droppableIndexEnd, 0, ...card);
+        list.cards.splice(droppableIndexEnd, 0, [...card]);
       }
       //in other list
       if (droppableIdStart !== droppableIdEnd) {
@@ -159,7 +168,7 @@ const listsReducer = (
         //put card in the new list
         listEnd.cards.splice(droppableIndexEnd, 0, ...card);
       }
-      return newState;
+      return newListById;
 
     default:
       return state;

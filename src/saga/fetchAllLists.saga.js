@@ -3,11 +3,12 @@ import { fetchAllLists } from '../services/task.project';
 
 import { fetchAllListsSuccess, fetchAllListsFailure } from '../actions';
 
-function* fetchAllListsAsync() {
+function* fetchAllListsAsync({ payload }) {
   try {
-    let lists = yield call(fetchAllLists);
+    let response = yield call(fetchAllLists, payload.projectId);
+    console.log('response', response);
 
-    yield put(fetchAllListsSuccess(lists));
+    yield put(fetchAllListsSuccess(response.sortedListArray));
   } catch (error) {
     yield put(fetchAllListsFailure(error.message));
   }

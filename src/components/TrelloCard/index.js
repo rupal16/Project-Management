@@ -16,7 +16,7 @@ const TrelloCard = props => {
   const updateCallBack = newText => {};
 
   return (
-    <Draggable draggableId={String(props.id)} index={props.index}>
+    <Draggable draggableId={String(props.cardId)} index={props.index}>
       {provided => (
         <div
           ref={provided.innerRef}

@@ -1,18 +1,23 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Droppable, Draggable } from 'react-beautiful-dnd';
 import { connect } from 'react-redux';
 
-import TrelloCard from '../TrelloCard';
+// import TrelloCard from '../TrelloCard';
 import ActionButton from '../actionButton';
-import { updateListTitleRequest } from '../../actions';
+import { updateListTitleRequest, fetchAllCardsRequest } from '../../actions';
 
 import './style.scss';
 
 // const TrelloList = ({ title, cards, listId, index, updateTitle }) => {
 const TrelloList = props => {
-  const { title, cards, listId, index, updateTitle } = props;
+  const { title, listId, index, updateTitle } = props;
   const [isUpdate, setUpdate] = useState(false);
   const [newTitle, setTitle] = useState({ title });
+
+  useEffect(() => {
+    // dispatch(fetchAllCardsRequest());
+    props.fetchAllCards();
+  }, []);
 
   const clickHandler = () => {
     console.log('setUpdate');
@@ -37,7 +42,7 @@ const TrelloList = props => {
   };
   // console.log('listid', listId);
   // console.log('props title', this.props);
-  console.log('listss', props.list);
+  console.log('listss', props);
   return (
     <div>
       <Draggable draggableId={String(listId)} index={index}>
@@ -59,22 +64,24 @@ const TrelloList = props => {
                       onChange={onChangeHandler}
                     />
                   ) : (
-                    <div onClick={clickHandler}>{props.title}</div>
+                    <div onClick={clickHandler}>{title}</div>
                   )}
 
-                  {Array.isArray(cards) &&
-                    cards.length !== 0 &&
-                    cards.map((card, index) => (
+                  {/* {props.cardsReducer.cardsById
+                    .filter(
+                      cardId =>
+                        props.cardsReducer.cards[cardId].listId === listId,
+                    )
+                    .map((card, index) => (
                       <TrelloCard
-                        listTitle={title}
-                        key={card.id}
+                        cardId={card}
+                        key={props.cardsReducer.cards[card].id}
+                        title={props.cardsReducer.cards[card].title}
                         index={index}
-                        text={card.text}
-                        id={card.id}
                       />
-                    ))}
+                    ))} */}
 
-                  <ActionButton index={index} />
+                  <ActionButton index={index} listId={listId} />
 
                   {provided.placeholder}
                 </div>
@@ -91,6 +98,9 @@ const mapStateToProps = state => {
   console.log('map state', state);
   return {
     list: state.listsReducer.lists,
+    listById: state.listsReducer.listById,
+    // card: state.cardsReducer.cards,
+    cardsReducer: state.cardsReducer,
   };
 };
 
@@ -98,6 +108,9 @@ const mapDispatchToProps = dispatch => {
   return {
     updateTitle: (listId, title) => {
       dispatch(updateListTitleRequest(listId, title));
+    },
+    fetchAllCards: () => {
+      dispatch(fetchAllCardsRequest());
     },
   };
 };
