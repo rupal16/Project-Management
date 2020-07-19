@@ -43,7 +43,9 @@ export const requestUserSuccess = (firstName, lastName, email, phone) => ({
 
 export const requestUserFailure = error => ({
   type: 'FETCH_USER_FAILURE',
-  error: error,
+  payload: {
+    error: error,
+  },
 });
 
 export const editUserDetails = (firstName, lastName, email, phone) => {
@@ -60,7 +62,9 @@ export const editUserDetails = (firstName, lastName, email, phone) => {
 
 export const editUserDetailsFailure = error => ({
   type: 'EDIT_USER_DETAILS_FAILURE',
-  error: error,
+  payload: {
+    error: error,
+  },
 });
 
 export const editUserDetailsSuccess = (firstName, lastName, email, phone) => ({
@@ -94,7 +98,9 @@ export const createProjectSuccess = projects => {
 
 export const createProjectFailure = error => ({
   type: 'CREATE_PROJECT_FAILURE',
-  error: error,
+  payload: {
+    error: error,
+  },
 });
 
 export const removeProjectRequest = id => {
@@ -115,7 +121,9 @@ export const removeProjectSuccess = id => ({
 
 export const removeProjectFailure = error => ({
   type: 'REMOVE_PROJECT_FAILURE',
-  error: error.message,
+  payload: {
+    error: error,
+  },
 });
 
 export const fetchAllProjectsRequest = () => {
@@ -145,14 +153,18 @@ export const fetchAllListsSuccess = sortedArrayList => ({
 });
 export const fetchAllListsFailure = error => ({
   type: 'FETCH_ALL_LISTS_FAILURE',
-  error: error,
+  payload: {
+    error: error,
+  },
 });
 
 // export const fetchAllListsSuccess =
 
 export const fetchAllProjectsFailure = error => ({
   type: 'FETCH_ALL_PROJECTS_FAILURE',
-  error: error,
+  payload: {
+    error: error,
+  },
 });
 
 export const fetchAllCardsRequest = () => ({
@@ -168,7 +180,9 @@ export const fetchAllCardsSuccess = cards => ({
 
 export const fetchAllCardsFailure = error => ({
   type: 'FETCH_ALL_CARDS_FAILURE',
-  error: error,
+  payload: {
+    error: error,
+  },
 });
 
 export const fetchProjectByIdRequest = id => ({
@@ -188,7 +202,9 @@ export const fetchProjectByIdSuccess = (projectTitle, projectDescription) => ({
 
 export const fetchProjectByIdFailure = error => ({
   type: 'FETCH_PROJECT_BY_ID_FAILURE',
-  error: error,
+  payload: {
+    error: error,
+  },
 });
 
 export const updateProjectRequest = (id, projectTitle, projectDescription) => {
@@ -227,7 +243,9 @@ export const updateListTitleSuccess = (listId, title) => {
 export const updateListTitleFailure = error => {
   return {
     type: 'UPDATE_LIST_TITLE_FAILURE',
-    error: error,
+    payload: {
+      error: error,
+    },
   };
 };
 
@@ -241,7 +259,9 @@ export const updateProjectSuccess = (projectTitle, projectDescription) => ({
 
 export const updateProjectFailure = error => ({
   type: 'UPDATE_PROJECT_FAILURE',
-  error: error,
+  payload: {
+    error: error,
+  },
 });
 
 //add list
@@ -270,7 +290,9 @@ export const addListSuccess = (title, projectId, listId) => {
 export const addListFailure = error => {
   return {
     type: 'ADD_LIST_FAILURE',
-    error: error,
+    payload: {
+      error: error,
+    },
   };
 };
 
@@ -299,7 +321,9 @@ export const addCardSuccess = (text, listId, cardId) => {
 export const addCardFailure = error => {
   return {
     type: 'ADD_CARD_FAILURE',
-    error: error,
+    payload: {
+      error: error,
+    },
   };
 };
 
@@ -323,3 +347,6 @@ export const sort = (
     },
   };
 };
+
+//update list title
+//drag and drop lists

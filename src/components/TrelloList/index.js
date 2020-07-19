@@ -38,14 +38,16 @@ const TrelloList = props => {
 
   const blurHandler = () => {
     setUpdate(false);
-    updateTitle(listId, newTitle);
+    console.log('listid, newtitle', listId.id, newTitle);
+    updateTitle(listId.id, newTitle);
   };
   // console.log('listid', listId);
   // console.log('props title', this.props);
   console.log('listss', props);
+  console.log('listId', listId.id);
   return (
     <div>
-      <Draggable draggableId={String(listId)} index={index}>
+      <Draggable draggableId={String(listId.id)} index={index}>
         {provided => (
           <div
             {...provided.draggableProps}

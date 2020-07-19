@@ -121,6 +121,7 @@ class OpenProject extends Component {
                   />
                 ))}
                 <ActionButton list projectId={this.props.match.params.id} />
+                {provided.placeholder}
               </div>
             )}
           </Droppable>
